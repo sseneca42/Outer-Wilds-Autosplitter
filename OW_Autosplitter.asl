@@ -1,6 +1,12 @@
 //Download dbgview to see the comments.
 state("OuterWilds") {}
 
+//1.1.1 -Fixed issue with the "warp core related" splits that caused them not to be activable again if you activated them once, even after starting a new expedition.
+//		-The _exitWarp split is now triggered at the end of the warping animation
+//1.1.0 -Added Splits and Options
+//		-Too much to list
+//1.0.0 Initial release
+
 //Launched when the script first loads (so only once)
 startup
 {
@@ -120,6 +126,9 @@ print("__INIT START__");
 	//---
 	//Locator - 0x28 _toolModeSwapper - 0x40 _itemCarryTool - 0x80 _heldItem - 0x64 _type
 	vars.heldItem = new MemoryWatcher<int>(new DeepPointer(Locator + 0x28, 0x40, 0x80, 0x64));// 2 = WarpCore (not broken)
+	//Locator - 0x28 _toolModeSwapper - (0x18 _equippedTool)(0x40 _itemCarryTool) - 0xA8 _promptState
+	vars.promptItem = new MemoryWatcher<int>(new DeepPointer(Locator + 0x28, 0x40, 0xA8));
+	//Locator - 0x28 _toolModeSwapper - 0x50 _firstPersonManipulator - 0x30 _focusedItemSocket - 0x70 _isVesselClassSlot
 	//---
 	//Locator - 0xB0 _playerSectorDetector - 0x54 _inBrambleDimension
 	vars.inBrambleDimension = new MemoryWatcher<bool>(new DeepPointer(Locator + 0xB0, 0x54));
@@ -159,24 +168,14 @@ print("__INIT START__");
 	//______________________________________________________________________________________________________________
 
 	vars.watchers = new MemoryWatcherList() {
-		vars.pauseMenu,
-		vars.pauseLoading,
-		vars.pauseSleeping,
-		vars.pauseInitializing,
-		vars.sceneC,
-		vars.scene,
-		vars.fadeT,
-		vars.allowAsync,
+		vars.pauseMenu, vars.pauseLoading, vars.pauseSleeping, vars.pauseInitializing,
+		vars.sceneC, vars.scene, vars.fadeT, vars.allowAsync,
 		vars.isWearingSuit,
-		vars.inWarpField,
-		vars.heldItem,
-		vars.inBrambleDimension,
-		vars.inVesselDimension,
-		vars.eyeState,
-		vars.eyeInitialized,
+		vars.inWarpField, vars.heldItem, vars.promptItem,
+		vars.inBrambleDimension, vars.inVesselDimension,
+		vars.eyeState, vars.eyeInitialized,
 		vars.isSleepingAtCampfire,
-		vars.isDying,
-		vars.deathType
+		vars.isDying, vars.deathType
 	};
 
 print("__INIT END__");
@@ -184,8 +183,10 @@ print("__INIT END__");
 
 //Launched when the game process is exited
 exit {
+	print("__EXITING THE GAME__\n");
 	if(settings["GeneralOptions"] && settings["_exitReset"])
     	vars.timer.Reset();
+	timer.IsGameTimePaused = true;
 }
 
 //Run in a loop after INIT. If the timer isn't running, is followed by START. If the timer is running, is followed by ISLOADING, RESET and SPLITS.
@@ -257,11 +258,11 @@ split {
 			vars.splits["_firstWarp"] = true;
 			return true;
 		}
-		else if (settings["_warpCore"] && !vars.splits["_warpCore"] && vars.heldItem.Current == 2 && vars.heldItem.Old != 2) {
+		else if (!vars.splits["_warpCore"] && vars.heldItem.Current == 2 && vars.promptItem.Old == 3 && vars.promptItem.Current > 3) {
 			vars.splits["_warpCore"] = true;
-			return true;
+			return (settings["_warpCore"]);
 		}
-		else if (settings["_exitWarp"] && !vars.splits["_exitWarp"] && vars.inWarpField.Current && !vars.inWarpField.Old && vars.heldItem.Current == 2) {
+		else if (settings["_exitWarp"] && !vars.splits["_exitWarp"] && !vars.inWarpField.Current && vars.inWarpField.Old && vars.splits["_warpCore"]) {
 			vars.splits["_exitWarp"] = true;
 			return true;
 		}
