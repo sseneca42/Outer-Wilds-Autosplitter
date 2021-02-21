@@ -1,6 +1,7 @@
 //Download dbgview to see the comments.
 state("OuterWilds") {}
 
+//1.1.2 -Changed the "_firstDeath" split into 3 splits : -Loss of HP -Impact -Anglerfish
 //1.1.1 -Fixed issue with the "warp core related" splits that caused them not to be activable again if you activated them once, even after starting a new expedition.
 //		-The _exitWarp split is now triggered at the end of the warping animation
 //1.1.0 -Added Splits and Options
@@ -17,7 +18,9 @@ print("__STARTUP START__");
 	vars.cleanValues = true;
 	vars.splits = new Dictionary<string, bool>
         {
-            { "_death", false },
+            { "_deathImpact", false },
+			{ "_deathHP", false },
+			{ "_deathFish", false },
             { "_sleep", false },
 			{ "_wearSuit", false },
 			{ "_firstWarp", false },
@@ -61,7 +64,9 @@ print("__STARTUP START__");
 	vars.createSetting("GeneralSplits", "Splits", "Choose where you want the game to split, by default only works the first time an event happens", true);
 	vars.createSetting("GeneralOptions", "Options", "", false);
 	settings.CurrentDefaultParent = "GeneralSplits";
-		vars.createSetting("_death", "First death", "", false);
+		vars.createSetting("_deathImpact", "First death from Impact", "Like jumping off a cliff ;;)", false);
+		vars.createSetting("_deathHP", "First death from HP loss", "Like a campfire ;;)", false);
+		vars.createSetting("_deathFish", "First death from DaFishy", "chomp", false);
 		vars.createSetting("_sleep", "Sleep", "", false);
 		vars.createSetting("_wearSuit", "Wear spacesuit", "", false);
 		vars.createSetting("_firstWarp", "Use a warp pad", "Any warp pad in the Solar System", false);
@@ -209,7 +214,9 @@ start {
 		print("Clean Values\n");
 	   	vars.load = false;
     	vars.menu = false;
-        vars.splits["_death"] = false;
+        vars.splits["_deathImpact"] = false;
+		vars.splits["_deathHP"] = false;
+		vars.splits["_deathFish"] = false;
 		vars.splits["_sleep"] = false;
 		vars.splits["_wearSuit"] = false;
 		vars.splits["_firstWarp"] = false;
@@ -242,8 +249,16 @@ split {
 	if(settings["GeneralSplits"]) {
 		if (settings["_bigBang"] && vars.deathType.Current == 6 && vars.deathType.Old != 6)
 			return true;
-		else if (settings["_death"] && !vars.splits["_death"] && vars.isDying.Current && !vars.isDying.Old) {
-			vars.splits["_death"] = true;
+		else if (settings["_deathImpact"] && !vars.splits["_deathImpact"] && vars.deathType.Old != 1 && vars.deathType.Current == 1) {
+			vars.splits["_deathImpact"] = true;
+			return true;
+		}
+		else if (settings["_deathHP"] && !vars.splits["_deathHP"] && vars.isDying.Current && !vars.isDying.Old && vars.deathType.Current == 0) {
+			vars.splits["_deathHP"] = true;
+			return true;
+		}
+		else if (settings["_deathFish"] && !vars.splits["_deathFish"] && vars.deathType.Old != 5 && vars.deathType.Current == 5) {
+			vars.splits["_deathFish"] = true;
 			return true;
 		}
 		else if (settings["_sleep"] && !vars.splits["_sleep"] && vars.isSleepingAtCampfire.Current && !vars.isSleepingAtCampfire.Old) {
