@@ -27,9 +27,9 @@ __Features :__<br>
 
 ![Settings](https://github.com/sseneca42/Outer-Wilds-Autosplitter/blob/main/Images/Image3_SettingsScreen.png)<br>
 
-Be sure that the timer's "timing method" is "Game Time" in your layout *[Right click on LiveSplit -> Click on "Edit Layout..." -> Click on "Layout Settings" -> Click on the "Timer" tab -> Check "Timing Method"]*<br>
-Don't forget to edit your splits to match the one you choosed.<br>
-When you close Livesplit you will be asked if you want to save your splits and layout, say YES or you will have to start everything all over again.<br>
+-Be sure that the timer's "timing method" is "Game Time" in your layout *[Right click on LiveSplit -> Click on "Edit Layout..." -> Click on "Layout Settings" -> Click on the "Timer" tab -> Check "Timing Method"]*<br>
+-Don't forget to edit your splits to match the one you choosed.<br>
+-When you close Livesplit you will be asked if you want to save your splits and layout, say YES or you will have to start everything all over again.<br>
 
 ## Report issues
 If you have any issue or question you can contact me on Discord `Nepo#2778` or send me a message on [speedrun.com](https://www.speedrun.com/user/Nepo)<br>
