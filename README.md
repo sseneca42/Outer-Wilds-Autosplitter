@@ -1,5 +1,6 @@
 # Outer-Wilds-Autosplitter
-*If you have any comment or issue, contact me on Discord Nepo#2778. Any help or suggestion is appreciated*
+*If you have any comment or issue, contact me on Discord Nepo#2778. Any help or suggestion is appreciated*<br>
+*Join the [Outer Wilds Speedrun Discord Server](https://discord.gg/T69zH3UnSZ)*
 
 ## What is this ?
 This is a load remover and autosplitter made for Outer Wilds on PC, usable with [Livesplit](https://livesplit.org/).<br>
@@ -23,7 +24,7 @@ __Features :__<br>
 
 ![Active the Autosplitter and click on 'Settings'](https://github.com/sseneca42/Outer-Wilds-Autosplitter/blob/main/Images/Image2_ActivateSettings.png)<br>
 
-4 - In `Settings` you can select exactly where you want the autosplitter to split, depending notably of the category you are running.<br>
+4 - In `Settings` you can select exactly where you want the autosplitter to split, depending notably of the category you are running. (The sub-options will be ignored if the parent option isn't activated)<br>
 
 ![Settings](https://github.com/sseneca42/Outer-Wilds-Autosplitter/blob/main/Images/Image3_SettingsScreen.png)<br>
 
@@ -42,6 +43,6 @@ __Known issue·s :__<br>
 
 ## Pantheon of gratitude
 
-* Thanks __turkwinif__ for helping me several times during the development of the early versions and thank you for handling most of the retiming and a plenty of things that helped make the Autosplitter legal.<br>
+* Thanks __turkwinif__ for helping me several times during the development of the early versions and thank you for handling most of the retiming and a plenty of other things.<br>
 * Thanks to everybody who took on their time to help me and reported issues, especially __frodododo__, __Skywalker__ and __zid__.<br>
 * Thanks to __DevilSquirrel__ for their guide on making Autosplitters for Unity games and thanks to __Ero__ for teaching me how to use the Cheat Engine's mono dissect tool properly.<br>
