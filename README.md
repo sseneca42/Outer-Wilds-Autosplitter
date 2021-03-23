@@ -1,5 +1,6 @@
 # Outer-Wilds-Autosplitter
-*If you have any comment or issue, including any comment or suggestion regarding this README, contact me on Discord Nepo#2778. Any help or suggestion is appreciated*<br>
+*If you have any comment or issue, including any comment or suggestion regarding this README, contact me on Discord Nepo#2778.<br>
+Any help or suggestion is appreciated !*<br>
 *Join the [Outer Wilds Speedrun Discord Server](https://discord.gg/T69zH3UnSZ) !*
 
 ## What is this?
@@ -45,13 +46,18 @@ __Known issue·s :__<br>
 -The initialization (and therefore the whole autosplitter) are not working for one person, likely because of an old computer/OS (Windows 7)<br>
 
 ## Patchnote and futur improvements
-1.0.0 Initial release.<br>
-1.1.0 -Added Splits and Options.<br>
-		  -Too much to list.<br>
-1.1.1 -Fixed issue with the "warp core related" splits that caused them not to be activable again if you activated them once, even after starting a new expedition.<br>
-		  -The _exitWarp split is now triggered at the end of the warping animation.<br>
-1.1.2 -Changed the "_firstDeath" split into 3 different splits : -Loss of HP Death -Impact Death -Anglerfish Death.<br>
-__NEXT :__
+__1.0.0__<br>
+-Initial release.<br>
+__1.1.0__<br>
+-Added Splits and Options.<br>
+-Too much to list.<br>
+__1.1.1__<br>
+-Fixed issue with the "warp core related" splits that caused them not to be activable again if you activated them once, even after starting a new expedition.<br>
+-The _exitWarp split is now triggered at the end of the warping animation.<br>
+__1.1.2__<br>
+-Changed the "_firstDeath" split into 3 different splits : -Loss of HP Death -Impact Death -Anglerfish Death.<br>
+
+__NEXT :__<br>
 -Adding DestroySpacetime final split.<br>
 -Performances Improvements.<br>
 -Known issue Fix.<br>
