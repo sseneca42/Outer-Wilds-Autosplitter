@@ -56,6 +56,8 @@ __1.1.1__<br>
 -The _exitWarp split is now triggered at the end of the warping animation.<br>
 __1.1.2__<br>
 -Changed the "_firstDeath" split into 3 different splits : -Loss of HP Death -Impact Death -Anglerfish Death.<br>
+__1.1.3__<br>
+-Added a split option for entering the Quantum Moon<br>
 
 __NEXT :__<br>
 -Adding DestroySpacetime final split.<br>
