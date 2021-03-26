@@ -1,6 +1,7 @@
 //Download dbgview to see the comments.
 state("OuterWilds") {}
 
+//1.1.3 -Added a split option for entering the Quantum Moon
 //1.1.2 -Changed the "_firstDeath" split into 3 splits : -Loss of HP -Impact -Anglerfish
 //1.1.1 -Fixed issue with the "warp core related" splits that caused them not to be activable again if you activated them once, even after starting a new expedition.
 //		-The _exitWarp split is now triggered at the end of the warping animation
@@ -27,7 +28,8 @@ print("__STARTUP START__");
 			{ "_warpCore", false },
 			{ "_exitWarp", false },
 			{ "_dBramble", false },
-			{ "_dBrambleVessel", false }
+			{ "_dBrambleVessel", false },
+			{ "_qMoonIn", false }
         };
 	//Look for a specific part of the game code, in this case a variable we want, since the game code doesn't change it works better than pointer paths for this game (likely because of Unity)
 	vars.signatureScan = (Func<Process, string, int, string, IntPtr>)((process, name, offset, target) => {
@@ -74,6 +76,7 @@ print("__STARTUP START__");
 		vars.createSetting("_exitWarp", "Use a warp pad while holding a warp core", "", false);
 		vars.createSetting("_dBramble", "Enter Dark Bramble", "", false);
 		vars.createSetting("_dBrambleVessel", "Enter the vessel node in Dark Bramble", "", false);
+		vars.createSetting("_qMoonIn", "Enter the Quantum Moon", "", false);
 		vars.createSetting("_vesselWarp", "Warp to the Eye of the Universe", "", false);
 			vars.createSetting("EyeSplits", "Eye Splits", "", false);
 			settings.CurrentDefaultParent = "EyeSplits";
@@ -140,11 +143,6 @@ print("__INIT START__");
 	//Locator - 0xB0 _playerSectorDetector - 0x55 _inVesselDimension
 	vars.inVesselDimension = new MemoryWatcher<bool>(new DeepPointer(Locator + 0xB0, 0x55));
 	//---
-	//Locator - 0x148 _eyeStateManager - 0x1C
-	vars.eyeState = new MemoryWatcher<int>(new DeepPointer(Locator + 0x148, 0x1C));//
-	//Locator - 0x148 _eyeStateManager - 0x20
-	vars.eyeInitialized = new MemoryWatcher<bool>(new DeepPointer(Locator + 0x148, 0x20));
-	//---
 	//Locator - 0xC8 _audioMixer - 0xA0 _isSleepingAtCampfire
 	vars.isSleepingAtCampfire = new MemoryWatcher<bool>(new DeepPointer(Locator + 0xC8, 0xA0));
 	//---
@@ -152,6 +150,14 @@ print("__INIT START__");
 	vars.isDying = new MemoryWatcher<bool>(new DeepPointer(Locator + 0xD8, 0x18));//0x19 for _isDead
 	//Locator - 0xD8 _deathManager - 0x24 _deathType
 	vars.deathType = new MemoryWatcher<int>(new DeepPointer(Locator + 0xD8, 0x24));//6 = BigBang
+	//---
+	//Locator - 0x148 _eyeStateManager - 0x1C
+	vars.eyeState = new MemoryWatcher<int>(new DeepPointer(Locator + 0x148, 0x1C));
+	//Locator - 0x148 _eyeStateManager - 0x20
+	vars.eyeInitialized = new MemoryWatcher<bool>(new DeepPointer(Locator + 0x148, 0x20));
+	//---
+	//Locator - 0x1C8 _playerSectorDetector - 0x15C _isPlayerInside
+	vars.inQuantumMoon = new MemoryWatcher<bool>(new DeepPointer(Locator + 0x1C8, 0x15C));
 
 	//OW_TIME_______________________________________________________________________________________________________
 	//OW_Time 0x20 s_pauseFlags (bool[7])
@@ -178,12 +184,14 @@ print("__INIT START__");
 		vars.isWearingSuit,
 		vars.inWarpField, vars.heldItem, vars.promptItem,
 		vars.inBrambleDimension, vars.inVesselDimension,
+		vars.inQuantumMoon,
 		vars.eyeState, vars.eyeInitialized,
 		vars.isSleepingAtCampfire,
 		vars.isDying, vars.deathType
 	};
 
 print("__INIT END__");
+print("Start Running Outer Wild's Autosplitter V.1.1.3");
 }
 
 //Launched when the game process is exited
@@ -211,7 +219,7 @@ update {
 //Start the timer if it returns TRUE
 start {
 	if (vars.cleanValues) {
-		print("Clean Values\n");
+		print("Cleaning 'Splits' Array\n");
 	   	vars.load = false;
     	vars.menu = false;
         vars.splits["_deathImpact"] = false;
@@ -224,6 +232,7 @@ start {
 		vars.splits["_warpCore"] = false;
 		vars.splits["_dBramble"] = false;
 		vars.splits["_dBrambleVessel"] = false;
+		vars.splits["_qMoonIn"] = false;
 		vars.cleanValues = false;
 	}
 	if (vars.pauseSleeping.Old && !vars.pauseSleeping.Current) {
@@ -287,6 +296,10 @@ split {
 		}
 		else if (settings["_dBrambleVessel"] && !vars.splits["_dBrambleVessel"] && vars.inVesselDimension.Current && !vars.inVesselDimension.Old) {
 			vars.splits["_dBrambleVessel"] = true;
+			return true;
+		}
+		else if (settings["_qMoonIn"] && !vars.splits["_qMoonIn"] && vars.inQuantumMoon.Current && !vars.inQuantumMoon.Old) {
+			vars.splits["_qMoonIn"] = true;
 			return true;
 		}
 		else if (settings["_vesselWarp"] && vars.eyeInitialized.Current && !vars.eyeInitialized.Old)
