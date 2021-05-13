@@ -1,6 +1,7 @@
 //Download dbgview to see the comments.
 state("OuterWilds") {}
 
+//1.1.4 -Added an option for resetting on quit out when you haven't splited yet
 //1.1.3 -Added a split option for entering the Quantum Moon
 //1.1.2 -Changed the "_firstDeath" split into 3 splits : -Loss of HP -Impact -Anglerfish
 //1.1.1 -Fixed issue with the "warp core related" splits that caused them not to be activable again if you activated them once, even after starting a new expedition.
@@ -90,6 +91,7 @@ print("__STARTUP START__");
 	settings.CurrentDefaultParent = "GeneralOptions";
 	vars.createSetting("_menuSplit", "Split when quitting back to the menu", "", false);
 	vars.createSetting("_menuReset", "Reset the timer when quitting back to the menu", "", false);
+	vars.createSetting("_menuResetLite", "Reset the timer when quitting back to the menu ONLY if you do before splitting", "", false);
 	vars.createSetting("_exitReset", "Reset the timer when closing the game", "", false);
 
 print("__STARTUP END__");
@@ -248,7 +250,7 @@ isLoading {
 
 //Reset the timer if it returns TRUE
 reset {
-	return (settings["GeneralOptions"] && settings["_menuReset"] && vars.menu);
+	return (settings["GeneralOptions"] && (settings["_menuReset"] || (settings["_menuResetLite"] && timer.CurrentSplitIndex == 0)) && vars.menu);
 }
 
 //Split if it returns TRUE
