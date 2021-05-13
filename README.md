@@ -58,16 +58,18 @@ __1.1.2__<br>
 -Changed the "_firstDeath" split into 3 different splits : -Loss of HP Death -Impact Death -Anglerfish Death.<br>
 __1.1.3__<br>
 -Added a split option for entering the Quantum Moon<br>
-
+__1.1.4__<br>
+-Added an option for resetting on quit out when you haven't splited yet
 __NEXT :__<br>
--Adding DestroySpacetime final split.<br>
--Performances Improvements.<br>
--Known issue Fix.<br>
--Looking for possible big improvements.<br>
+- Adding DestroySpacetime final split.<br>
+- ~If possible~ Adding All Signals splits.<br>
+- Performances Improvements.<br>
+- ~If possible~ Known issue Fix.<br>
+- Looking for possible big improvements.<br>
 ...<br>
 
 ## Pantheon of gratitude
 
-* Thanks __turkwinif__ for helping me several times during the development of the early versions and thank you for handling most of the retiming and a plenty of other things.<br>
+* Thanks __turkwinif__ for helping me several times during the development of the early versions and thank you for handling most of the retiming and plenty of other things.<br>
 * Thanks to everybody who took on their time to help me and reported issues, especially __frodododo__, __Skywalker__ and __zid__.<br>
 * Thanks to __DevilSquirrel__ for their guide on making Autosplitters for Unity games and thanks to __Ero__ for teaching me how to use the Cheat Engine's mono dissect tool properly.<br>
