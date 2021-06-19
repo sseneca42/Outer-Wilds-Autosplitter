@@ -1,7 +1,7 @@
 # Outer-Wilds-Autosplitter
-*If you have any comment or issue, including any comment or suggestion regarding this README, contact me on Discord Nepo#2778.<br>
-Any help or suggestion is appreciated !*<br>
-*Join the [Outer Wilds Speedrun Discord Server](https://discord.gg/T69zH3UnSZ) !*
+*If you have any comment or issue with the autosplitter or this README, contact me on Discord Nepo#2778.<br>
+Any help or suggestion is appreciated!*<br>
+*Join the [Outer Wilds Speedrun Discord Server](https://discord.gg/T69zH3UnSZ)!*
 
 ## What is this?
 This is a load remover and autosplitter made for Outer Wilds on PC, usable with [Livesplit](https://livesplit.org/).<br>
