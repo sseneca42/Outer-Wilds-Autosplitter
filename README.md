@@ -29,18 +29,21 @@ __Features :__<br>
 
 ![Settings](https://github.com/sseneca42/Outer-Wilds-Autosplitter/blob/main/Images/Image3_SettingsScreen.png)<br>
 
--Be sure that the timer's "timing method" is "Game Time" in your layout *[Right click on LiveSplit -> Click on "Edit Layout..." -> Click on "Layout Settings" -> Click on the "Timer" tab -> Check "Timing Method"]*<br>
--Don't forget to edit your splits to match the one you choosed.<br>
--When you close Livesplit you will be asked if you want to save your splits and layout, say YES or you will have to start everything all over again.<br>
+5 - __Be sure that the your timing method is "Game Time"__<br>
+&nbsp;&nbsp; [Right click on LiveSplit -> Compare against -> Game Time]<br>
+&nbsp;&nbsp;&nbsp; or<br>
+&nbsp;&nbsp; [Right click on LiveSplit -> Click on "Edit Layout..." -> Click on "Layout Settings" -> Click on the "Timer" tab -> Check "Timing Method"]<br>
+6 - Don't forget to edit your splits to match the one you choosed.<br><br>
+*-When you close Livesplit you will be asked if you want to save your splits and layout, say YES or you will have to start everything all over again.<br>*
 
 ## Troubleshooting
 If you have any issue or question you can contact me on Discord `Nepo#2778` or send me a message on [speedrun.com](https://www.speedrun.com/user/Nepo)<br>
 
 __If you have an issue :__<br>
 -Be sure that you do not have 'Scriptable Auto Splitter' in your Layout Editor [Right click on LiveSplit -> Click on "Edit Layout..." -> Select the element you want to delete and click on the *"-"* button].<br>
--Be sure that you followed the steps detailed in the __"How to use it?"__ section, check that you activated the Auto Splitter in the __Splits Editor__ and that the splits you want to use (and their parent options) are all checked in the __Options__.<br>
+-Be sure that you followed the steps detailed in the __"How to use it?"__ section (*especially step 5*), check that you activated the Auto Splitter in the __Splits Editor__ and that the splits you want to use (and their parent options) are all checked in the __Options__.<br>
 -A new Update or a mod being installed *could* impact the autosplitter, let me know if you notice anything.<br>
--You can install [DebugView](https://docs.microsoft.com/en-us/sysinternals/downloads/debugview) to see the comments, it probably won't help you though.<br>
+-You can install [DebugView](https://docs.microsoft.com/en-us/sysinternals/downloads/debugview) to see the comments, it probably won't help you much though.<br>
 
 __Known issue·s :__<br>
 -The initialization (and therefore the whole autosplitter) are not working for one person, likely because of an old computer/OS (Windows 7)<br>
@@ -59,7 +62,7 @@ __1.1.2__<br>
 __1.1.3__<br>
 -Added a split option for entering the Quantum Moon<br>
 __1.1.4__<br>
--Added an option for resetting on quit out when you haven't splited yet
+-Added an option for resetting on quit out when you haven't splited yet<br>
 __NEXT :__<br>
 - Adding DestroySpacetime final split.<br>
 - ~If possible~ Adding All Signals splits.<br>
