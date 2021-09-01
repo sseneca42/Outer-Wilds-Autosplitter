@@ -1,6 +1,7 @@
 //Download dbgview to see the comments.
 state("OuterWilds") {}
 
+//1.1.5 -Added a split for the Destroy Spacetime category & forces the timer to compare against 'Game Time' at launch
 //1.1.4 -Added an option for resetting on quit out when you haven't splited yet
 //1.1.3 -Added a split option for entering the Quantum Moon
 //1.1.2 -Changed the "_firstDeath" split into 3 splits : -Loss of HP -Impact -Anglerfish
@@ -9,6 +10,7 @@ state("OuterWilds") {}
 //1.1.0 -Added Splits and Options
 //		-Too much to list
 //1.0.0 Initial release
+
 
 //Launched when the script first loads (so only once)
 startup
@@ -87,7 +89,8 @@ print("__STARTUP START__");
 			vars.createSetting("_eyeMap", "Observe the map in the observatory", "", false);
 			vars.createSetting("_eyeInstruments", "Start the 'Instrument Hunt'", "", false);
 		settings.CurrentDefaultParent = "GeneralSplits";
-		vars.createSetting("_bigBang", "BigBang", "Last split for most categories, can be kept on all the time", true);
+		vars.createSetting("_bigBang", "BigBang", "Last split of most categories, can be kept on all the time", true);
+		vars.createSetting("_dst", "Destroy Spacetime", "Last split of the Destroy Spacetime category", true);
 	settings.CurrentDefaultParent = "GeneralOptions";
 	vars.createSetting("_menuSplit", "Split when quitting back to the menu", "", false);
 	vars.createSetting("_menuReset", "Reset the timer when quitting back to the menu", "", false);
@@ -128,6 +131,7 @@ print("__INIT START__");
 	IntPtr Load = (IntPtr)(game.ReadValue<long>(ptrLoad));
 	print("|\nPOINTER LoadManager : 0x" + Load.ToString("X8") + "\n|");
 
+
 	//LOCATOR_______________________________________________________________________________________________________
 	//Locator - 0x8 _playerController - 0x131 _isWearingSuit
 	vars.isWearingSuit = new MemoryWatcher<bool>(new DeepPointer(Locator + 0x8, 0x131));
@@ -136,7 +140,7 @@ print("__INIT START__");
 	//---
 	//Locator - 0x28 _toolModeSwapper - 0x40 _itemCarryTool - 0x80 _heldItem - 0x64 _type
 	vars.heldItem = new MemoryWatcher<int>(new DeepPointer(Locator + 0x28, 0x40, 0x80, 0x64));// 2 = WarpCore (not broken)
-	//Locator - 0x28 _toolModeSwapper - (0x18 _equippedTool)(0x40 _itemCarryTool) - 0xA8 _promptState
+	//Locator - 0x28 _toolModeSwapper - 0x40 _itemCarryTool - 0xA8 _promptState
 	vars.promptItem = new MemoryWatcher<int>(new DeepPointer(Locator + 0x28, 0x40, 0xA8));
 	//Locator - 0x28 _toolModeSwapper - 0x50 _firstPersonManipulator - 0x30 _focusedItemSocket - 0x70 _isVesselClassSlot
 	//---
@@ -148,7 +152,7 @@ print("__INIT START__");
 	//Locator - 0xC8 _audioMixer - 0xA0 _isSleepingAtCampfire
 	vars.isSleepingAtCampfire = new MemoryWatcher<bool>(new DeepPointer(Locator + 0xC8, 0xA0));
 	//---
-	//Locator - 0xD8 _deathManager - 0x19 _isDead
+	//Locator - 0xD8 _deathManager - 0x18 _isDying
 	vars.isDying = new MemoryWatcher<bool>(new DeepPointer(Locator + 0xD8, 0x18));//0x19 for _isDead
 	//Locator - 0xD8 _deathManager - 0x24 _deathType
 	vars.deathType = new MemoryWatcher<int>(new DeepPointer(Locator + 0xD8, 0x24));//6 = BigBang
@@ -157,6 +161,9 @@ print("__INIT START__");
 	vars.eyeState = new MemoryWatcher<int>(new DeepPointer(Locator + 0x148, 0x1C));
 	//Locator - 0x148 _eyeStateManager - 0x20
 	vars.eyeInitialized = new MemoryWatcher<bool>(new DeepPointer(Locator + 0x148, 0x20));
+	//---
+	//Locator - 0x150 _timelineObliterationController - 0x40 _cameraEffect - 0x131 _isRealityShatterEffectComplete
+	vars.isRealityShatterEffectComplete = new MemoryWatcher<bool>(new DeepPointer(Locator + 0x150, 0x40, 0x131));
 	//---
 	//Locator - 0x1C8 _playerSectorDetector - 0x15C _isPlayerInside
 	vars.inQuantumMoon = new MemoryWatcher<bool>(new DeepPointer(Locator + 0x1C8, 0x15C));
@@ -189,11 +196,17 @@ print("__INIT START__");
 		vars.inQuantumMoon,
 		vars.eyeState, vars.eyeInitialized,
 		vars.isSleepingAtCampfire,
-		vars.isDying, vars.deathType
+		vars.isDying, vars.deathType,
+		vars.isRealityShatterEffectComplete
 	};
 
+	if (timer.CurrentTimingMethod == 0) {
+		timer.CurrentTimingMethod++;
+		print("Timing Method Changed!");
+	}
+
 print("__INIT END__");
-print("Start Running Outer Wild's Autosplitter V.1.1.3");
+print("\nStart Running Outer Wild's Autosplitter V.1.1.5");
 }
 
 //Launched when the game process is exited
@@ -259,6 +272,8 @@ split {
 		return true;
 	if(settings["GeneralSplits"]) {
 		if (settings["_bigBang"] && vars.deathType.Current == 6 && vars.deathType.Old != 6)
+			return true;
+		else if (settings["_dst"] && vars.isRealityShatterEffectComplete.Current && !vars.isRealityShatterEffectComplete.Old)
 			return true;
 		else if (settings["_deathImpact"] && !vars.splits["_deathImpact"] && vars.deathType.Old != 1 && vars.deathType.Current == 1) {
 			vars.splits["_deathImpact"] = true;
