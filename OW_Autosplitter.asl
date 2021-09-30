@@ -1,8 +1,9 @@
 //Download dbgview to see the comments.
 state("OuterWilds") {}
 
-//1.1.5 -Added a split for the Destroy Spacetime category & forces the timer to compare against 'Game Time' at launch
-//1.1.4 -Added an option for resetting on quit out when you haven't splited yet
+//1.2.0 -Updated for the dlc, now support at least 1.0.7 & 1.1.10
+//1.1.5 -Added a split for the Destroy Spacetime category & forces the timer to compare against 'Game Time'
+//1.1.4 -Added an option for resetting on quit out when you haven't splitted yet
 //1.1.3 -Added a split option for entering the Quantum Moon
 //1.1.2 -Changed the "_firstDeath" split into 3 splits : -Loss of HP -Impact -Anglerfish
 //1.1.1 -Fixed issue with the "warp core related" splits that caused them not to be activable again if you activated them once, even after starting a new expedition.
@@ -20,6 +21,8 @@ print("__STARTUP START__");
 	vars.load = false;
     vars.menu = false;
 	vars.cleanValues = true;
+	vars.frame = (float)1/60;
+	vars.loop = 0;
 	vars.splits = new Dictionary<string, bool>
         {
             { "_deathImpact", false },
@@ -103,23 +106,65 @@ print("__STARTUP END__");
 //Launched whenever a game process has been found (potentially multiple times, when the game is restarted for example)
 init
 {
-print("__INIT START__");
+	print("__INIT START__");
+	
+	// MD5 code by CptBrian.
+    string MD5Hash;
+    using (var md5 = System.Security.Cryptography.MD5.Create())
+        using (var s = File.Open(modules.First().FileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            MD5Hash = md5.ComputeHash(s).Select(x => x.ToString("X2")).Aggregate((a, b) => a + b);
+	print("HASH = " + MD5Hash);
+
+	//Steam 1.0.7  CFF646D642E49E06FBE02DACAA7747E0 
+	//Epic  1.0.7  D2EBA93197CB5DBAAF23748E3657352F 
+	//Steam 1.1.10 8AC2F7475D483025CF94EF3027A58CE7 
+	//Epic  1.1.10 AD7A9F942E657193C8124B1FE0A89CB5
+	if(MD5Hash == "8AC2F7475D483025CF94EF3027A58CE7" || MD5Hash == "AD7A9F942E657193C8124B1FE0A89CB5")
+		version = "1.1.10";
+	else if (MD5Hash == "CFF646D642E49E06FBE02DACAA7747E0" || MD5Hash == "D2EBA93197CB5DBAAF23748E3657352F")
+		version = "1.0.7";
+	else version = "unknown";
+    print("Game version = " + version);
 
 	IntPtr ptrLocator = IntPtr.Zero;
 	while(ptrLocator == IntPtr.Zero){
-		ptrLocator = vars.signatureScan(game, "Locator", 49, "0F84 ???????? 41 83 3F 00 49 BA ???????????????? 49 8B CF 48 83 EC 20 49 BB ???????????????? 41 FF D3 48 83 C4 20 48 8B C8 48 B8");
-		if (ptrLocator == IntPtr.Zero)
-			System.Threading.Thread.Sleep(1000);
+		if(version == "1.1.10" || version == "unknown")
+			ptrLocator = vars.signatureScan(game, "LOCATOR v.1.1.10", 43, "0F84 ???????? 41 83 3F 00 49 BA ???????????????? 49 8B CF 66 90 49 BB ???????????????? 41 FF D3 48 8B C8 48 B8");
+		if (ptrLocator != IntPtr.Zero) {
+			version = "1.1.10";//026521612A80
+			break;
+		}
+		if(version == "1.0.7" || version == "unknown")
+			ptrLocator = vars.signatureScan(game, "LOCATOR v.1.0.7", 49, "0F84 ???????? 41 83 3F 00 49 BA ???????????????? 49 8B CF 48 83 EC 20 49 BB ???????????????? 41 FF D3 48 83 C4 20 48 8B C8 48 B8");
+		if (ptrLocator != IntPtr.Zero) {
+			version = "1.0.7";
+			break;
+		}
+		if (ptrLocator == IntPtr.Zero){
+			vars.loop++;
+			System.Threading.Thread.Sleep(2000 * vars.loop);
+		}
+		//INSERT EXIT ERROR HERE
 	}
 
 	IntPtr ptrTime = IntPtr.Zero;
-	while(ptrTime == IntPtr.Zero) {
-		ptrTime = vars.signatureScan(game, "OW_Time", 18, "F3 0F5A C0 48 63 45 FC F2 0F2A C8 F2 0F5E C1 48 B8");
+	while(ptrTime == IntPtr.Zero) {;
+		if (version == "1.1.10")
+			ptrTime = vars.signatureScan(game, "OW_TIME v.1.1.10", 14, "f3 0f2a c8 f3 0f5a c9 f2 0f5e c1 48 b8");
+		else
+			ptrTime = vars.signatureScan(game, "OW_TIME v.1.0.7", 18, "F3 0F5A C0 48 63 45 FC F2 0F2A C8 F2 0F5E C1 48 B8");
+		if (ptrTime == IntPtr.Zero)
+			System.Threading.Thread.Sleep(1000);//f3 0f2a c8 f3 0f5a c9 f2 0f5e c1 48 b8
 	}
 
 	IntPtr ptrLoad = IntPtr.Zero;
 	while (ptrLoad == IntPtr.Zero) {
-		ptrLoad = vars.signatureScan(game, "LoadManager", 14, "55 48 8B EC 56 48 83 EC 78 48 8B F1 48 B8");
+		if (version == "1.1.10")
+			ptrLoad = vars.signatureScan(game, "LOAD_MANAGER v.1.1.10", 20, "55 48 8b ec 48 81 ec ???????? 48 89 75 f8 48 8b f1 48 b8 ???????????????? 48 8b 00 48 85 c0 75 15 48 b8");
+		else
+			ptrLoad = vars.signatureScan(game, "LOAD_MANAGER v.1.0.7", 14, "55 48 8B EC 56 48 83 EC 78 48 8B F1 48 B8");
+		if (ptrLoad == IntPtr.Zero)
+			System.Threading.Thread.Sleep(1000);
 	}
 
 	IntPtr Locator = (IntPtr)(game.ReadValue<long>(ptrLocator));
@@ -131,8 +176,44 @@ print("__INIT START__");
 	IntPtr Load = (IntPtr)(game.ReadValue<long>(ptrLoad));
 	print("|\nPOINTER LoadManager : 0x" + Load.ToString("X8") + "\n|");
 
-
-	//LOCATOR_______________________________________________________________________________________________________
+	if(version == "1.1.10") {
+	//LOCATOR_1_1_10________________________________________________________________________________________________
+	//Locator - 0x8 _playerController - 0x139 _isWearingSuit
+	vars.isWearingSuit = new MemoryWatcher<bool>(new DeepPointer(Locator + 0x8, 0x139));
+	//Locator - 0x8 _playerController - 0x144 _inWarpField
+	vars.inWarpField = new MemoryWatcher<bool>(new DeepPointer(Locator + 0x8, 0x144));
+	//---
+	//Locator - 0x28 _toolModeSwapper - 0x40 _itemCarryTool - 0x98 _heldItem - 0x7C _type
+	vars.heldItem = new MemoryWatcher<int>(new DeepPointer(Locator + 0x28, 0x40, 0x98, 0x7C));// 2 = WarpCore (not broken)
+	//Locator - 0x28 _toolModeSwapper - 0x40 _itemCarryTool - 0xC0 _promptState
+	vars.promptItem = new MemoryWatcher<int>(new DeepPointer(Locator + 0x28, 0x40, 0xC0));
+	//---
+	//Locator - 0xB8 _playerSectorDetector - 0x54 _inBrambleDimension
+	vars.inBrambleDimension = new MemoryWatcher<bool>(new DeepPointer(Locator + 0xB8, 0x54));
+	//Locator - 0xB8 _playerSectorDetector - 0x55 _inVesselDimension
+	vars.inVesselDimension = new MemoryWatcher<bool>(new DeepPointer(Locator + 0xB8, 0x55));
+	//---
+	//Locator - 0xD0 _audioMixer - 0xCA _isSleepingAtCampfire
+	vars.isSleepingAtCampfire = new MemoryWatcher<bool>(new DeepPointer(Locator + 0xD0, 0xCA));
+	//---
+	//Locator - 0xE0 _deathManager - 0x20 _isDying
+	vars.isDying = new MemoryWatcher<bool>(new DeepPointer(Locator + 0xE0, 0x20));//0x21 for _isDead
+	//Locator - 0xE0 _deathManager - 0x2c _deathType
+	vars.deathType = new MemoryWatcher<int>(new DeepPointer(Locator + 0xE0, 0x2C));//6 = BigBang
+	//---
+	//Locator - 0x158 _eyeStateManager - 0x1C _state
+	vars.eyeState = new MemoryWatcher<int>(new DeepPointer(Locator + 0x158, 0x1C));
+	//Locator - 0x158 _eyeStateManager - 0x20 _initialized
+	vars.eyeInitialized = new MemoryWatcher<bool>(new DeepPointer(Locator + 0x158, 0x20));
+	//---
+	//Locator - 0x160 _timelineObliterationController - 0x40 _cameraEffect - 0x145 _isRealityShatterEffectComplete
+	vars.isRealityShatterEffectComplete = new MemoryWatcher<bool>(new DeepPointer(Locator + 0x160, 0x40, 0x145));
+	//---
+	//Locator - 0x228 _playerSectorDetector - 0x15C _isPlayerInside
+	vars.inQuantumMoon = new MemoryWatcher<bool>(new DeepPointer(Locator + 0x228, 0x15C));
+	}
+	else {
+	//LOCATOR_1_0_7_________________________________________________________________________________________________
 	//Locator - 0x8 _playerController - 0x131 _isWearingSuit
 	vars.isWearingSuit = new MemoryWatcher<bool>(new DeepPointer(Locator + 0x8, 0x131));
 	//Locator - 0x8 _playerController - 0x13C _inWarpField
@@ -142,7 +223,6 @@ print("__INIT START__");
 	vars.heldItem = new MemoryWatcher<int>(new DeepPointer(Locator + 0x28, 0x40, 0x80, 0x64));// 2 = WarpCore (not broken)
 	//Locator - 0x28 _toolModeSwapper - 0x40 _itemCarryTool - 0xA8 _promptState
 	vars.promptItem = new MemoryWatcher<int>(new DeepPointer(Locator + 0x28, 0x40, 0xA8));
-	//Locator - 0x28 _toolModeSwapper - 0x50 _firstPersonManipulator - 0x30 _focusedItemSocket - 0x70 _isVesselClassSlot
 	//---
 	//Locator - 0xB0 _playerSectorDetector - 0x54 _inBrambleDimension
 	vars.inBrambleDimension = new MemoryWatcher<bool>(new DeepPointer(Locator + 0xB0, 0x54));
@@ -167,13 +247,16 @@ print("__INIT START__");
 	//---
 	//Locator - 0x1C8 _playerSectorDetector - 0x15C _isPlayerInside
 	vars.inQuantumMoon = new MemoryWatcher<bool>(new DeepPointer(Locator + 0x1C8, 0x15C));
-
+	}
 	//OW_TIME_______________________________________________________________________________________________________
-	//OW_Time 0x20 s_pauseFlags (bool[7])
+	//OW_Time 0x0 s_pauseFlags (bool[7])
 	vars.pauseMenu = new MemoryWatcher<bool>(new DeepPointer(OW_Time - 0x10, 0x20));//When in the ESC Menu
 	vars.pauseLoading = new MemoryWatcher<bool>(new DeepPointer(OW_Time - 0x10, 0x21));//WHen quitting to the menu (and other maybe)
 	vars.pauseSleeping = new MemoryWatcher<bool>(new DeepPointer(OW_Time - 0x10, 0x23));//Before waking up (loop beginning)
 	vars.pauseInitializing = new MemoryWatcher<bool>(new DeepPointer(OW_Time - 0x10, 0x24));//When you see the "Save icon" more or less
+
+	//OW_Time 0x10 s_fixedTimestep
+	vars.fixedTimestep = new MemoryWatcher<float>(new DeepPointer(OW_Time));
 
 	//LOADMANAGER___________________________________________________________________________________________________
 	//LoadManager - 0xc s_currentScene
@@ -189,6 +272,7 @@ print("__INIT START__");
 
 	vars.watchers = new MemoryWatcherList() {
 		vars.pauseMenu, vars.pauseLoading, vars.pauseSleeping, vars.pauseInitializing,
+		vars.fixedTimestep,
 		vars.sceneC, vars.scene, vars.fadeT, vars.allowAsync,
 		vars.isWearingSuit,
 		vars.inWarpField, vars.heldItem, vars.promptItem,
@@ -206,7 +290,7 @@ print("__INIT START__");
 	}
 
 print("__INIT END__");
-print("\nStart Running Outer Wild's Autosplitter V.1.1.5");
+print("\n~Running Outer Wild's Autosplitter V.1.2.0~\n");
 }
 
 //Launched when the game process is exited
@@ -220,6 +304,9 @@ exit {
 //Run in a loop after INIT. If the timer isn't running, is followed by START. If the timer is running, is followed by ISLOADING, RESET and SPLITS.
 update {
 	vars.watchers.UpdateAll(game);
+	
+//	if(vars.fixedTimestep.Current == vars.frame)
+//	 print("FTS = " + vars.fixedTimestep.Current);
 
 	if (!vars.menu && vars.loadCompare(0, 1, -1, 1, true))
 		vars.menu = true;
