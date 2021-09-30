@@ -63,8 +63,13 @@ __1.1.3__<br>
 -Added a split option for entering the Quantum Moon<br>
 __1.1.4__<br>
 -Added an option for resetting on quit out when you haven't splited yet<br>
+__1.1.5__<br>
+-Added a split for the Destroy Spacetime category & forces the timer to compare against 'Game Time'<br>
+__1.2.0__<br>
+-Updated for the DLC, now support at least 1.0.7 & 1.1.10<br>
 __NEXT :__<br>
-- Adding DestroySpacetime final split.<br>
+- DLC splits
+- 100% splits ?
 - ~If possible~ Adding All Signals splits.<br>
 - Performances Improvements.<br>
 - ~If possible~ Known issue Fix.<br>
