@@ -67,8 +67,10 @@ __1.1.5__<br>
 -Added a split for the Destroy Spacetime category & forces the timer to compare against 'Game Time'<br>
 __1.2.0__<br>
 -Updated for the DLC, now support at least 1.0.7 & 1.1.10<br>
+__1.2.1__<br>
+-Added "Free Splits" for the dlc, with the possibility to split when entering/exiting the Stranger/Ring/Dream World.<br>
 __NEXT :__<br>
-- DLC splits
+- More DLC splits
 - 100% splits ?
 - ~If possible~ Adding All Signals splits.<br>
 - Performances Improvements.<br>
