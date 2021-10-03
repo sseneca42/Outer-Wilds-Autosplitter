@@ -1,6 +1,7 @@
 //Download dbgview to see the comments.
 state("OuterWilds") {}
 
+//1.2.1 -Added "Free Splits" for the dlc, with the possibility to split when entering/exiting the Stranger/Ring/Dream World.
 //1.2.0 -Updated for the dlc, now support at least 1.0.7 & 1.1.10
 //1.1.5 -Added a split for the Destroy Spacetime category & forces the timer to compare against 'Game Time'
 //1.1.4 -Added an option for resetting on quit out when you haven't splitted yet
@@ -23,6 +24,7 @@ print("__STARTUP START__");
 	vars.cleanValues = true;
 	vars.frame = (float)1/60;
 	vars.loop = 0;
+	vars.currDlcSplit = 0;
 	vars.splits = new Dictionary<string, bool>
         {
             { "_deathImpact", false },
@@ -71,6 +73,9 @@ print("__STARTUP START__");
 	//
 	vars.createSetting("GeneralSplits", "Splits", "Choose where you want the game to split, by default only works the first time an event happens", true);
 	vars.createSetting("GeneralOptions", "Options", "", false);
+	//
+	vars.createSetting("DLC", "DLC - hover to read instructions", "Choose what split you want in the Stranger\nRULES\n· Only one split at a time is considered\n· You can use both the free splits and the regular splits in the same run\n· You can select several sub-options, the first one to be validated will trigger the split\n", false);
+	//
 	settings.CurrentDefaultParent = "GeneralSplits";
 		vars.createSetting("_deathImpact", "First death from Impact", "Like jumping off a cliff ;;)", false);
 		vars.createSetting("_deathHP", "First death from HP loss", "Like a campfire ;;)", false);
@@ -99,6 +104,31 @@ print("__STARTUP START__");
 	vars.createSetting("_menuReset", "Reset the timer when quitting back to the menu", "", false);
 	vars.createSetting("_menuResetLite", "Reset the timer when quitting back to the menu ONLY if you do before splitting", "", false);
 	vars.createSetting("_exitReset", "Reset the timer when closing the game", "", false);
+    
+	settings.CurrentDefaultParent = "DLC";
+	for (int i = 0; i < 10; i++) {
+		settings.CurrentDefaultParent = "DLC";
+    	vars.createSetting("_dlc" + i.ToString(), "Free Split " + (i + 1).ToString(), "", false);
+		settings.CurrentDefaultParent = "_dlc" + i.ToString();
+		vars.createSetting("_dlc" + i.ToString() + "CloakEnter", "Stranger In", "", false);
+		vars.createSetting("_dlc" + i.ToString() + "CloakExit", "Stranger Out", "", false);
+		vars.createSetting("_dlc" + i.ToString() + "RingEnter", "Ring In", "", false);
+		vars.createSetting("_dlc" + i.ToString() + "RingExit", "Ring Out", "", false);
+		vars.createSetting("_dlc" + i.ToString() + "DreamEnter", "Dream In", "", false);
+		vars.createSetting("_dlc" + i.ToString() + "DreamExit", "Dream Out", "", false);
+		for (int j = 1; j < 3; j++) {
+			settings.CurrentDefaultParent = "_dlc" + i.ToString() + (j == 1 ? "DreamEnter" : "DreamExit");
+			vars.createSetting("_dlc" + i.ToString() + (j == 1 ? "DreamEnter" : "DreamExit") + "Any", "Any", "", false);
+			vars.createSetting("_dlc" + i.ToString() + (j == 1 ? "DreamEnter" : "DreamExit") + "Zone1", "Shrouded Woodlands | River Lowlands", "", false);
+			vars.createSetting("_dlc" + i.ToString() + (j == 1 ? "DreamEnter" : "DreamExit") + "Zone2", "Starlit Cove                 | Cinder Isles", "", false);
+			vars.createSetting("_dlc" + i.ToString() + (j == 1 ? "DreamEnter" : "DreamExit") + "Zone3", "Endless Canyon          | Hidden Gorge", "", false);
+			vars.createSetting("_dlc" + i.ToString() + (j == 1 ? "DreamEnter" : "DreamExit") + "Zone4", "Subterranean Lake     | Submerged Structure", "", false);
+		}
+	}
+
+//
+
+//
 
 print("__STARTUP END__");
 }
@@ -127,11 +157,12 @@ init
     print("Game version = " + version);
 
 	IntPtr ptrLocator = IntPtr.Zero;
+//*
 	while(ptrLocator == IntPtr.Zero){
 		if(version == "1.1.10" || version == "unknown")
 			ptrLocator = vars.signatureScan(game, "LOCATOR v.1.1.10", 43, "0F84 ???????? 41 83 3F 00 49 BA ???????????????? 49 8B CF 66 90 49 BB ???????????????? 41 FF D3 48 8B C8 48 B8");
 		if (ptrLocator != IntPtr.Zero) {
-			version = "1.1.10";//026521612A80
+			version = "1.1.10";
 			break;
 		}
 		if(version == "1.0.7" || version == "unknown")
@@ -144,28 +175,33 @@ init
 			vars.loop++;
 			System.Threading.Thread.Sleep(2000 * vars.loop);
 		}
-		//INSERT EXIT ERROR HERE
+		if(vars.loop == 10)
+			return;
 	}
-
+	vars.loop = 0;
+//*/
 	IntPtr ptrTime = IntPtr.Zero;
+//*
 	while(ptrTime == IntPtr.Zero) {;
 		if (version == "1.1.10")
-			ptrTime = vars.signatureScan(game, "OW_TIME v.1.1.10", 14, "f3 0f2a c8 f3 0f5a c9 f2 0f5e c1 48 b8");
+			ptrTime = vars.signatureScan(game, "OW_TIME v.1.1.10", 14, "F3 0F2A C8 F3 0F5A C9 F2 0F5E C1 48 B8");
 		else
 			ptrTime = vars.signatureScan(game, "OW_TIME v.1.0.7", 18, "F3 0F5A C0 48 63 45 FC F2 0F2A C8 F2 0F5E C1 48 B8");
 		if (ptrTime == IntPtr.Zero)
-			System.Threading.Thread.Sleep(1000);//f3 0f2a c8 f3 0f5a c9 f2 0f5e c1 48 b8
+			System.Threading.Thread.Sleep(1000);
 	}
-
+//*/
 	IntPtr ptrLoad = IntPtr.Zero;
+//*
 	while (ptrLoad == IntPtr.Zero) {
 		if (version == "1.1.10")
-			ptrLoad = vars.signatureScan(game, "LOAD_MANAGER v.1.1.10", 20, "55 48 8b ec 48 81 ec ???????? 48 89 75 f8 48 8b f1 48 b8 ???????????????? 48 8b 00 48 85 c0 75 15 48 b8");
+			ptrLoad = vars.signatureScan(game, "LOAD_MANAGER v.1.1.10", 20, "55 48 8B EC 48 81 EC ???????? 48 89 75 F8 48 8B F1 48 B8 ???????????????? 48 8B 00 48 85 C0 75 15 48 B8");
 		else
 			ptrLoad = vars.signatureScan(game, "LOAD_MANAGER v.1.0.7", 14, "55 48 8B EC 56 48 83 EC 78 48 8B F1 48 B8");
 		if (ptrLoad == IntPtr.Zero)
 			System.Threading.Thread.Sleep(1000);
 	}
+//*/
 
 	IntPtr Locator = (IntPtr)(game.ReadValue<long>(ptrLocator));
 	print("|\nPOINTER Locator : 0x" + Locator.ToString("X8") + "\n|");
@@ -177,7 +213,7 @@ init
 	print("|\nPOINTER LoadManager : 0x" + Load.ToString("X8") + "\n|");
 
 	if(version == "1.1.10") {
-	//LOCATOR_1_1_10________________________________________________________________________________________________
+//LOCATOR_1_1_10________________________________________________________________________________________________
 	//Locator - 0x8 _playerController - 0x139 _isWearingSuit
 	vars.isWearingSuit = new MemoryWatcher<bool>(new DeepPointer(Locator + 0x8, 0x139));
 	//Locator - 0x8 _playerController - 0x144 _inWarpField
@@ -209,11 +245,24 @@ init
 	//Locator - 0x160 _timelineObliterationController - 0x40 _cameraEffect - 0x145 _isRealityShatterEffectComplete
 	vars.isRealityShatterEffectComplete = new MemoryWatcher<bool>(new DeepPointer(Locator + 0x160, 0x40, 0x145));
 	//---
-	//Locator - 0x228 _playerSectorDetector - 0x15C _isPlayerInside
+	//Locator - 0x228 _quantumMoon - 0x15C _isPlayerInside
 	vars.inQuantumMoon = new MemoryWatcher<bool>(new DeepPointer(Locator + 0x228, 0x15C));
+//DLC
+	//---
+	//Locator - 0x190 _cloakFieldController - 0x10F _playerInsideCloak
+    vars.playerInsideCloak = new MemoryWatcher<bool>(new DeepPointer(Locator + 0x190, 0x10F));
+	//---
+	//Locator - 0x198 _ringWorldController - 0x184 _playerInsideRingWorld
+	vars.playerInsideRingWorld = new MemoryWatcher<bool>(new DeepPointer(Locator + 0x198, 0x184));
+	//---
+	//Locator - 0x1A0 _dreamWorldController - 0x133 _insideDream
+	vars.insideDream = new MemoryWatcher<bool>(new DeepPointer(Locator + 0x1A0, 0x133));
+	//Locator - 0x1A0 _dreamWorldController - 0xA0 _dreamArrivalPoint - 0x48 DreamArrivalPoint.Location
+	vars.dreamLocation = new MemoryWatcher<int>(new DeepPointer(Locator + 0x1A0, 0xA0, 0x48));
+	
 	}
 	else {
-	//LOCATOR_1_0_7_________________________________________________________________________________________________
+//LOCATOR_1_0_7_________________________________________________________________________________________________
 	//Locator - 0x8 _playerController - 0x131 _isWearingSuit
 	vars.isWearingSuit = new MemoryWatcher<bool>(new DeepPointer(Locator + 0x8, 0x131));
 	//Locator - 0x8 _playerController - 0x13C _inWarpField
@@ -245,10 +294,16 @@ init
 	//Locator - 0x150 _timelineObliterationController - 0x40 _cameraEffect - 0x131 _isRealityShatterEffectComplete
 	vars.isRealityShatterEffectComplete = new MemoryWatcher<bool>(new DeepPointer(Locator + 0x150, 0x40, 0x131));
 	//---
-	//Locator - 0x1C8 _playerSectorDetector - 0x15C _isPlayerInside
+	//Locator - 0x1C8 _quantumMoon - 0x15C _isPlayerInside
 	vars.inQuantumMoon = new MemoryWatcher<bool>(new DeepPointer(Locator + 0x1C8, 0x15C));
+	//
+	vars.playerInsideCloak = new MemoryWatcher<bool>(new DeepPointer(IntPtr.Zero));
+	vars.playerInsideRingWorld = new MemoryWatcher<bool>(new DeepPointer(IntPtr.Zero));
+	vars.insideDream = new MemoryWatcher<bool>(new DeepPointer(IntPtr.Zero));
+	vars.dreamLocation = new MemoryWatcher<int>(new DeepPointer(IntPtr.Zero));
 	}
-	//OW_TIME_______________________________________________________________________________________________________
+
+//OW_TIME_______________________________________________________________________________________________________
 	//OW_Time 0x0 s_pauseFlags (bool[7])
 	vars.pauseMenu = new MemoryWatcher<bool>(new DeepPointer(OW_Time - 0x10, 0x20));//When in the ESC Menu
 	vars.pauseLoading = new MemoryWatcher<bool>(new DeepPointer(OW_Time - 0x10, 0x21));//WHen quitting to the menu (and other maybe)
@@ -258,7 +313,7 @@ init
 	//OW_Time 0x10 s_fixedTimestep
 	vars.fixedTimestep = new MemoryWatcher<float>(new DeepPointer(OW_Time));
 
-	//LOADMANAGER___________________________________________________________________________________________________
+//LOADMANAGER___________________________________________________________________________________________________
 	//LoadManager - 0xc s_currentScene
 	vars.sceneC = new MemoryWatcher<int>(new DeepPointer(Load - 0x2C));
 	//LoadManager - 0x10 s_loadingScene
@@ -281,7 +336,8 @@ init
 		vars.eyeState, vars.eyeInitialized,
 		vars.isSleepingAtCampfire,
 		vars.isDying, vars.deathType,
-		vars.isRealityShatterEffectComplete
+		vars.isRealityShatterEffectComplete,
+		vars.playerInsideCloak, vars.playerInsideRingWorld, vars.insideDream, vars.dreamLocation
 	};
 
 	if (timer.CurrentTimingMethod == 0) {
@@ -289,8 +345,18 @@ init
 		print("Timing Method Changed!");
 	}
 
+	vars.numDlcSplits = 0;
+	for (int i = 0; i < 10; i++) 
+	{
+		if (settings["_dlc" + i.ToString()])
+			vars.numDlcSplits++;
+		else
+			break;
+	}	
+	print("Number of free dlc splits = " + vars.numDlcSplits);
+
 print("__INIT END__");
-print("\n~Running Outer Wild's Autosplitter V.1.2.0~\n");
+print("\n~Running Outer Wilds Autosplitter V.1.2.1~\n");
 }
 
 //Launched when the game process is exited
@@ -336,6 +402,7 @@ start {
 		vars.splits["_dBrambleVessel"] = false;
 		vars.splits["_qMoonIn"] = false;
 		vars.cleanValues = false;
+		vars.currDlcSplit = 0;
 	}
 	if (vars.pauseSleeping.Old && !vars.pauseSleeping.Current) {
 		vars.cleanValues = true;
@@ -421,5 +488,30 @@ split {
 				return true;
 		}
 	}
+	//print("settings = " + settings["DLC"] + "" + settings["_dlc" + vars.currDlcSplit.ToString() + "CloakEnter"] + "\nsplits curr = " + vars.currDlcSplit + " num = " + vars.numDlcSplits);
+	if (version == "1.1.10" && settings["DLC"]) {
+			if (vars.currDlcSplit < vars.numDlcSplits) {
+				if((settings["_dlc" + vars.currDlcSplit.ToString() + "CloakEnter"] && vars.playerInsideCloak.Current && !vars.playerInsideCloak.Old)
+				|| (settings["_dlc" + vars.currDlcSplit.ToString() + "CloakExit"] && !vars.playerInsideCloak.Current && vars.playerInsideCloak.Old)
+				|| (settings["_dlc" + vars.currDlcSplit.ToString() + "RingEnter"] && vars.playerInsideRingWorld.Current && !vars.playerInsideRingWorld.Old)
+				|| (settings["_dlc" + vars.currDlcSplit.ToString() + "RingExit"] && !vars.playerInsideRingWorld.Current && vars.playerInsideRingWorld.Old)
+				|| (settings["_dlc" + vars.currDlcSplit.ToString() + "DreamEnter"] && vars.insideDream.Current && !vars.insideDream.Old &&
+					(settings["_dlc" + vars.currDlcSplit.ToString() + "DreamEnterAny"]
+				|| (vars.dreamLocation.Current == 100 && settings["_dlc" + vars.currDlcSplit.ToString() + "DreamEnterZone1"])
+				|| (vars.dreamLocation.Current == 200 && settings["_dlc" + vars.currDlcSplit.ToString() + "DreamEnterZone2"])
+				|| (vars.dreamLocation.Current == 300 && settings["_dlc" + vars.currDlcSplit.ToString() + "DreamEnterZone3"])
+				|| (vars.dreamLocation.Current == 400 && settings["_dlc" + vars.currDlcSplit.ToString() + "DreamEnterZone4"]) ))
+				|| (settings["_dlc" + vars.currDlcSplit.ToString() + "DreamExit"] && !vars.insideDream.Current && vars.insideDream.Old &&
+					(settings["_dlc" + vars.currDlcSplit.ToString() + "DreamExitAny"]
+				|| (vars.dreamLocation.Old == 100 && settings["_dlc" + vars.currDlcSplit.ToString() + "DreamExitZone1"])
+				|| (vars.dreamLocation.Old == 200 && settings["_dlc" + vars.currDlcSplit.ToString() + "DreamExitZone2"])
+				|| (vars.dreamLocation.Old == 300 && settings["_dlc" + vars.currDlcSplit.ToString() + "DreamExitZone3"])
+				|| (vars.dreamLocation.Old == 400 && settings["_dlc" + vars.currDlcSplit.ToString() + "DreamExitZone4"]) ))
+				) {
+					vars.currDlcSplit++;
+					return true;
+				}
+			}
+		}
 	return false;
 }
