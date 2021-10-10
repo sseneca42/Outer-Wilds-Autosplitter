@@ -69,6 +69,8 @@ __1.2.0__<br>
 -Updated for the DLC, now support at least 1.0.7 & 1.1.10<br>
 __1.2.1__<br>
 -Added "Free Splits" for the dlc, with the possibility to split when entering/exiting the Stranger/Ring/Dream World.<br>
+__1.2.2__<br>
+-Added 100% Splits & Signals Splits + an option to reset your savefile automatically + a lot of smaller stuff<br>
 __NEXT :__<br>
 - More DLC splits
 - 100% splits ?
