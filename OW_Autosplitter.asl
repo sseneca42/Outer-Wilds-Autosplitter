@@ -847,7 +847,7 @@ update {
 	vars.watchers.UpdateAll(game);
 
 	if(version == "1.1.10" && (settings["Signals"] || settings["Facts"])) {
-		if (vars.nameLength.Current != vars.nameLength.Old && vars.pathLength.Current != 0) {
+		if ((vars.nameLength.Current != vars.nameLength.Old || String.IsNullOrEmpty(vars.path)) && vars.pathLength.Current != 0) {
 			string name = "";
 			vars.path = "";
 			char[] str = new char[vars.nameLength.Current];
