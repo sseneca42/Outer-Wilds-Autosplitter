@@ -43,6 +43,7 @@ __If you have an issue :__<br>
 -Be sure that you do not have 'Scriptable Auto Splitter' in your Layout Editor [Right click on LiveSplit -> Click on "Edit Layout..." -> Select the element you want to delete and click on the *"-"* button].<br>
 -Be sure that you followed the steps detailed in the __"How to use it?"__ section (*especially step 5*), check that you activated the Auto Splitter in the __Splits Editor__ and that the splits you want to use (and their parent options) are all checked in the __Options__.<br>
 -A new Update or a mod being installed *could* impact the autosplitter, let me know if you notice anything.<br>
+-Try launching Livesplit as an administrator.<br>
 -You can install [DebugView](https://docs.microsoft.com/en-us/sysinternals/downloads/debugview) to see the comments, it probably won't help you much though.<br>
 
 __Known issue·s :__<br>
