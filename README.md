@@ -46,7 +46,7 @@ __If you have an issue :__<br>
 -You can install [DebugView](https://docs.microsoft.com/en-us/sysinternals/downloads/debugview) to see the comments, it probably won't help you much though.<br>
 
 __Known issue·s :__<br>
--The initialization (and therefore the whole autosplitter) are not working for one person, likely because of an old computer/OS (Windows 7)<br>
+-
 
 ## Patchnote and futur improvements
 __1.0.0__<br>
@@ -70,15 +70,10 @@ __1.2.0__<br>
 __1.2.1__<br>
 -Added "Free Splits" for the dlc, with the possibility to split when entering/exiting the Stranger/Ring/Dream World.<br>
 __1.2.2__<br>
--Added 100% Splits & Signals Splits + an option to reset your savefile automatically + a lot of smaller stuff<br>
+-Added 100% Splits & Signals Splits + an option to reset your savefile automatically + a lot of smaller stuff<br><br>
 __NEXT :__<br>
-- More DLC splits
-- 100% splits ?
-- ~If possible~ Adding All Signals splits.<br>
-- Performances Improvements.<br>
-- ~If possible~ Known issue Fix.<br>
-- Looking for possible big improvements.<br>
-...<br>
+-Safety net against certain file modifications<br>
+-Description for 100% Facts
 
 ## Pantheon of gratitude
 
