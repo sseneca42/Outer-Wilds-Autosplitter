@@ -39,7 +39,10 @@ __Features :__<br>
 ## Troubleshooting
 If you have any issue or question you can contact me on Discord `Nepo#2778` or send me a message on [speedrun.com](https://www.speedrun.com/user/Nepo)<br>
 
-__If you have an issue :__<br>
+__If Livesplit cannot find the autosplitter :__<br>
+-Try to reinstall/move Livesplit to another location. (Let me know if you have more details)<br>
+
+__If the autosplitter does not work as expected or does not start :__<br>
 -Be sure that you do not have 'Scriptable Auto Splitter' in your Layout Editor [Right click on LiveSplit -> Click on "Edit Layout..." -> Select the element you want to delete and click on the *"-"* button].<br>
 -Be sure that you followed the steps detailed in the __"How to use it?"__ section (*especially step 5*), check that you activated the Auto Splitter in the __Splits Editor__ and that the splits you want to use (and their parent options) are all checked in the __Options__.<br>
 -A new Update or a mod being installed *could* impact the autosplitter, let me know if you notice anything.<br>
@@ -71,10 +74,12 @@ __1.2.0__<br>
 __1.2.1__<br>
 -Added "Free Splits" for the dlc, with the possibility to split when entering/exiting the Stranger/Ring/Dream World.<br>
 __1.2.2__<br>
--Added 100% Splits & Signals Splits + an option to reset your savefile automatically + a lot of smaller stuff<br><br>
+-Added 100% Splits & Signals Splits + an option to reset your savefile automatically + a lot of smaller stuff<br>
+__1.2.3__<br>
+-Added descriptions to the Stranger's 100% Splits + WarpCore split fix + Secret Settings modification warning<br><br>
 __NEXT :__<br>
--Safety net against certain file modifications<br>
--Description for 100% Facts
+-Complete descriptions for every 100% splits
+-Improved scanning performance (?)
 
 ## Pantheon of gratitude
 
