@@ -518,6 +518,11 @@ print("__STARTUP START__");
 	vars.createSetting("_menuReset", "Reset the timer when quitting back to the menu", "", false);
 	vars.createSetting("_menuResetLite", "  ˪ Same but ONLY if you do before splitting", "", false);
     vars.createSetting("_saveFile", "Auto delete progression while keeping Launch Codes /!\\ OVERWRITE SAVEFILE", "Automatically overwrite your savefile when the timer isn't running to erase everything except the launch codes.\nYOU NEED TO RESET THE TIMER BEFORE QUITTING OUT!\nUse it by clicking \"Resume expedition\"", false);
+		vars.createSetting("_forceVersion", "Force the autosplitter to run for a specific game version\nThe game need to be restarted", "Be careful, if you select the wrong version it could break the autosplitter", false);
+		settings.CurrentDefaultParent = "_forceVersion";
+		vars.createSetting("_v107", "1.0.7", "", false);
+		vars.createSetting("_v1110", "1.1.10 or 1.1.11", "", false);
+		vars.createSetting("_v1112", "1.1.12", "", false);
 
 	settings.CurrentDefaultParent = "DLCSplits";
 	vars.createSetting("Signals", "Signals", "", false);
@@ -610,23 +615,33 @@ init
             MD5Hash = md5.ComputeHash(s).Select(x => x.ToString("X2")).Aggregate((a, b) => a + b);
 	print("HASH = " + MD5Hash);
 
-	//Steam 1.0.7  CFF646D642E49E06FBE02DACAA7747E0 
-	//Epic  1.0.7  D2EBA93197CB5DBAAF23748E3657352F 
-	//Steam 1.1.10 8AC2F7475D483025CF94EF3027A58CE7 
-	//Epic  1.1.10 AD7A9F942E657193C8124B1FE0A89CB5
-	//Steam 1.1.11 C10C6961017C813F611D5D02710B07A9 
-	//Epic  1.1.11 AD7A9F942E657193C8124B1FE0A89CB5 (hmm)
-	//Steam	1.1.12 75425F7225EC5C685EC183E9E2FEFC68 
-	//Epic	1.1.12 B56866911AECACA1488891A8A32C9BEE 
+	//Steam 1.0.7  		CFF646D642E49E06FBE02DACAA7747E0 
+	//Epic  1.0.7  		D2EBA93197CB5DBAAF23748E3657352F 
+	//Steam 1.1.10 		8AC2F7475D483025CF94EF3027A58CE7 
+	//Epic  1.1.10 		AD7A9F942E657193C8124B1FE0A89CB5
+	//Steam 1.1.11 		C10C6961017C813F611D5D02710B07A9
+	//Steam 1.1.11new	2DEA3DB5FAC0A7DF634ADEA81123561C
+	//Epic  1.1.11 		AD7A9F942E657193C8124B1FE0A89CB5 (hmm)
+	//Steam	1.1.12 		75425F7225EC5C685EC183E9E2FEFC68 
+	//Epic	1.1.12 		B56866911AECACA1488891A8A32C9BEE 
 
 	if (MD5Hash == "75425F7225EC5C685EC183E9E2FEFC68" || MD5Hash == "B56866911AECACA1488891A8A32C9BEE")
 		version = "1.1.12";
-	else if (MD5Hash == "8AC2F7475D483025CF94EF3027A58CE7" || MD5Hash == "AD7A9F942E657193C8124B1FE0A89CB5" || MD5Hash == "C10C6961017C813F611D5D02710B07A9")
+	else if (MD5Hash == "8AC2F7475D483025CF94EF3027A58CE7" || MD5Hash == "AD7A9F942E657193C8124B1FE0A89CB5" || MD5Hash == "C10C6961017C813F611D5D02710B07A9" || MD5Hash == "2DEA3DB5FAC0A7DF634ADEA81123561C")
 		version = "1.1.10";
 	else if (MD5Hash == "CFF646D642E49E06FBE02DACAA7747E0" || MD5Hash == "D2EBA93197CB5DBAAF23748E3657352F")
 		version = "1.0.7";
 	else version = "unknown";
     print("Game version = " + version);
+	if (settings["_forceVersion"]) {
+		if(settings["_v1112"])
+			version = "1.1.12";
+		else if(settings["_v1110"])
+			version = "1.1.10";
+		else if(settings["_v107"])
+			version = "1.0.7";
+		print("Forced the game version to " + version);
+	}
 
 	vars.splitSignals = new List<int[]> {};
 	vars.splitFacts = new List<int[]> {};
