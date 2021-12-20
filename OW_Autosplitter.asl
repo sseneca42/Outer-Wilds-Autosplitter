@@ -518,7 +518,7 @@ print("__STARTUP START__");
 	vars.createSetting("_menuReset", "Reset the timer when quitting back to the menu", "", false);
 	vars.createSetting("_menuResetLite", "  ˪ Same but ONLY if you do before splitting", "", false);
     vars.createSetting("_saveFile", "Auto delete progression while keeping Launch Codes /!\\ OVERWRITE SAVEFILE", "Automatically overwrite your savefile when the timer isn't running to erase everything except the launch codes.\nYOU NEED TO RESET THE TIMER BEFORE QUITTING OUT!\nUse it by clicking \"Resume expedition\"", false);
-		vars.createSetting("_forceVersion", "Force the autosplitter to run for a specific game version\nThe game need to be restarted", "Be careful, if you select the wrong version it could break the autosplitter", false);
+		vars.createSetting("_forceVersion", "Force the autosplitter to run for a specific game version", "The game need to be restarted\nBe careful, if you select the wrong version it could break the autosplitter", false);
 		settings.CurrentDefaultParent = "_forceVersion";
 		vars.createSetting("_v107", "1.0.7", "", false);
 		vars.createSetting("_v1110", "1.1.10 or 1.1.11", "", false);
