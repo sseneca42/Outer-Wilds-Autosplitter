@@ -25,7 +25,7 @@ __Features :__<br>
 
 ![Active the Autosplitter and click on 'Settings'](https://github.com/sseneca42/Outer-Wilds-Autosplitter/blob/main/Images/Image2_ActivateSettings.png)<br>
 
-4 - In `Settings` you can select exactly where you want the autosplitter to split, depending notably of the category you are running. (The sub-options will be ignored if the parent option isn't activated)<br>
+4 - In `Settings` you can select exactly where you want the autosplitter to split. (The sub-options will be ignored if the parent option isn't activated)<br>
 
 ![Settings](https://github.com/sseneca42/Outer-Wilds-Autosplitter/blob/main/Images/Image3_SettingsScreen.png)<br>
 
@@ -45,7 +45,7 @@ __If Livesplit cannot find the autosplitter :__<br>
 __If the autosplitter does not work as expected or does not start :__<br>
 -Be sure that you do not have 'Scriptable Auto Splitter' in your Layout Editor [Right click on LiveSplit -> Click on "Edit Layout..." -> Select the element you want to delete and click on the *"-"* button].<br>
 -Be sure that you followed the steps detailed in the __"How to use it?"__ section (*especially step 5*), check that you activated the Auto Splitter in the __Splits Editor__ and that the splits you want to use (and their parent options) are all checked in the __Options__.<br>
--A new Update or a mod being installed *could* impact the autosplitter, let me know if you notice anything.<br>
+-A new update or a mod being installed *could* impact the autosplitter, let me know if you notice anything.<br>
 -Try launching Livesplit as an administrator.<br>
 -You can install [DebugView](https://docs.microsoft.com/en-us/sysinternals/downloads/debugview) to see the comments, it probably won't help you much though.<br>
 
@@ -76,7 +76,9 @@ __1.2.1__<br>
 __1.2.2__<br>
 -Added 100% Splits & Signals Splits + an option to reset your savefile automatically + a lot of smaller stuff<br>
 __1.2.3__<br>
--Added descriptions to the Stranger's 100% Splits + WarpCore split fix + Secret Settings modification warning<br><br>
+-Added descriptions to the Stranger's 100% Splits + WarpCore split fix + Secret Settings modification warning<br>
+__1.2.4__<br>
+-Now Works for 1.0.7, 1.1.10, 1.1.11 & 1.1.12<br><br>
 __NEXT :__<br>
 -Complete descriptions for every 100% splits
 -Improved scanning performance (?)
