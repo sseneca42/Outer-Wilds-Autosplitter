@@ -1,0 +1,415 @@
+<OWData>
+	<Signals>
+		<Signal ID= "10" Name="Traveler_Esker"/>
+		<Signal ID= "11" Name="Traveler_Chert"/>
+		<Signal ID= "12" Name="Traveler_Riebeck"/>
+		<Signal ID= "13" Name="Traveler_Gabbro"/>
+		<Signal ID= "14" Name="Traveler_Feldspar"/>
+		<Signal ID= "15" Name="Traveler_Nomai"/>
+		<Signal ID= "16" Name="Traveler_Prisoner"/>
+		<Signal ID= "20" Name="Quantum_CT_Shard"/>
+		<Signal ID= "21" Name="Quantum_TH_MuseumShard"/>
+		<Signal ID= "22" Name="Quantum_TH_GroveShard"/>
+		<Signal ID= "23" Name="Quantum_BH_Shard"/>
+		<Signal ID= "24" Name="Quantum_GD_Shard"/>
+		<Signal ID= "25" Name="Quantum_QM"/>
+		<Signal ID= "30" Name="EscapePod_CT"/>
+		<Signal ID= "31" Name="EscapePod_BH"/>
+		<Signal ID= "32" Name="EscapePod_DB"/>
+		<Signal ID= "40" Name="WhiteHole_WH"/>
+		<Signal ID= "41" Name="WhiteHole_SS_Receiver"/>
+		<Signal ID= "42" Name="WhiteHole_CT_Receiver"/>
+		<Signal ID= "43" Name="WhiteHole_CT_Experiment"/>
+		<Signal ID= "44" Name="WhiteHole_TT_Receiver"/>
+		<Signal ID= "45" Name="WhiteHole_TT_TimeLoopCore"/>
+		<Signal ID= "46" Name="WhiteHole_TH_Receiver"/>
+		<Signal ID= "47" Name="WhiteHole_BH_NorthPoleReceiver"/>
+		<Signal ID= "48" Name="WhiteHole_BH_ForgeReceiver"/>
+		<Signal ID= "49" Name="WhiteHole_GD_Receiver"/>
+		<Signal ID= "60" Name="HideAndSeek_Galena"/>
+		<Signal ID= "61" Name="HideAndSeek_Tephra"/>
+		<Signal ID= "62" Name="HideAndSeek_Arkose"/>
+		<Signal ID="100" Name="RadioTower"/>
+		<Signal ID="101" Name="MapSatellite"/>
+	</Signals>
+
+	<Facts>
+		<Other>
+			<Fact Name="S_SUNSTATION_R1"              Description=""/>
+			<Fact Name="S_SUNSTATION_R2"              Description=""/>
+			<Fact Name="S_SUNSTATION_R3"              Description=""/>
+			<Fact Name="S_SUNSTATION_X1"              Description=""/>
+			<Fact Name="S_SUNSTATION_X2"              Description=""/>
+			<Fact Name="S_SUNSTATION_X3"              Description=""/>
+			<Fact Name="S_SUNSTATION_X4"              Description=""/>
+			<Fact Name="CT_CHERT_X1"                  Description=""/>
+			<Fact Name="CT_CHERT_X2"                  Description=""/>
+			<Fact Name="CT_CHERT_X3"                  Description=""/>
+			<Fact Name="CT_CHERT_X4"                  Description=""/>
+			<Fact Name="CT_CHERT_X5"                  Description=""/>
+			<Fact Name="CT_QUANTUM_MOON_LOCATOR_X1"   Description=""/>
+			<Fact Name="CT_QUANTUM_MOON_LOCATOR_X2"   Description=""/>
+			<Fact Name="CT_QUANTUM_MOON_LOCATOR_X3"   Description=""/>
+			<Fact Name="CT_GRAVITY_CANNON_R1"         Description=""/>
+			<Fact Name="CT_GRAVITY_CANNON_X1"         Description=""/>
+			<Fact Name="CT_GRAVITY_CANNON_X2"         Description=""/>
+			<Fact Name="CT_ESCAPE_POD_R1"             Description=""/>
+			<Fact Name="CT_ESCAPE_POD_R2"             Description=""/>
+			<Fact Name="CT_ESCAPE_POD_X1"             Description=""/>
+			<Fact Name="CT_ESCAPE_POD_X2"             Description=""/>
+			<Fact Name="CT_HIGH_ENERGY_LAB_R1"        Description=""/>
+			<Fact Name="CT_HIGH_ENERGY_LAB_R2"        Description=""/>
+			<Fact Name="CT_HIGH_ENERGY_LAB_R3"        Description=""/>
+			<Fact Name="CT_HIGH_ENERGY_LAB_X1"        Description=""/>
+			<Fact Name="CT_HIGH_ENERGY_LAB_X2"        Description=""/>
+			<Fact Name="CT_HIGH_ENERGY_LAB_X3"        Description=""/>
+			<Fact Name="CT_WARP_TOWER_MAP_R1"         Description=""/>
+			<Fact Name="CT_WARP_TOWER_MAP_X1"         Description=""/>
+			<Fact Name="CT_WARP_TOWER_MAP_X4"         Description=""/>
+			<Fact Name="CT_WARP_TOWER_MAP_X3"         Description=""/>
+			<Fact Name="CT_WARP_TOWER_MAP_X2"         Description=""/>
+			<Fact Name="CT_SUNLESS_CITY_R1"           Description=""/>
+			<Fact Name="CT_SUNLESS_CITY_R3"           Description=""/>
+			<Fact Name="CT_SUNLESS_CITY_R4"           Description=""/>
+			<Fact Name="CT_SUNLESS_CITY_R5"           Description=""/>
+			<Fact Name="CT_SUNLESS_CITY_R2"           Description=""/>
+			<Fact Name="CT_SUNLESS_CITY_X1"           Description=""/>
+			<Fact Name="CT_SUNLESS_CITY_X2"           Description=""/>
+			<Fact Name="CT_SUNLESS_CITY_X3"           Description=""/>
+			<Fact Name="CT_ANGLERFISH_FOSSIL_R1"      Description=""/>
+			<Fact Name="CT_ANGLERFISH_FOSSIL_R2"      Description=""/>
+			<Fact Name="CT_ANGLERFISH_FOSSIL_R3"      Description=""/>
+			<Fact Name="CT_ANGLERFISH_FOSSIL_R4"      Description=""/>
+			<Fact Name="CT_ANGLERFISH_FOSSIL_X1"      Description=""/>
+			<Fact Name="CT_ANGLERFISH_FOSSIL_X2"      Description=""/>
+			<Fact Name="CT_ANGLERFISH_FOSSIL_X3"      Description=""/>
+			<Fact Name="CT_QUANTUM_CAVES_R1"          Description=""/>
+			<Fact Name="CT_QUANTUM_CAVES_X1"          Description=""/>
+			<Fact Name="CT_QUANTUM_CAVES_X2"          Description=""/>
+			<Fact Name="CT_LAKEBED_CAVERN_R1"         Description=""/>
+			<Fact Name="CT_LAKEBED_CAVERN_R2"         Description=""/>
+			<Fact Name="CT_LAKEBED_CAVERN_X1"         Description=""/>
+			<Fact Name="CT_LAKEBED_CAVERN_X2"         Description=""/>
+			<Fact Name="CT_LAKEBED_CAVERN_X3"         Description=""/>
+			<Fact Name="TT_WARP_TOWERS_X1"            Description=""/>
+			<Fact Name="TT_WARP_TOWERS_X2"            Description=""/>
+			<Fact Name="TT_TIME_LOOP_DEVICE_R1"       Description=""/>
+			<Fact Name="TT_TIME_LOOP_DEVICE_R2"       Description=""/>
+			<Fact Name="TT_TIME_LOOP_DEVICE_R3"       Description=""/>
+			<Fact Name="TT_TIME_LOOP_DEVICE_R4"       Description=""/>
+			<Fact Name="TT_TIME_LOOP_DEVICE_X1"       Description=""/>
+			<Fact Name="TT_TIME_LOOP_DEVICE_X2"       Description=""/>
+			<Fact Name="TT_TIME_LOOP_DEVICE_X3"       Description=""/>
+			<Fact Name="TT_TIME_LOOP_DEVICE_X4"       Description=""/>
+			<Fact Name="TT_TIME_LOOP_DEVICE_X5"       Description=""/>
+			<Fact Name="TH_VILLAGE_X1"                Description=""/>
+			<Fact Name="TH_VILLAGE_X2"                Description=""/>
+			<Fact Name="TH_VILLAGE_X3"                Description=""/>
+			<Fact Name="TH_ZERO_G_CAVE_R1"            Description=""/>
+			<Fact Name="TH_ZERO_G_CAVE_X1"            Description=""/>
+			<Fact Name="TH_ZERO_G_CAVE_X2"            Description=""/>
+			<Fact Name="TH_IMPACT_CRATER_R1"          Description=""/>
+			<Fact Name="TH_IMPACT_CRATER_X1"          Description=""/>
+			<Fact Name="TH_IMPACT_CRATER_X2"          Description=""/>
+			<Fact Name="TH_IMPACT_CRATER_X3"          Description=""/>
+			<Fact Name="TH_NOMAI_MINE_R1"             Description=""/>
+			<Fact Name="TH_NOMAI_MINE_X1"             Description=""/>
+			<Fact Name="TH_NOMAI_MINE_X2"             Description=""/>
+			<Fact Name="TH_NOMAI_MINE_X3"             Description=""/>
+			<Fact Name="TH_QUANTUM_SHARD_R1"          Description=""/>
+			<Fact Name="TH_QUANTUM_SHARD_R2"          Description=""/>
+			<Fact Name="TH_QUANTUM_SHARD_X1"          Description=""/>
+			<Fact Name="TH_QUANTUM_SHARD_X2"          Description=""/>
+			<Fact Name="TH_RADIO_TOWER_X1"            Description=""/>
+			<Fact Name="TM_ESKER_R1"                  Description=""/>
+			<Fact Name="TM_ESKER_X1"                  Description=""/>
+			<Fact Name="TM_NORTH_POLE_R1"             Description=""/>
+			<Fact Name="TM_NORTH_POLE_X1"             Description=""/>
+			<Fact Name="TM_EYE_LOCATOR_R1"            Description=""/>
+			<Fact Name="TM_EYE_LOCATOR_R2"            Description=""/>
+			<Fact Name="TM_EYE_LOCATOR_X1"            Description=""/>
+			<Fact Name="TM_EYE_LOCATOR_X2"            Description=""/>
+			<Fact Name="BH_RIEBECK_R1"                Description=""/>
+			<Fact Name="BH_RIEBECK_R2"                Description=""/>
+			<Fact Name="BH_RIEBECK_R3"                Description=""/>
+			<Fact Name="BH_RIEBECK_R4"                Description=""/>
+			<Fact Name="BH_RIEBECK_X1"                Description=""/>
+			<Fact Name="BH_RIEBECK_X2"                Description=""/>
+			<Fact Name="BH_GRAVITY_CANNON_X1"         Description=""/>
+			<Fact Name="BH_GRAVITY_CANNON_X2"         Description=""/>
+			<Fact Name="BH_QUANTUM_RESEARCH_TOWER_R1" Description=""/>
+			<Fact Name="BH_QUANTUM_RESEARCH_TOWER_R2" Description=""/>
+			<Fact Name="BH_QUANTUM_RESEARCH_TOWER_X1" Description=""/>
+			<Fact Name="BH_QUANTUM_RESEARCH_TOWER_X2" Description=""/>
+			<Fact Name="BH_QUANTUM_RESEARCH_TOWER_X3" Description=""/>
+			<Fact Name="BH_QUANTUM_SHARD_R1"          Description=""/>
+			<Fact Name="BH_QUANTUM_SHARD_X1"          Description=""/>
+			<Fact Name="BH_QUANTUM_SHARD_X2"          Description=""/>
+			<Fact Name="BH_QUANTUM_SHARD_X3"          Description=""/>
+			<Fact Name="BH_WARP_RECEIVER_X1"          Description=""/>
+			<Fact Name="BH_WARP_RECEIVER_X2"          Description=""/>
+			<Fact Name="BH_ESCAPE_POD_R1"             Description=""/>
+			<Fact Name="BH_ESCAPE_POD_X1"             Description=""/>
+			<Fact Name="BH_ESCAPE_POD_X2"             Description=""/>
+			<Fact Name="BH_OLD_SETTLEMENT_R1"         Description=""/>
+			<Fact Name="BH_OLD_SETTLEMENT_X1"         Description=""/>
+			<Fact Name="BH_OLD_SETTLEMENT_X2"         Description=""/>
+			<Fact Name="BH_OLD_SETTLEMENT_X3"         Description=""/>
+			<Fact Name="BH_OLD_SETTLEMENT_X4"         Description=""/>
+			<Fact Name="BH_MURAL_3_X1"                Description=""/>
+			<Fact Name="BH_MURAL_2_X1"                Description=""/>
+			<Fact Name="BH_MURAL_1_X1"                Description=""/>
+			<Fact Name="BH_HANGING_CITY_R1"           Description=""/>
+			<Fact Name="BH_HANGING_CITY_R2"           Description=""/>
+			<Fact Name="BH_HANGING_CITY_X1"           Description=""/>
+			<Fact Name="BH_HANGING_CITY_X2"           Description=""/>
+			<Fact Name="BH_HANGING_CITY_X3"           Description=""/>
+			<Fact Name="BH_HANGING_CITY_X4"           Description=""/>
+			<Fact Name="BH_BLACK_HOLE_FORGE_R1"       Description=""/>
+			<Fact Name="BH_BLACK_HOLE_FORGE_R2"       Description=""/>
+			<Fact Name="BH_BLACK_HOLE_FORGE_R3"       Description=""/>
+			<Fact Name="BH_BLACK_HOLE_FORGE_R4"       Description=""/>
+			<Fact Name="BH_BLACK_HOLE_FORGE_X4"       Description=""/>
+			<Fact Name="BH_BLACK_HOLE_FORGE_X5"       Description=""/>
+			<Fact Name="BH_BLACK_HOLE_FORGE_X6"       Description=""/>
+			<Fact Name="BH_BLACK_HOLE_FORGE_X1"       Description=""/>
+			<Fact Name="BH_BLACK_HOLE_FORGE_X3"       Description=""/>
+			<Fact Name="BH_WARP_ALIGNMENT_MAP_X1"     Description=""/>
+			<Fact Name="BH_WARP_ALIGNMENT_MAP_X2"     Description=""/>
+			<Fact Name="BH_WARP_ALIGNMENT_MAP_X3"     Description=""/>
+			<Fact Name="BH_WARP_ALIGNMENT_MAP_X4"     Description=""/>
+			<Fact Name="BH_OBSERVATORY_R1"            Description=""/>
+			<Fact Name="BH_OBSERVATORY_R2"            Description=""/>
+			<Fact Name="BH_OBSERVATORY_R3"            Description=""/>
+			<Fact Name="BH_OBSERVATORY_R4"            Description=""/>
+			<Fact Name="BH_OBSERVATORY_X1"            Description=""/>
+			<Fact Name="BH_OBSERVATORY_X2"            Description=""/>
+			<Fact Name="BH_OBSERVATORY_X3"            Description=""/>
+			<Fact Name="BH_OBSERVATORY_X4"            Description=""/>
+			<Fact Name="BH_TORNADO_SIMULATION_R1"     Description=""/>
+			<Fact Name="BH_TORNADO_SIMULATION_X1"     Description=""/>
+			<Fact Name="BH_TORNADO_SIMULATION_X2"     Description=""/>
+			<Fact Name="VM_VOLCANO_X1"                Description=""/>
+			<Fact Name="VM_VOLCANO_X2"                Description=""/>
+			<Fact Name="VM_VOLCANO_X3"                Description=""/>
+			<Fact Name="GD_OCEAN_R1"                  Description=""/>
+			<Fact Name="GD_OCEAN_R2"                  Description=""/>
+			<Fact Name="GD_OCEAN_R3"                  Description=""/>
+			<Fact Name="GD_OCEAN_X1"                  Description=""/>
+			<Fact Name="GD_OCEAN_X2"                  Description=""/>
+			<Fact Name="GD_GABBRO_ISLAND_R1"          Description=""/>
+			<Fact Name="GD_GABBRO_ISLAND_X0"          Description=""/>
+			<Fact Name="GD_GABBRO_ISLAND_X1"          Description=""/>
+			<Fact Name="GD_GABBRO_ISLAND_X2"          Description=""/>
+			<Fact Name="GD_GABBRO_ISLAND_X3"          Description=""/>
+			<Fact Name="GD_CONSTRUCTION_YARD_R1"      Description=""/>
+			<Fact Name="GD_CONSTRUCTION_YARD_X1"      Description=""/>
+			<Fact Name="GD_CONSTRUCTION_YARD_X2"      Description=""/>
+			<Fact Name="GD_CONSTRUCTION_YARD_X3"      Description=""/>
+			<Fact Name="GD_BRAMBLE_ISLAND_X1"         Description=""/>
+			<Fact Name="GD_STATUE_ISLAND_R1"          Description=""/>
+			<Fact Name="GD_STATUE_ISLAND_R2"          Description=""/>
+			<Fact Name="GD_STATUE_ISLAND_X1"          Description=""/>
+			<Fact Name="GD_STATUE_ISLAND_X2"          Description=""/>
+			<Fact Name="GD_STATUE_WORKSHOP_R1"        Description=""/>
+			<Fact Name="GD_STATUE_WORKSHOP_R2"        Description=""/>
+			<Fact Name="GD_STATUE_WORKSHOP_R3"        Description=""/>
+			<Fact Name="GD_STATUE_WORKSHOP_X1"        Description=""/>
+			<Fact Name="GD_STATUE_WORKSHOP_X2"        Description=""/>
+			<Fact Name="GD_STATUE_WORKSHOP_X3"        Description=""/>
+			<Fact Name="GD_QUANTUM_TOWER_R1"          Description=""/>
+			<Fact Name="GD_QUANTUM_TOWER_X1"          Description=""/>
+			<Fact Name="GD_QUANTUM_TOWER_X2"          Description=""/>
+			<Fact Name="GD_QUANTUM_TOWER_X3"          Description=""/>
+			<Fact Name="GD_QUANTUM_TOWER_X4"          Description=""/>
+			<Fact Name="ORBITAL_PROBE_CANNON_R1"      Description=""/>
+			<Fact Name="ORBITAL_PROBE_CANNON_R2"      Description=""/>
+			<Fact Name="ORBITAL_PROBE_CANNON_R4"      Description=""/>
+			<Fact Name="ORBITAL_PROBE_CANNON_R3"      Description=""/>
+			<Fact Name="ORBITAL_PROBE_CANNON_X1"      Description=""/>
+			<Fact Name="ORBITAL_PROBE_CANNON_X2"      Description=""/>
+			<Fact Name="ORBITAL_PROBE_CANNON_X3"      Description=""/>
+			<Fact Name="OPC_SUNKEN_MODULE_R1"         Description=""/>
+			<Fact Name="OPC_SUNKEN_MODULE_R5"         Description=""/>
+			<Fact Name="OPC_SUNKEN_MODULE_R4"         Description=""/>
+			<Fact Name="OPC_SUNKEN_MODULE_R2"         Description=""/>
+			<Fact Name="OPC_SUNKEN_MODULE_R3"         Description=""/>
+			<Fact Name="OPC_SUNKEN_MODULE_X1"         Description=""/>
+			<Fact Name="OPC_SUNKEN_MODULE_X2"         Description=""/>
+			<Fact Name="OPC_SUNKEN_MODULE_X3"         Description=""/>
+			<Fact Name="OPC_EYE_COORDINATES_X1"       Description=""/>
+			<Fact Name="OPC_BROKEN_MODULE_R1"         Description=""/>
+			<Fact Name="OPC_BROKEN_MODULE_R2"         Description=""/>
+			<Fact Name="OPC_BROKEN_MODULE_R3"         Description=""/>
+			<Fact Name="OPC_BROKEN_MODULE_X1"         Description=""/>
+			<Fact Name="OPC_BROKEN_MODULE_X2"         Description=""/>
+			<Fact Name="OPC_BROKEN_MODULE_X3"         Description=""/>
+			<Fact Name="OPC_INTACT_MODULE_R1"         Description=""/>
+			<Fact Name="OPC_INTACT_MODULE_X1"         Description=""/>
+			<Fact Name="OPC_INTACT_MODULE_X2"         Description=""/>
+			<Fact Name="DB_FELDSPAR_R1"               Description=""/>
+			<Fact Name="DB_FELDSPAR_R2"               Description=""/>
+			<Fact Name="DB_FELDSPAR_X1"               Description=""/>
+			<Fact Name="DB_FELDSPAR_X2"               Description=""/>
+			<Fact Name="DB_FELDSPAR_X3"               Description=""/>
+			<Fact Name="DB_FROZEN_JELLYFISH_R1"       Description=""/>
+			<Fact Name="DB_FROZEN_JELLYFISH_X1"       Description=""/>
+			<Fact Name="DB_FROZEN_JELLYFISH_X2"       Description=""/>
+			<Fact Name="DB_FROZEN_JELLYFISH_X3"       Description=""/>
+			<Fact Name="DB_ESCAPE_POD_R1"             Description=""/>
+			<Fact Name="DB_ESCAPE_POD_X1"             Description=""/>
+			<Fact Name="DB_ESCAPE_POD_X2"             Description=""/>
+			<Fact Name="DB_ESCAPE_POD_X3"             Description=""/>
+			<Fact Name="DB_NOMAI_GRAVE_R1"            Description=""/>
+			<Fact Name="DB_NOMAI_GRAVE_R2"            Description=""/>
+			<Fact Name="DB_NOMAI_GRAVE_X1"            Description=""/>
+			<Fact Name="DB_NOMAI_GRAVE_X2"            Description=""/>
+			<Fact Name="DB_NOMAI_GRAVE_X3"            Description=""/>
+			<Fact Name="DB_NOMAI_GRAVE_X4"            Description=""/>
+			<Fact Name="DB_VESSEL_R1"                 Description=""/>
+			<Fact Name="DB_VESSEL_R2"                 Description=""/>
+			<Fact Name="DB_VESSEL_R3"                 Description=""/>
+			<Fact Name="DB_VESSEL_R4"                 Description=""/>
+			<Fact Name="DB_VESSEL_X1"                 Description=""/>
+			<Fact Name="DB_VESSEL_X2"                 Description=""/>
+			<Fact Name="DB_VESSEL_X3"                 Description=""/>
+			<Fact Name="DB_VESSEL_X4"                 Description=""/>
+			<Fact Name="DB_VESSEL_X5"                 Description=""/>
+			<Fact Name="DB_VESSEL_X6"                 Description=""/>
+			<Fact Name="WHS_R1"                       Description=""/>
+			<Fact Name="WHS_R2"                       Description=""/>
+			<Fact Name="WHS_R3"                       Description=""/>
+			<Fact Name="WHS_R4"                       Description=""/>
+			<Fact Name="WHS_X4"                       Description=""/>
+			<Fact Name="WHS_X1"                       Description=""/>
+			<Fact Name="WHS_X2"                       Description=""/>
+			<Fact Name="WHS_X3"                       Description=""/>
+			<Fact Name="COMET_SHUTTLE_X1"             Description=""/>
+			<Fact Name="COMET_SHUTTLE_X2"             Description=""/>
+			<Fact Name="COMET_SHUTTLE_X3"             Description=""/>
+			<Fact Name="COMET_SHUTTLE_X4"             Description=""/>
+			<Fact Name="COMET_INTERIOR_R1"            Description=""/>
+			<Fact Name="COMET_INTERIOR_R2"            Description=""/>
+			<Fact Name="COMET_INTERIOR_X1"            Description=""/>
+			<Fact Name="COMET_INTERIOR_X2"            Description=""/>
+			<Fact Name="COMET_INTERIOR_X3"            Description=""/>
+			<Fact Name="COMET_INTERIOR_X4"            Description=""/>
+			<Fact Name="QUANTUM_MOON_R1"              Description=""/>
+			<Fact Name="QUANTUM_MOON_R2"              Description=""/>
+			<Fact Name="QUANTUM_MOON_R3"              Description=""/>
+			<Fact Name="QUANTUM_MOON_R4"              Description=""/>
+			<Fact Name="QUANTUM_MOON_X1"              Description=""/>
+			<Fact Name="QUANTUM_MOON_X2"              Description=""/>
+			<Fact Name="QM_SHUTTLE_X1"                Description=""/>
+			<Fact Name="QM_SHUTTLE_X2"                Description=""/>
+			<Fact Name="QM_SHRINE_R1"                 Description=""/>
+			<Fact Name="QM_SHRINE_X1"                 Description=""/>
+			<Fact Name="QM_SHRINE_X2"                 Description=""/>
+			<Fact Name="QM_SHRINE_X3"                 Description=""/>
+			<Fact Name="QM_SHRINE_X4"                 Description=""/>
+			<Fact Name="QM_SIXTH_LOCATION_R1"         Description=""/>
+			<Fact Name="QM_SIXTH_LOCATION_R2"         Description=""/>
+			<Fact Name="QM_SIXTH_LOCATION_R3"         Description=""/>
+			<Fact Name="QM_SIXTH_LOCATION_X1"         Description=""/>
+			<Fact Name="QM_SIXTH_LOCATION_X3"         Description=""/>
+			<Fact Name="QM_SIXTH_LOCATION_X5"         Description=""/>
+			<Fact Name="QM_SIXTH_LOCATION_X4"         Description=""/>
+			<Fact Name="QM_SIXTH_LOCATION_X2"         Description=""/>
+			<Fact Name="QM_SIXTH_LOCATION_X6"         Description=""/>
+		</Other>
+
+		<Stranger>
+			<Fact Name="IP_RING_WORLD_X1"        Description="Enter the Ring World"/>
+			<Fact Name="IP_ZONE_1_X1"            Description="Reach River Lowlands"/>
+			<Fact Name="IP_ZONE_1_X2"            Description="River Lowlands - Find Artifact"/>
+			<Fact Name="IP_ZONE_1_STORY_X1"      Description="River Lowlands - Reel Story 1 (End)"/>
+			<Fact Name="IP_ZONE_1_STORY_X2"      Description="River Lowlands - Reel Story 1 (Burned part)"/>
+			<Fact Name="IP_ZONE_1_SECRET_R1"     Description="Temple - Look at the Hint for the Secret of River Lowlands"/>
+			<Fact Name="IP_ZONE_1_SECRET_X2"     Description="River Lowlands - Secret Reel (End)"/>
+			<Fact Name="IP_ZONE_1_SECRET_X1"     Description="River Lowlands - Find Secret Area"/>
+			<Fact Name="IP_ZONE_2_X1"            Description="Reach Cinder Isles"/>
+			<Fact Name="IP_ZONE_2_X2"            Description="Cinder Isles - Find Eye in Burned Building"/>
+			<Fact Name="IP_ZONE_2_STORY_X1"      Description="Cinder Isles - Reel Story 2 (Slide ?/? Eye Scanned)"/>
+			<Fact Name="IP_ZONE_2_STORY_X2"      Description="Cinder Isles - Reel Story 2 (End)"/>
+			<Fact Name="IP_ZONE_2_SECRET_R1"     Description="Temple - Look at the Hint for the Secret of Cinder Isles"/>
+			<Fact Name="IP_ZONE_2_SECRET_X2"     Description="Cinder Isles - Secret Reel (End)"/>
+			<Fact Name="IP_ZONE_2_SECRET_X1"     Description="Cinder Isles - Find Secret Area"/>
+			<Fact Name="IP_ZONE_2_LIGHTHOUSE_R1" Description="Cinder Isles - Discover the Tower Secret w/ a Lantern"/>
+			<Fact Name="IP_ZONE_2_LIGHTHOUSE_X2" Description="Cinder Isles - Reel Secret Campfires (End)"/>
+			<Fact Name="IP_ZONE_2_LIGHTHOUSE_X1" Description="Cinder Isles - Enter Island Tower Room From The Top"/>
+			<Fact Name="IP_ZONE_2_CODE_R1"       Description="Subterranean Lake - Vision form the Sarcophagus"/>
+			<Fact Name="IP_ZONE_2_CODE_X1"       Description="Island Tower - Hidden Room Open Anything (?)"/>
+			<Fact Name="IP_ZONE_2_CODE_X2"       Description="Island Tower - Hidden Room Open Seal Symbol w/ Burned Code"/>
+			<Fact Name="IP_ZONE_2_CODE_X3"       Description="Island Tower - Hidden Room Open Burning Reel Symbol"/>
+			<Fact Name="IP_ZONE_3_X1"            Description="Reach Hidden Gorge"/>
+			<Fact Name="IP_ZONE_3_SECRET_R1"     Description="Hidden Gorge - Reel Story 3 (End)"/>
+			<Fact Name="IP_ZONE_3_SECRET_X2"     Description="Hidden Gorge - Reel Story 3 (Burned part)"/>
+			<Fact Name="IP_ZONE_3_SECRET_X1"     Description="Temple - Look at the Hint for the Secret of Hidden Gorge"/>
+			<Fact Name="IP_ZONE_3_STORY_X1"      Description="Hidden Gorge - Secret Reel (End)"/>
+			<Fact Name="IP_ZONE_3_STORY_X2"      Description="Hidden Gorge - Find Secret Area"/>
+			<Fact Name="IP_ZONE_3_ENTRANCE_R1"   Description="Hidden Gorge - Reel Hull Breach (End)"/>
+			<Fact Name="IP_ZONE_3_ENTRANCE_X1"   Description="Reach the Damaged Laboratory"/>
+			<Fact Name="IP_ZONE_3_ENTRANCE_X2"   Description="Laboratory - Vision Successful Lantern Experiment"/>
+			<Fact Name="IP_ZONE_3_ENTRANCE_X3"   Description="Hidden Gorge - Reel Lantern Experiment (Slide ?/? Lantern Light Up)"/>
+			<Fact Name="IP_ZONE_3_LAB_R1"        Description=""/>
+			<Fact Name="IP_ZONE_3_LAB_X1"        Description="Reach the Abandoned Temple"/>
+			<Fact Name="IP_ZONE_3_LAB_X3"        Description="Hidden Gorge - Reel Burning Conspiracy (End)"/>
+			<Fact Name="IP_ZONE_3_LAB_X4"        Description="Temple - Find the Code Cylinder"/>
+			<Fact Name="IP_ZONE_3_LAB_X2"        Description="Temple - Find the Secret Room after Entering the Correct Code"/>
+			<Fact Name="IP_MAP_PROJECTION_1_X1"  Description="Temple - Look at the Hint for the Secret of River Lowlands"/>
+			<Fact Name="IP_MAP_PROJECTION_2_X1"  Description="Temple - Look at the Hint for the Secret of Cinder Isles"/>
+			<Fact Name="IP_MAP_PROJECTION_3_X1"  Description="Temple - Look at the Hint for the Secret of Hidden Gorge"/>
+			<Fact Name="IP_ZONE_4_X2"            Description="Reach the Reservoir"/>
+			<Fact Name="IP_ZONE_4_X3"            Description="Reservoir - Find the Screen in the Code Room"/>
+			<Fact Name="IP_ZONE_4_X4"            Description="Reservoir - Find the Projection in the Control Room"/>
+			<Fact Name="IP_ZONE_4_STORY_X1"      Description="Reservoir - Reel Story 4 (Slide ?/? Bell Lowered in Water)"/>
+			<Fact Name="IP_ZONE_4_STORY_X2"      Description="Reservoir - Reel Story 4 (Burned part)"/>
+			<Fact Name="IP_PRISON_R1"            Description="Reservoir - Reel Story 4 (Slide ?/? Bell Lowered in Water)"/>
+			<Fact Name="IP_PRISON_R2"            Description="Reservoir - Discover the Bell Secret w/ a Lantern"/>
+			<Fact Name="IP_PRISON_X1"            Description="Reservoir - Enter the Bell"/>
+			<Fact Name="IP_PRISON_X2"            Description="Reservoir - Look at the Sarcophagus"/>
+			<Fact Name="IP_DREAM_LAKE_R1"        Description="Lake Outside - Look into the bell"/>
+			<Fact Name="IP_DREAM_LAKE_R2"        Description="Lake Outside - Vision"/>
+			<Fact Name="IP_DREAM_LAKE_X1"        Description="Reach Subterranean Lake"/>
+			<Fact Name="IP_DREAM_LAKE_X2"        Description="Subterranean Lake - Attempt to Open the Sealed Sarcophagus"/>
+			<Fact Name="IP_SARCOPHAGUS_R4"       Description="River Lowlands - Reel Seal 1 (End)"/>
+			<Fact Name="IP_SARCOPHAGUS_R1"       Description="Cinder Isles - Reel Seal 2 (End)"/>
+			<Fact Name="IP_SARCOPHAGUS_R2"       Description="Hidden Gorge - Reel Seal 3 (End)"/>
+			<Fact Name="IP_SARCOPHAGUS_R3"       Description="Reservoir - Look at the Sarcophagus"/>
+			<Fact Name="IP_SARCOPHAGUS_X2"       Description="Prison - Talk to the Prisoner"/>
+			<Fact Name="IP_SARCOPHAGUS_X3"       Description="Prison - Vision Prisoner Story"/>
+			<Fact Name="IP_SARCOPHAGUS_X4"       Description="Prison - Vision Hearthian Story"/>
+			<Fact Name="IP_DREAM_ZONE_1_R1"      Description=""/>
+			<Fact Name="IP_DREAM_ZONE_1_X1"      Description="Reach Shrouded Woodlands"/>
+			<Fact Name="IP_DREAM_ZONE_1_X2"      Description="Shrouded Woodlands - Hear the Music in the Wood"/>
+			<Fact Name="IP_DREAM_ZONE_1_X3"      Description="Shrouded Woodlands - Find the Bridge to the Wood"/>
+			<Fact Name="IP_DREAM_LIBRARY_1_R1"   Description="River Lowlands - Secret Reel (End)"/>
+			<Fact Name="IP_DREAM_LIBRARY_1_X1"   Description="Reach Shrouded Woodland's Forbidden Archive"/>
+			<Fact Name="IP_DREAM_LIBRARY_1_X2"   Description="Archive 1 - Open Burned Code"/>
+			<Fact Name="IP_DREAM_1_STORY_X1"     Description="Archive 1 - Reel Story 1 (Slide 2/71)"/>
+			<Fact Name="IP_DREAM_1_STORY_X2"     Description="Archive 1 - Reel Story 1 (Slide 55/71 Stranger Construction Complete)"/>
+			<Fact Name="IP_DREAM_1_RULE_X1"      Description="Archive 1 - Reel Bug Raft (End)"/>
+			<Fact Name="IP_DREAM_ZONE_2_R1"      Description=""/>
+			<Fact Name="IP_DREAM_ZONE_2_X1"      Description="Reach Starlit Cove"/>
+			<Fact Name="IP_DREAM_ZONE_2_X2"      Description="Starlit Cove - Find the Alarm (Trigger in the Cave)"/>
+			<Fact Name="IP_DREAM_ZONE_2_X3"      Description="Starlit Cove - Find Burned Building"/>
+			<Fact Name="IP_DREAM_ZONE_2_X4"      Description="Starlit Cove - Enter Tower Room"/>
+			<Fact Name="IP_DREAM_LIBRARY_2_R1"   Description="Cinder Isles - Secret Reel (End)"/>
+			<Fact Name="IP_DREAM_LIBRARY_2_X1"   Description="Reach Starlit Cove's Forbidden Archive"/>
+			<Fact Name="IP_DREAM_LIBRARY_2_X2"   Description="Archive 2 - Open Burned Code"/>
+			<Fact Name="IP_DREAM_2_STORY_X1"     Description="Archive 2 - Reel Story 2 (Slide 2/99)"/>
+			<Fact Name="IP_DREAM_2_STORY_X2"     Description="Archive 2 - Reel Story 2 (Slide 88/99 Eye Blocked Completely)"/>
+			<Fact Name="IP_DREAM_2_RULE_X1"      Description="Archive 2 - Reel Bug Death (Slide ?/? Old Elk Lantern Lights Up)"/>
+			<Fact Name="IP_DREAM_2_RULE_X2"      Description="Archive 2 - Reel Bug Alarm (Slide ?-3/? Elk Red Text)"/>
+			<Fact Name="IP_DREAM_ZONE_3_R1"      Description=""/>
+			<Fact Name="IP_DREAM_ZONE_3_X1"      Description="Reach Endless Canyon"/>
+			<Fact Name="IP_DREAM_ZONE_3_X2"      Description="Endless Canyon - Find the Painting at the Bottom of the Lodge"/>
+			<Fact Name="IP_DREAM_LIBRARY_3_R1"   Description="Hidden Gorge - Secret Reel (End)"/>
+			<Fact Name="IP_DREAM_LIBRARY_3_X1"   Description="Reach Endless Canyon's Forbidden Archive"/>
+			<Fact Name="IP_DREAM_LIBRARY_3_X2"   Description="Archive 3 - Open Burned Code"/>
+			<Fact Name="IP_DREAM_3_STORY_X1"     Description="Archive 3 - Reel Story 3 (Slide 2/84)"/>
+			<Fact Name="IP_DREAM_3_STORY_X2"     Description="Archive 3 - Reel Story 3 (Slide 53/84 Finish Building Simulation)"/>
+			<Fact Name="IP_DREAM_3_RULE_X1"      Description="Archive 3 - Reel Bug Matrix (Slide ?/? Elk Red Text"/>
+		</Stranger>
+	</Facts>
+</OWData>
