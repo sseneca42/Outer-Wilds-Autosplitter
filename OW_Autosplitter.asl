@@ -3,7 +3,7 @@ state("OuterWilds") {}
 startup
 {
 	vars.Log = (Action<object>)(output => print("[Outer Wilds] " + output));
-	vars.Unity = Assembly.Load(File.ReadAllBytes(@"Components\ULibrary.bin")).CreateInstance("ULibrary.Unity");
+	vars.Unity = Assembly.Load(File.ReadAllBytes(@"Components\UnityASL.bin")).CreateInstance("UnityASL.Unity");
 
 	vars.CompletedSplits = new List<string>();
 	vars.DEFAULT_TIMESTEP = 1f / 60f;
