@@ -649,7 +649,7 @@ init
 		version = vars.ver[2];
 	else if (MD5Hash == "7D64EC17914879EB2541002E4105C1F7" || MD5Hash == "24FEAE80D912656ACA721E7729D03554")
 		version = vars.ver[3];
-	else version = vars.ver[vars.ver.Length - 1];
+	else version = "unknown";
 
     print("Game version = " + version);
 	if (settings["_forceVersion"]) {
@@ -681,7 +681,7 @@ init
 			ptrLocator = vars.signatureScan(game, "LOCATOR v.1.1.10+", 43, "0F84 ???????? 41 83 3F 00 49 BA ???????????????? 49 8B CF 66 90 49 BB ???????????????? 41 FF D3 48 8B C8 48 B8");
 		if (ptrLocator != IntPtr.Zero) {
 			if (version == "unknown")
-				version = "1.1.12";
+				version = vars.ver[vars.ver.Length - 1];
 			break;
 		}
 		if(version == "1.0.7" || version == "unknown")
