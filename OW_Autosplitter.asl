@@ -1,6 +1,7 @@
 //Download dbgview to see the comments.
 state("OuterWilds") {}
 
+//1.2.5 -Updated for the 1.1.13 version.
 //1.2.4 -Updated for the 1.1.12 version. Now Works for 1.0.7, 1.1.10, 1.1.11 & 1.1.12
 //1.2.3 -Reworked 100% Splits & completed Descriptions for the Stranger's Facts + WarpCore split fix + Physics rate warning
 //1.2.2 -Added 100% Splits & Signals Splits + an option to reset your savefile automatically + a lot of small stuff and fixes
@@ -20,11 +21,14 @@ state("OuterWilds") {}
 startup
 {
 print("__STARTUP START__");
+
 	if(timer.CurrentTimingMethod == TimingMethod.RealTime) {
 		timer.CurrentTimingMethod = TimingMethod.GameTime;
 		print("Timing Method Changed!");
-	} 
-	vars.name = "Outer Wilds Autosplitter 1.2.4";
+	}
+
+	vars.ver = new string[] {"1.0.7", "1.1.10", "1.1.12", "1.1.13"};
+	vars.name = "Outer Wilds Autosplitter 1.2.5b";
 	vars.debug = false;
 	vars.timer = new TimerModel { CurrentState = timer };
 	vars.load = false;
@@ -379,6 +383,7 @@ print("__STARTUP START__");
 		{ 3576, new string[] { "IP_ZONE_2_LIGHTHOUSE_X1", "Stranger", "Cinder Isles - Reel Secret Campfires (End)" } },
 		{ 3564, new string[] { "IP_ZONE_2_LIGHTHOUSE_X2", "Stranger", "Cinder Isles - Enter Island Tower Room From The Top" } },
 		{ 3588, new string[] { "IP_ZONE_2_CODE_R1", "Stranger", "Subterranean Lake - Vision form the Sarcophagus" } },
+		{ 4464, new string[] { "IP_ZONE_2_CODE_R2", "Stranger", "Subterranean Lake - ---" } },
 		{ 3600, new string[] { "IP_ZONE_2_CODE_X1", "Stranger", "Island Tower - Hidden Room Open Anything (?)" } },
 		{ 3612, new string[] { "IP_ZONE_2_CODE_X2", "Stranger", "Island Tower - Hidden Room Open Seal Symbol w/ Burned Code" } },
 		{ 3624, new string[] { "IP_ZONE_2_CODE_X3", "Stranger", "Island Tower - Hidden Room Open Burning Reel Symbol" } },
@@ -420,6 +425,7 @@ print("__STARTUP START__");
 		{ 4056, new string[] { "IP_SARCOPHAGUS_X2", "Stranger", "Prison - Talk to the Prisoner" } },
 		{ 4068, new string[] { "IP_SARCOPHAGUS_X3", "Stranger", "Prison - Vision Prisoner Story" } },
 		{ 4080, new string[] { "IP_SARCOPHAGUS_X4", "Stranger", "Prison - Vision Hearthian Story" } },
+		{ 4476, new string[] { "IP_SARCOPHAGUS_X5", "Stranger", "Prison - Final Prisoner Vision" } },
 		{ 4092, new string[] { "IP_DREAM_ZONE_1_R1", "Stranger", "" } },
 		{ 4104, new string[] { "IP_DREAM_ZONE_1_X1", "Stranger", "Reach Shrouded Woodlands" } },
 		{ 4116, new string[] { "IP_DREAM_ZONE_1_X2", "Stranger", "Shrouded Woodlands - Hear the Music in the Wood" } },
@@ -520,16 +526,22 @@ print("__STARTUP START__");
     vars.createSetting("_saveFile", "Auto delete progression while keeping Launch Codes /!\\ OVERWRITE SAVEFILE", "Automatically overwrite your savefile when the timer isn't running to erase everything except the launch codes.\nYOU NEED TO RESET THE TIMER BEFORE QUITTING OUT!\nUse it by clicking \"Resume expedition\"", false);
 		vars.createSetting("_forceVersion", "Force the autosplitter to run for a specific game version", "The game need to be restarted\nBe careful, if you select the wrong version it could break the autosplitter", false);
 		settings.CurrentDefaultParent = "_forceVersion";
+		foreach (string item in vars.ver) {
+			vars.createSetting("_v" + item, "" + item, "", false);
+		}
+		/*
 		vars.createSetting("_v107", "1.0.7", "", false);
 		vars.createSetting("_v1110", "1.1.10 or 1.1.11", "", false);
 		vars.createSetting("_v1112", "1.1.12", "", false);
+		vars.createSetting("_v1113", "1.1.13", "", false);
+		*/
 
 	settings.CurrentDefaultParent = "DLCSplits";
 	vars.createSetting("Signals", "Signals", "", false);
 	vars.createSetting("Facts", "Facts & Rumors [WIP]", "", false);
 	vars.createSetting("FreeSplits", "General DLC Splits - hover to read instructions", "Choose what split you want in the Stranger\nRULES\n· Only one split at a time is considered\n· You can use both the free splits and the regular splits in the same run\n· You can select several sub-options, the first one to be validated will trigger the split\n", false);
 
-	for (int i = 0; i < 8; i++) {
+	for (int i = 0; i < 4; i++) {
 		settings.CurrentDefaultParent = "FreeSplits";
     	vars.createSetting("_dlc" + i.ToString(), "Free Split " + (i + 1).ToString(), "", false);
 		settings.CurrentDefaultParent = "_dlc" + i.ToString();
@@ -551,7 +563,7 @@ print("__STARTUP START__");
 
 	settings.CurrentDefaultParent = "Signals";
 	foreach (var item in vars.signals.Keys) {
-  		vars.createSetting("_sig" + item, item, "", false);
+  		vars.createSetting("_sig" + item, "" + item, "", false);
 	}
 
 	settings.CurrentDefaultParent = "Facts";
@@ -600,7 +612,7 @@ print("__STARTUP START__");
 		return true;
 	});
 //
-print("__STARTUP END__");
+print("__STARTUP END__ ");
 }
 
 //Launched whenever a game process has been found (potentially multiple times, when the game is restarted for example)
@@ -622,25 +634,42 @@ init
 	//Steam 1.1.11 		C10C6961017C813F611D5D02710B07A9
 	//Steam 1.1.11new	2DEA3DB5FAC0A7DF634ADEA81123561C
 	//Epic  1.1.11 		AD7A9F942E657193C8124B1FE0A89CB5 (hmm)
-	//Steam	1.1.12 		75425F7225EC5C685EC183E9E2FEFC68 
-	//Epic	1.1.12 		B56866911AECACA1488891A8A32C9BEE 
+	//Steam	1.1.12 		75425F7225EC5C685EC183E9E2FEFC68
+	//Steam 1.1.12alt	8D09BEF112436A190C1464D82E35F119
+	//Epic	1.1.12 		B56866911AECACA1488891A8A32C9BEE
+	//Steam 1.1.13		7D64EC17914879EB2541002E4105C1F7
+	//Epic  1.1.13		24FEAE80D912656ACA721E7729D03554
 
-	if (MD5Hash == "75425F7225EC5C685EC183E9E2FEFC68" || MD5Hash == "B56866911AECACA1488891A8A32C9BEE")
-		version = "1.1.12";
+//Make that clean zzz
+	if (MD5Hash == "CFF646D642E49E06FBE02DACAA7747E0" || MD5Hash == "D2EBA93197CB5DBAAF23748E3657352F")
+		version = vars.ver[0];
 	else if (MD5Hash == "8AC2F7475D483025CF94EF3027A58CE7" || MD5Hash == "AD7A9F942E657193C8124B1FE0A89CB5" || MD5Hash == "C10C6961017C813F611D5D02710B07A9" || MD5Hash == "2DEA3DB5FAC0A7DF634ADEA81123561C")
-		version = "1.1.10";
-	else if (MD5Hash == "CFF646D642E49E06FBE02DACAA7747E0" || MD5Hash == "D2EBA93197CB5DBAAF23748E3657352F")
-		version = "1.0.7";
-	else version = "unknown";
+		version = vars.ver[1];
+	else if (MD5Hash == "75425F7225EC5C685EC183E9E2FEFC68" || MD5Hash == "B56866911AECACA1488891A8A32C9BEE" || MD5Hash == "8D09BEF112436A190C1464D82E35F119")
+		version = vars.ver[2];
+	else if (MD5Hash == "7D64EC17914879EB2541002E4105C1F7" || MD5Hash == "24FEAE80D912656ACA721E7729D03554")
+		version = vars.ver[3];
+	else version = vars.ver[vars.ver.Length - 1];
+
     print("Game version = " + version);
 	if (settings["_forceVersion"]) {
-		if(settings["_v1112"])
+		foreach (var item in vars.ver) {
+			if(settings["_v" + item]) {
+				version = item;
+				print("Forced the game version to " + version);
+			}
+		}
+/*
+		if(settings["_v1113"])
+			version = "1.1.13";
+		else if(settings["_v1112"])
 			version = "1.1.12";
 		else if(settings["_v1110"])
 			version = "1.1.10";
 		else if(settings["_v107"])
 			version = "1.0.7";
 		print("Forced the game version to " + version);
+*/
 	}
 
 	vars.splitSignals = new List<int[]> {};
@@ -737,22 +766,34 @@ if (!vars.debug) {
 		vars.inBrambleDimension = new MemoryWatcher<bool>(new DeepPointer(Locator + 0xB8, 0x54));
 		//Locator - 0xB8 _playerSectorDetector - 0x55 _inVesselDimension
 		vars.inVesselDimension = new MemoryWatcher<bool>(new DeepPointer(Locator + 0xB8, 0x55));
-		//---
-		//Locator - 0xD0 _audioMixer - 0xCA _isSleepingAtCampfire
-		vars.isSleepingAtCampfire = new MemoryWatcher<bool>(new DeepPointer(Locator + 0xD0, 0xCA));
-		//---
+		if (version == "1.1.13") {
+			//Locator - 0xD0 _audioMixer - 0xD2 _isSleepingAtCampfire
+			vars.isSleepingAtCampfire = new MemoryWatcher<bool>(new DeepPointer(Locator + 0xD0, 0xD2));
+			//---
+			//Locator - 0x150 _eyeStateManager - 0x1C _state
+			vars.eyeState = new MemoryWatcher<int>(new DeepPointer(Locator + 0x150, 0x1C));
+			//Locator - 0x150 _eyeStateManager - 0x20 _initialized
+			vars.eyeInitialized = new MemoryWatcher<bool>(new DeepPointer(Locator + 0x150, 0x20));
+			//---
+			//Locator - 0x158 _timelineObliterationController - 0x40 _cameraEffect - 0x145 _isRealityShatterEffectComplete
+			vars.isRealityShatterEffectComplete = new MemoryWatcher<bool>(new DeepPointer(Locator + 0x158, 0x40, 0x145));
+		}
+		else {
+			//Locator - 0xD0 _audioMixer - 0xCA _isSleepingAtCampfire
+			vars.isSleepingAtCampfire = new MemoryWatcher<bool>(new DeepPointer(Locator + 0xD0, 0xCA));
+			//---
+			//Locator - 0x158 _eyeStateManager - 0x1C _state
+			vars.eyeState = new MemoryWatcher<int>(new DeepPointer(Locator + 0x158, 0x1C));
+			//Locator - 0x158 _eyeStateManager - 0x20 _initialized
+			vars.eyeInitialized = new MemoryWatcher<bool>(new DeepPointer(Locator + 0x158, 0x20));
+			//---
+			//Locator - 0x160 _timelineObliterationController - 0x40 _cameraEffect - 0x145 _isRealityShatterEffectComplete
+			vars.isRealityShatterEffectComplete = new MemoryWatcher<bool>(new DeepPointer(Locator + 0x160, 0x40, 0x145));
+		}
 		//Locator - 0xE0 _deathManager - 0x20 _isDying
 		vars.isDying = new MemoryWatcher<bool>(new DeepPointer(Locator + 0xE0, 0x20));//0x21 for _isDead
 		//Locator - 0xE0 _deathManager - 0x2c _deathType
 		vars.deathType = new MemoryWatcher<int>(new DeepPointer(Locator + 0xE0, 0x2C));//6 = BigBang
-		//---
-		//Locator - 0x158 _eyeStateManager - 0x1C _state
-		vars.eyeState = new MemoryWatcher<int>(new DeepPointer(Locator + 0x158, 0x1C));
-		//Locator - 0x158 _eyeStateManager - 0x20 _initialized
-		vars.eyeInitialized = new MemoryWatcher<bool>(new DeepPointer(Locator + 0x158, 0x20));
-		//---
-		//Locator - 0x160 _timelineObliterationController - 0x40 _cameraEffect - 0x145 _isRealityShatterEffectComplete
-		vars.isRealityShatterEffectComplete = new MemoryWatcher<bool>(new DeepPointer(Locator + 0x160, 0x40, 0x145));
 		//---
 		//Locator - 0x228 _quantumMoon - 0x15C _isPlayerInside
 		vars.inQuantumMoon = new MemoryWatcher<bool>(new DeepPointer(Locator + 0x228, 0x15C));
