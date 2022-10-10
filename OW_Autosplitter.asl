@@ -954,7 +954,7 @@ update {
 	else if(vars.loadCompare(2, 0, 2, 0, true) || vars.loadCompare(0, 3, 2, 2, false))
 		vars.load = !vars.menu;
 	else if(settings["_menuPauseOff"] && ( vars.loadCompare(0, 2, 1, 1, false) ||  vars.loadCompare(0, 3, 1, 1, true) ) )
-		vars.load = vars.menu;
+		vars.load = true;
 	else if(vars.pauseInitializing.Old && !vars.pauseInitializing.Current)
 		vars.load = false;
 }
