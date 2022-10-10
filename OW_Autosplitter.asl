@@ -1,6 +1,7 @@
 //Download dbgview to see the comments.
 state("OuterWilds") {}
 
+//1.2.6 -Reworked timer behaviour on the menu and added an option for categories using Menu Storage
 //1.2.5 -Updated for the 1.1.13 version.
 //1.2.4 -Updated for the 1.1.12 version. Now Works for 1.0.7, 1.1.10, 1.1.11 & 1.1.12
 //1.2.3 -Reworked 100% Splits & completed Descriptions for the Stranger's Facts + WarpCore split fix + Physics rate warning
@@ -28,7 +29,7 @@ print("__STARTUP START__");
 	}
 
 	vars.ver = new string[] {"1.0.7", "1.1.10", "1.1.12", "1.1.13"};
-	vars.name = "Outer Wilds Autosplitter 1.2.5b";
+	vars.name = "Outer Wilds Autosplitter 1.2.6";
 	vars.debug = false;
 	vars.timer = new TimerModel { CurrentState = timer };
 	vars.load = false;
@@ -520,6 +521,7 @@ print("__STARTUP START__");
 		vars.createSetting("_bigBang", "BigBang", "Last split of most categories, can be kept on all the time", true);
 		vars.createSetting("_dst", "Destroy Spacetime", "Last split of the Destroy Spacetime category", true);
 	settings.CurrentDefaultParent = "GeneralOptions";
+	vars.createSetting("_menuPauseOff", "Disable the time pause on the menu (Menu Storage)", "", false);
 	vars.createSetting("_menuSplit", "Split when quitting back to the menu", "", false);
 	vars.createSetting("_menuReset", "Reset the timer when quitting back to the menu", "", false);
 	vars.createSetting("_menuResetLite", "  ˪ Same but ONLY if you do before splitting", "", false);
@@ -529,12 +531,6 @@ print("__STARTUP START__");
 		foreach (string item in vars.ver) {
 			vars.createSetting("_v" + item, "" + item, "", false);
 		}
-		/*
-		vars.createSetting("_v107", "1.0.7", "", false);
-		vars.createSetting("_v1110", "1.1.10 or 1.1.11", "", false);
-		vars.createSetting("_v1112", "1.1.12", "", false);
-		vars.createSetting("_v1113", "1.1.13", "", false);
-		*/
 
 	settings.CurrentDefaultParent = "DLCSplits";
 	vars.createSetting("Signals", "Signals", "", false);
@@ -640,7 +636,6 @@ init
 	//Steam 1.1.13		7D64EC17914879EB2541002E4105C1F7
 	//Epic  1.1.13		24FEAE80D912656ACA721E7729D03554
 
-//Make that clean zzz
 	if (MD5Hash == "CFF646D642E49E06FBE02DACAA7747E0" || MD5Hash == "D2EBA93197CB5DBAAF23748E3657352F")
 		version = vars.ver[0];
 	else if (MD5Hash == "8AC2F7475D483025CF94EF3027A58CE7" || MD5Hash == "AD7A9F942E657193C8124B1FE0A89CB5" || MD5Hash == "C10C6961017C813F611D5D02710B07A9" || MD5Hash == "2DEA3DB5FAC0A7DF634ADEA81123561C")
@@ -659,17 +654,6 @@ init
 				print("Forced the game version to " + version);
 			}
 		}
-/*
-		if(settings["_v1113"])
-			version = "1.1.13";
-		else if(settings["_v1112"])
-			version = "1.1.12";
-		else if(settings["_v1110"])
-			version = "1.1.10";
-		else if(settings["_v107"])
-			version = "1.0.7";
-		print("Forced the game version to " + version);
-*/
 	}
 
 	vars.splitSignals = new List<int[]> {};
@@ -869,7 +853,7 @@ if (!vars.debug) {
 //OW_TIME_______________________________________________________________________________________________________
 	//OW_Time 0x0 s_pauseFlags (bool[7])
 	vars.pauseMenu = new MemoryWatcher<bool>(new DeepPointer(OW_Time - 0x10, 0x20));//When in the ESC Menu
-	vars.pauseLoading = new MemoryWatcher<bool>(new DeepPointer(OW_Time - 0x10, 0x21));//WHen quitting to the menu (and other maybe)
+	vars.pauseLoading = new MemoryWatcher<bool>(new DeepPointer(OW_Time - 0x10, 0x21));//When quitting to the menu (and other maybe)
 	vars.pauseSleeping = new MemoryWatcher<bool>(new DeepPointer(OW_Time - 0x10, 0x23));//Before waking up (loop beginning)
 	vars.pauseInitializing = new MemoryWatcher<bool>(new DeepPointer(OW_Time - 0x10, 0x24));//When you see the "Save icon" more or less
 
@@ -931,6 +915,12 @@ update {
 
 	vars.watchers.UpdateAll(game);
 
+	/*
+	if (vars.sceneC.Current != vars.sceneC.Old || vars.scene.Current != vars.scene.Old || vars.fadeT.Current != vars.fadeT.Old || vars.allowAsync.Current != vars.allowAsync.Old) {
+		print("Current Scene = " + vars.sceneC.Current + "\nScene = " + vars.scene.Current + " old = " + vars.scene.Old + "\n fadeT = " + vars.fadeT.Current + "\n allowAsync = " + vars.allowAsync.Current);
+	}
+	*/
+	
 	if(version != "1.0.7" && (settings["Signals"] || settings["Facts"] || settings["_saveFile"])) {
 		if ((vars.nameLength.Current != vars.nameLength.Old || String.IsNullOrEmpty(vars.path)) && vars.pathLength.Current != 0) {
 			string name = "";
@@ -963,6 +953,8 @@ update {
 	}
 	else if(vars.loadCompare(2, 0, 2, 0, true) || vars.loadCompare(0, 3, 2, 2, false))
 		vars.load = !vars.menu;
+	else if(settings["_menuPauseOff"] && ( vars.loadCompare(0, 2, 1, 1, false) ||  vars.loadCompare(0, 3, 1, 1, true) ) )
+		vars.load = vars.menu;
 	else if(vars.pauseInitializing.Old && !vars.pauseInitializing.Current)
 		vars.load = false;
 }
@@ -998,7 +990,7 @@ start {
 			vars.splitFacts.Add(new int[] { item.Key, 1 });
 		}
 		vars.numDlcSplits = 0;
-		for (int i = 0; i < 8; i++) 
+		for (int i = 0; i < 4; i++) 
 		{
 			if (settings["_dlc" + i.ToString()])
 				vars.numDlcSplits++;
@@ -1028,7 +1020,7 @@ start {
 		//throw;
 		}
 	}
-	if (vars.pauseSleeping.Old && !vars.pauseSleeping.Current) {
+	if ((vars.pauseSleeping.Old && !vars.pauseSleeping.Current) || vars.loadCompare(0, 3, 1, 1, true)) {
 		vars.cleanValues = 1;
 		return true;
 	}
@@ -1036,12 +1028,13 @@ start {
 
 //'Pause' the timer if it returns TRUE
 isLoading {
-    return(vars.load || vars.menu || (vars.isSleepingAtCampfire.Current && !vars.exitingDream.Current));
+    return(vars.load || ( vars.menu && !settings["_menuPauseOff"] ) || (vars.isSleepingAtCampfire.Current && !vars.exitingDream.Current) || (settings["_menuPauseOff"] && vars.menu && vars.pauseLoading.Current) );
 }
 
 //Reset the timer if it returns TRUE
 reset {
 	return (settings["GeneralOptions"] && (settings["_menuReset"] || (settings["_menuResetLite"] && timer.CurrentSplitIndex == 0)) && vars.menu);
+	//should remove generaloptions
 }
 
 //Split if it returns TRUE
