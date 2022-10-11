@@ -29,7 +29,7 @@ print("__STARTUP START__");
 	}
 
 	vars.ver = new string[] {"1.0.7", "1.1.10", "1.1.12", "1.1.13"};
-	vars.name = "Outer Wilds Autosplitter 1.2.6";
+	vars.name = "Outer Wilds Autosplitter 1.2.6b";
 	vars.debug = false;
 	vars.timer = new TimerModel { CurrentState = timer };
 	vars.load = false;
@@ -57,7 +57,8 @@ print("__STARTUP START__");
 		{ "_exitWarp", false },
 		{ "_dBramble", false },
 		{ "_dBrambleVessel", false },
-		{ "_qMoonIn", false }
+		{ "_qMoonIn", false },
+		{ "_vesselWarp", false }
 	};
 	vars.signals = new Dictionary<string, int>
     {
@@ -914,12 +915,6 @@ update {
 		return false;
 
 	vars.watchers.UpdateAll(game);
-
-	/*
-	if (vars.sceneC.Current != vars.sceneC.Old || vars.scene.Current != vars.scene.Old || vars.fadeT.Current != vars.fadeT.Old || vars.allowAsync.Current != vars.allowAsync.Old) {
-		print("Current Scene = " + vars.sceneC.Current + "\nScene = " + vars.scene.Current + " old = " + vars.scene.Old + "\n fadeT = " + vars.fadeT.Current + "\n allowAsync = " + vars.allowAsync.Current);
-	}
-	*/
 	
 	if(version != "1.0.7" && (settings["Signals"] || settings["Facts"] || settings["_saveFile"])) {
 		if ((vars.nameLength.Current != vars.nameLength.Old || String.IsNullOrEmpty(vars.path)) && vars.pathLength.Current != 0) {
@@ -976,6 +971,7 @@ start {
 		vars.splits["_dBramble"] = false;
 		vars.splits["_dBrambleVessel"] = false;
 		vars.splits["_qMoonIn"] = false;
+		vars.splits["_vesselWarp"] = false;
 		vars.currDlcSplit = 0;
 		vars.loop = 0;
 		vars.warpCoreLoop = -1;
@@ -1093,8 +1089,10 @@ split {
 			vars.splits["_qMoonIn"] = true;
 			return true;
 		}
-		else if (settings["_vesselWarp"] && vars.eyeInitialized.Current && !vars.eyeInitialized.Old)
+		else if (settings["_vesselWarp"] && !vars.splits["_vesselWarp"] && vars.eyeInitialized.Current && !vars.eyeInitialized.Old) {
+			vars.splits["_vesselWarp"] = true;
 			return true;
+		}
 		else if (settings["EyeSplits"]) {
 			if (settings["_eyeSurface"] && vars.eyeState.Current == 10 && vars.eyeState.Old != 10)
 				return true;
