@@ -29,7 +29,7 @@ print("__STARTUP START__");
 	}
 
 	vars.ver = new string[] {"1.0.7", "1.1.10", "1.1.12", "1.1.13"};
-	vars.name = "Outer Wilds Autosplitter 1.2.6b";
+	vars.name = "Outer Wilds Autosplitter 1.2.6c";
 	vars.debug = false;
 	vars.timer = new TimerModel { CurrentState = timer };
 	vars.load = false;
@@ -915,7 +915,13 @@ update {
 		return false;
 
 	vars.watchers.UpdateAll(game);
-	
+
+/*
+	if (vars.sceneC.Current != vars.sceneC.Old || vars.scene.Current != vars.scene.Old || vars.fadeT.Current != vars.fadeT.Old || vars.allowAsync.Current != vars.allowAsync.Old) {
+		print("Current Scene = " + vars.sceneC.Current + "\nScene = " + vars.scene.Current + " old = " + vars.scene.Old + "\n fadeT = " + vars.fadeT.Current + "\n allowAsync = " + vars.allowAsync.Current);
+	}
+*/
+
 	if(version != "1.0.7" && (settings["Signals"] || settings["Facts"] || settings["_saveFile"])) {
 		if ((vars.nameLength.Current != vars.nameLength.Old || String.IsNullOrEmpty(vars.path)) && vars.pathLength.Current != 0) {
 			string name = "";
@@ -948,7 +954,7 @@ update {
 	}
 	else if(vars.loadCompare(2, 0, 2, 0, true) || vars.loadCompare(0, 3, 2, 2, false))
 		vars.load = !vars.menu;
-	else if(settings["_menuPauseOff"] && ( vars.loadCompare(0, 2, 1, 1, false) ||  vars.loadCompare(0, 3, 1, 1, true) ) )
+	else if( vars.loadCompare(0, 2, 1, 1, false) ||  vars.loadCompare(0, 3, 1, 1, true ) )
 		vars.load = true;
 	else if(vars.pauseInitializing.Old && !vars.pauseInitializing.Current)
 		vars.load = false;
@@ -1035,7 +1041,7 @@ reset {
 
 //Split if it returns TRUE
 split {
-	if (settings["GeneralOptions"] && settings["_menuSplit"] && vars.pauseLoading.Current && vars.pauseMenu.Old)
+	if (settings["_menuSplit"] && vars.loadCompare(0, 1, -1, 1, true))
 		return true;
 	if(settings["GeneralSplits"]) {
 		if (settings["_bigBang"] && vars.deathType.Current == 6 && vars.deathType.Old != 6)
