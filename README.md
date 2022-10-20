@@ -50,7 +50,7 @@ __If the autosplitter does not work as expected or does not start :__<br>
 -You can install [DebugView](https://docs.microsoft.com/en-us/sysinternals/downloads/debugview) to see the comments, it probably won't help you much though.<br>
 
 __Known issue·s :__<br>
--
+-Not working for Windows 7 and below(?)
 
 ## Patchnote and futur improvements
 __1.0.0__<br>
@@ -78,7 +78,9 @@ __1.2.2__<br>
 __1.2.3__<br>
 -Added descriptions to the Stranger's 100% Splits + WarpCore split fix + Secret Settings modification warning<br>
 __1.2.4__<br>
--Now Works for 1.0.7, 1.1.10, 1.1.11 & 1.1.12<br><br>
+-Now works for 1.0.7, 1.1.10, 1.1.11 & 1.1.12<br>
+__1.2.5__<br>
+-Now also works for 1.1.13<br><br>
 __NEXT :__<br>
 -Complete descriptions for every 100% splits
 -Improved scanning performance (?)
