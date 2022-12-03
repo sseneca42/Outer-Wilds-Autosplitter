@@ -29,7 +29,7 @@ print("__STARTUP START__");
 	}
 
 	vars.ver = new string[] {"1.0.7", "1.1.10", "1.1.12", "1.1.13"};
-	vars.name = "Outer Wilds Autosplitter 1.2.6c";
+	vars.name = "Outer Wilds Autosplitter 1.2.6d";
 	vars.debug = false;
 	vars.timer = new TimerModel { CurrentState = timer };
 	vars.load = false;
