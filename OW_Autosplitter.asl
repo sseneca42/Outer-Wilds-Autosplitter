@@ -762,6 +762,9 @@ if (!vars.debug) {
 			//---
 			//Locator - 0x158 _timelineObliterationController - 0x40 _cameraEffect - 0x145 _isRealityShatterEffectComplete
 			vars.isRealityShatterEffectComplete = new MemoryWatcher<bool>(new DeepPointer(Locator + 0x158, 0x40, 0x145));
+			//---
+			//Locator - 0x230 _quantumMoon - 0x15C _isPlayerInside
+			vars.inQuantumMoon = new MemoryWatcher<bool>(new DeepPointer(Locator + 0x230, 0x15C));
 		}
 		else {
 			//Locator - 0xD0 _audioMixer - 0xCA _isSleepingAtCampfire
@@ -774,14 +777,14 @@ if (!vars.debug) {
 			//---
 			//Locator - 0x160 _timelineObliterationController - 0x40 _cameraEffect - 0x145 _isRealityShatterEffectComplete
 			vars.isRealityShatterEffectComplete = new MemoryWatcher<bool>(new DeepPointer(Locator + 0x160, 0x40, 0x145));
+			//---
+			//Locator - 0x228 _quantumMoon - 0x15C _isPlayerInside
+			vars.inQuantumMoon = new MemoryWatcher<bool>(new DeepPointer(Locator + 0x228, 0x15C));
 		}
 		//Locator - 0xE0 _deathManager - 0x20 _isDying
 		vars.isDying = new MemoryWatcher<bool>(new DeepPointer(Locator + 0xE0, 0x20));//0x21 for _isDead
 		//Locator - 0xE0 _deathManager - 0x2c _deathType
 		vars.deathType = new MemoryWatcher<int>(new DeepPointer(Locator + 0xE0, 0x2C));//6 = BigBang
-		//---
-		//Locator - 0x228 _quantumMoon - 0x15C _isPlayerInside
-		vars.inQuantumMoon = new MemoryWatcher<bool>(new DeepPointer(Locator + 0x228, 0x15C));
 	//DLC
 		//---
 		//Locator - 0x190 _cloakFieldController - 0x10F _playerInsideCloak
@@ -1035,7 +1038,7 @@ isLoading {
 
 //Reset the timer if it returns TRUE
 reset {
-	return (settings["GeneralOptions"] && (settings["_menuReset"] || (settings["_menuResetLite"] && timer.CurrentSplitIndex == 0)) && vars.menu);
+	return (( (settings["_menuReset"] && !settings["_menuResetLite"]) || (settings["_menuResetLite"] && timer.CurrentSplitIndex == 0)) && vars.menu);
 	//should remove generaloptions
 }
 
