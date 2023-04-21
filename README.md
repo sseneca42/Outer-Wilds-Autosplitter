@@ -1,11 +1,11 @@
 # Outer-Wilds-Autosplitter
 *If you have any comment or issue with the autosplitter or this README, contact me on Discord Nepo#2778.<br>
 Any help or suggestion is appreciated!*<br>
-*Join the [Outer Wilds Speedrun Discord Server](https://discord.gg/T69zH3UnSZ)!*
+*Join the [Outer Wilds Speedrunning Discord Server](https://discord.gg/T69zH3UnSZ)!*
 
 ## What is this?
 This is a load remover and autosplitter made for Outer Wilds on PC, usable with [Livesplit](https://livesplit.org/).<br>
-__Features :__<br>
+__Features:__<br>
 * Pause the timer when sleeping.<br>
 * Pause the timer when quitting out to the menu - Unpause when waking up after resuming the expedition.<br>
 * Pause the timer when the game is loading [after a death, after the status cutscene, when warping to the eye].<br>
@@ -29,38 +29,47 @@ __Features :__<br>
 
 ![Settings](https://github.com/sseneca42/Outer-Wilds-Autosplitter/blob/main/Images/Image3_SettingsScreen.png)<br>
 
-5 - __Be sure that the your timing method is "Game Time"__<br>
-&nbsp;&nbsp; [Right click on LiveSplit -> Compare against -> Game Time]<br>
-&nbsp;&nbsp;&nbsp; or<br>
-&nbsp;&nbsp; [Right click on LiveSplit -> Click on "Edit Layout..." -> Click on "Layout Settings" -> Click on the "Timer" tab -> Check "Timing Method"]<br>
-6 - Don't forget to edit your splits to match the one you choosed.<br><br>
+5 - Don't forget to edit your splits to match the one you choosed.<br><br>
 *-When you close Livesplit you will be asked if you want to save your splits and layout, say YES or you will have to start everything all over again.<br>*
 
 ## Troubleshooting
-If you have any issue or question you can contact me on Discord `Nepo#2778` or send me a message on [speedrun.com](https://www.speedrun.com/user/Nepo)<br>
+If you have any issue or question you can join the Outer Wilds Speedrunning [Discord Server](https://discord.gg/T69zH3UnSZ) and contact me `Nepo#2778` or send me a message on [speedrun.com](https://www.speedrun.com/user/Nepo)<br>
+If you do not find what you need here do not hesitate to contact me, I would appreciate it so that I can try to fix the issue.
 
-__If Livesplit cannot find the autosplitter :__<br>
--Try to reinstall/move Livesplit to another location. (Let me know if you have more details)<br>
+__IF LIVESPLIT CANNOT FIND THE AUTOSPLITTER:__<br>
+-Try to reinstall/move Livesplit to another location.<br>
 
-__If the autosplitter does not work as expected or does not start :__<br>
+__IF THE AUTOSPLITTER DOES NOT WORK AS EXPECTED:__<br>
 -Be sure that you do not have 'Scriptable Auto Splitter' in your Layout Editor [Right click on LiveSplit -> Click on "Edit Layout..." -> Select the element you want to delete and click on the *"-"* button].<br>
--Be sure that you followed the steps detailed in the __"How to use it?"__ section (*especially step 5*), check that you activated the Auto Splitter in the __Splits Editor__ and that the splits you want to use (and their parent options) are all checked in the __Options__.<br>
--A new update or a mod being installed *could* impact the autosplitter, let me know if you notice anything.<br>
+-Be sure that you followed the steps detailed in the __"How to use it?"__ section, check that you activated the Auto Splitter in the __Splits Editor__ and that the splits you want to use (and their parent options) are all checked in the __Options__.<br>
 -Try launching Livesplit as an administrator.<br>
--You can install [DebugView](https://docs.microsoft.com/en-us/sysinternals/downloads/debugview) to see the comments, it probably won't help you much though.<br>
+-Try launching Livesplit in Windows 8 Compatibility Mode.<br>
 
-__Known issue·s :__<br>
--Not working for Windows 7 and below(?)
+__IF YOU GOT AN ERROR MESSAGE:__<br>
+-A new update or a mod being installed can impact the autosplitter, if you have used mods in the past you should verify your files.<br>
+Here is how to verify your files on STEAM:
+> In your game list right click on Outer Wilds -> Click on "Properties..." -> Click on "Local Files" -> Click on "Verify integrity of game files".<br>
+> Launch the game through the mod manager when you want to play with them again.<br>
+
+Alternatively or if you don't use Steam, you can keep multiple installs of the game, here is how to do that:
+> Locate your games files. Default locations: <br>
+> Steam: X:\Program Files\Steam\steamapps\common\Outer Wilds<br>
+> Epic Games: X:\Program Files\Epic Games\Outer Wilds<br>
+> For example if you installed mods you can rename your install to something else than Outer Wilds like "Outer Wilds Mods" and reinstall the game, you will now have the game installed twice, once with mods, once without. Then when you want to play with mods again rename both installs so that the modded one is named "Outer Wilds".<br>
+> You can also keep your other installs in another place and move them in and out. No matter how you do it, the file named "Outer Wilds" that is in the good emplacement will be the one used.<br>
+
+__KNOWN ISSUES:__<br>
+-Incompatible with Windows 7 (and below?)<br>
+-Incompatible with the Xbox launcher version
+I'm sorry, as of now I do not have access to Windows 7 and I do not know if it is even possible to counter the protections put in place by Microsoft on the Xbox version.
 
 ## Patchnote and futur improvements
 __1.0.0__<br>
--Initial release.<br>
+-Initial release<br>
 __1.1.0__<br>
--Added Splits and Options.<br>
--Too much to list.<br>
+-Added Splits and Options. Too much to list<br>
 __1.1.1__<br>
--Fixed issue with the "warp core related" splits that caused them not to be activable again if you activated them once, even after starting a new expedition.<br>
--The _exitWarp split is now triggered at the end of the warping animation.<br>
+-Fixed issues with the "warp core related" splits, the _exitWarp split is now triggered at the end of the warping animation.<br>
 __1.1.2__<br>
 -Changed the "_firstDeath" split into 3 different splits : -Loss of HP Death -Impact Death -Anglerfish Death.<br>
 __1.1.3__<br>
@@ -80,13 +89,22 @@ __1.2.3__<br>
 __1.2.4__<br>
 -Now works for 1.0.7, 1.1.10, 1.1.11 & 1.1.12<br>
 __1.2.5__<br>
--Now also works for 1.1.13<br><br>
+-Now also works for 1.1.13<br>
+__1.2.6__<br>
+-Maintenance and bug fixes<br>
+__1.2.7__<br>
+-Reworked the splits to better match current usage, added death splits. Reworked scanning so that it stops searching if the target is not found.<br>
+__1.2.8__<br>
+-Added an error message when scanning fails. Reworked the facts splits in order so that they work regardless of the savefile organisation<br>
 __NEXT :__<br>
+-Put the fact splits informations and the save file in separate files
+-Rework the fact splits to support any fact, so that mod campaigns can potentially be plugged in and work as well
 -Complete descriptions for every 100% splits
--Improved scanning performance (?)
+-Put the conditions for the normal splits in a list, simply for the sake of cleanliness
+-Add comments
 
 ## Pantheon of gratitude
 
-* Thanks __turkwinif__ for helping me several times during the development of the early versions and thank you for handling most of the retiming and plenty of other things.<br>
+* Thanks to __turkwinif__ for helping me several times during the development of the early versions and for handling most of the retiming + plenty of other things.<br>
 * Thanks to everybody who took on their time to help me and reported issues, especially __frodododo__, __Skywalker__ and __zid__.<br>
 * Thanks to __DevilSquirrel__ for their guide on making Autosplitters for Unity games and thanks to __Ero__ for teaching me how to use the Cheat Engine's mono dissect tool properly.<br>
