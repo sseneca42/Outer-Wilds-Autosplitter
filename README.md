@@ -34,34 +34,32 @@ __Features:__<br>
 
 ## Troubleshooting
 If you have any issue or question you can join the Outer Wilds Speedrunning [Discord Server](https://discord.gg/T69zH3UnSZ) and contact me `Nepo#2778` or send me a message on [speedrun.com](https://www.speedrun.com/user/Nepo)<br>
-If you do not find what you need here do not hesitate to contact me, I would appreciate it so that I can try to fix the issue.
+If you do not find what you need here do not hesitate to contact me, it would even be appreciated because it could help fix new issues before they impact more people.<br>
 
-__IF LIVESPLIT CANNOT FIND THE AUTOSPLITTER:__<br>
--Try to reinstall/move Livesplit to another location.<br>
+### __GENERAL TROUBLESHOOTING__<br>
+* Be sure that you do not have 'Scriptable Auto Splitter' in your Layout Editor [Right click on LiveSplit -> Click on "Edit Layout..." -> Select the element you want to delete and click on the *"-"* button].<br>
+* Be sure that you followed the steps detailed in the __"How to use it?"__ section, check that you activated the Auto Splitter in the __Splits Editor__ and that the splits you want to use (and their parent options) are all checked in the __Options__.<br>
+* Try launching Livesplit as an administrator.<br>
+* Try launching Livesplit in Windows 8 Compatibility Mode.<br>
+* Do not let the game running in the background right after launching it, you should be at least on the main menu before you tab out.<br>
 
-__IF THE AUTOSPLITTER DOES NOT WORK AS EXPECTED:__<br>
--Be sure that you do not have 'Scriptable Auto Splitter' in your Layout Editor [Right click on LiveSplit -> Click on "Edit Layout..." -> Select the element you want to delete and click on the *"-"* button].<br>
--Be sure that you followed the steps detailed in the __"How to use it?"__ section, check that you activated the Auto Splitter in the __Splits Editor__ and that the splits you want to use (and their parent options) are all checked in the __Options__.<br>
--Try launching Livesplit as an administrator.<br>
--Try launching Livesplit in Windows 8 Compatibility Mode.<br>
+### __IF YOU GOT AN ERROR MESSAGE:__<br>
+* A new update or a mod being installed can impact the autosplitter, if you have used mods in the past you should verify your files.<br>
+Here is how to verify your files on STEAM:<br>
+   * <sub>In your game list right click on Outer Wilds -> Click on "Properties..." -> Click on "Local Files" -> Click on "Verify integrity of game files".<br>Launch the game through the mod manager when you want to play with them again.</sub><br>
 
-__IF YOU GOT AN ERROR MESSAGE:__<br>
--A new update or a mod being installed can impact the autosplitter, if you have used mods in the past you should verify your files.<br>
-Here is how to verify your files on STEAM:
-> In your game list right click on Outer Wilds -> Click on "Properties..." -> Click on "Local Files" -> Click on "Verify integrity of game files".<br>
-> Launch the game through the mod manager when you want to play with them again.<br>
+  Alternatively or if you don't use Steam, you can keep multiple installs of the game, here is how to do that:<br>
+   * <sub>Locate your games files. Default locations: <br>-Steam: X:\Program Files\Steam\steamapps\common\Outer Wilds<br>-Epic Games: X:\Program Files\Epic Games\Outer Wilds<br>For example if you installed mods you can rename your install to something else than Outer Wilds like "Outer Wilds Mods" and reinstall the game, you will now have the game installed twice, once with mods, once without. Then when you want to play with mods again rename both installs so that the modded one is named "Outer Wilds".<br>You can also keep your other installs in another place and move them in and out. No matter how you do it, the file named "Outer Wilds" that is in the good emplacement will be the one used. </sub><br>
 
-Alternatively or if you don't use Steam, you can keep multiple installs of the game, here is how to do that:
-> Locate your games files. Default locations: <br>
-> Steam: X:\Program Files\Steam\steamapps\common\Outer Wilds<br>
-> Epic Games: X:\Program Files\Epic Games\Outer Wilds<br>
-> For example if you installed mods you can rename your install to something else than Outer Wilds like "Outer Wilds Mods" and reinstall the game, you will now have the game installed twice, once with mods, once without. Then when you want to play with mods again rename both installs so that the modded one is named "Outer Wilds".<br>
-> You can also keep your other installs in another place and move them in and out. No matter how you do it, the file named "Outer Wilds" that is in the good emplacement will be the one used.<br>
+### __IF LIVESPLIT CANNOT FIND THE AUTOSPLITTER:__<br>
+* Try to reinstall/move Livesplit to another location.<br>
 
-__KNOWN ISSUES:__<br>
--Incompatible with Windows 7 (and below?)<br>
--Incompatible with the Xbox launcher version
-I'm sorry, as of now I do not have access to Windows 7 and I do not know if it is even possible to counter the protections put in place by Microsoft on the Xbox version.
+#### __KNOWN ISSUES:__<br>
+* Incompatible with Windows 7 (and below?)<br>
+* Incompatible with the Xbox launcher version<br>
+
+_I'm sorry, as of now I do not have access to Windows 7 and I do not know if it is even possible to counter the protections put in place by Microsoft on the Xbox version.<br>
+If this impacts you you can still run the game, just let us know what your issue is and your runs will be retimed when you submit them._
 
 ## Patchnote and futur improvements
 __1.0.0__<br>
