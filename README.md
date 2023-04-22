@@ -54,12 +54,12 @@ Here is how to verify your files on STEAM:<br>
 ### __IF LIVESPLIT CANNOT FIND THE AUTOSPLITTER:__<br>
 * Try to reinstall/move Livesplit to another location.<br>
 
-#### __KNOWN ISSUES:__<br>
+### __KNOWN ISSUES:__<br>
 * Incompatible with Windows 7 (and below?)<br>
 * Incompatible with the Xbox launcher version<br>
 
 _I'm sorry, as of now I do not have access to Windows 7 and I do not know if it is even possible to counter the protections put in place by Microsoft on the Xbox version.<br>
-If this impacts you you can still run the game, just let us know what your issue is and your runs will be retimed when you submit them._
+If this impacts you you can still run the game, just let us know what your issue is and your runs will be retimed after you submit them._
 
 ## Patchnote and futur improvements
 __1.0.0__<br>
@@ -93,7 +93,7 @@ __1.2.6__<br>
 __1.2.7__<br>
 -Reworked the splits to better match current usage, added death splits. Reworked scanning so that it stops searching if the target is not found.<br>
 __1.2.8__<br>
--Added an error message when scanning fails. Reworked the facts splits in order so that they work regardless of the savefile organisation<br>
+-Added an error message when scanning fails. Reworked the facts splits so that they work regardless of the savefile organisation<br>
 __NEXT :__<br>
 -Put the fact splits informations and the save file in separate files
 -Rework the fact splits to support any fact, so that mod campaigns can potentially be plugged in and work as well
