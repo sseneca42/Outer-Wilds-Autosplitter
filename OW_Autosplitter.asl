@@ -1,6 +1,8 @@
 //Download dbgview to see the comments.
 state("OuterWilds") {}
 
+//1.2.8 -Added an error message when scanning fails. Reworked the facts splits so that they work regardless of the savefile organisation
+//1.2.7 -Reworked the splits to better match current usage, added death splits. Reworked scanning so that it stops searching if the target is not found.
 //1.2.6 -Reworked timer behaviour on the menu and added an option for categories using Menu Storage
 //1.2.5 -Updated for the 1.1.13 version.
 //1.2.4 -Updated for the 1.1.12 version. Now Works for 1.0.7, 1.1.10, 1.1.11 & 1.1.12
@@ -21,6 +23,7 @@ state("OuterWilds") {}
 //Launched when the script first loads (so only once)
 startup
 {
+
 print("__STARTUP START__");
 
 	if(timer.CurrentTimingMethod == TimingMethod.RealTime) {
@@ -28,8 +31,8 @@ print("__STARTUP START__");
 		print("Timing Method Changed!");
 	}
 
+	vars.name = "Outer Wilds Autosplitter 1.2.8";
 	vars.ver = new string[] {"1.0.7", "1.1.10", "1.1.12", "1.1.13"};
-	vars.name = "Outer Wilds Autosplitter 1.2.6d";
 	vars.debug = false;
 	vars.timer = new TimerModel { CurrentState = timer };
 	vars.load = false;
@@ -39,18 +42,13 @@ print("__STARTUP START__");
 	vars.warpCoreLoop = -1;
 	vars.saveFile = "{\"loopCount\":3,\"knownFrequencies\":[true,true,false,false,false,false,false],\"knownSignals\":{\"31\":false,\"30\":false,\"32\":false,\"62\":false,\"60\":false,\"61\":false,\"23\":false,\"20\":false,\"24\":false,\"22\":false,\"21\":false,\"25\":false,\"11\":false,\"10\":false,\"14\":false,\"13\":false,\"12\":false,\"15\":false,\"16\":false,\"40\":false,\"43\":false,\"42\":false,\"49\":false,\"41\":false,\"46\":false,\"44\":false,\"48\":false,\"47\":false,\"45\":false,\"100\":false,\"101\":false},\"dictConditions\":{\"HIDE_TEMPLE_BASEMENT_ENTRIES\":true,\"LAUNCH_CODES_GIVEN\":true},\"shipLogFactSaves\":{\"S_SUNSTATION_R1\":{\"id\":\"S_SUNSTATION_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"S_SUNSTATION_R2\":{\"id\":\"S_SUNSTATION_R2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"S_SUNSTATION_R3\":{\"id\":\"S_SUNSTATION_R3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"S_SUNSTATION_X1\":{\"id\":\"S_SUNSTATION_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"S_SUNSTATION_X2\":{\"id\":\"S_SUNSTATION_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"S_SUNSTATION_X3\":{\"id\":\"S_SUNSTATION_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"S_SUNSTATION_X4\":{\"id\":\"S_SUNSTATION_X4\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_CHERT_X1\":{\"id\":\"CT_CHERT_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_CHERT_X2\":{\"id\":\"CT_CHERT_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_CHERT_X3\":{\"id\":\"CT_CHERT_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_CHERT_X4\":{\"id\":\"CT_CHERT_X4\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_CHERT_X5\":{\"id\":\"CT_CHERT_X5\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_QUANTUM_MOON_LOCATOR_X1\":{\"id\":\"CT_QUANTUM_MOON_LOCATOR_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_QUANTUM_MOON_LOCATOR_X2\":{\"id\":\"CT_QUANTUM_MOON_LOCATOR_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_QUANTUM_MOON_LOCATOR_X3\":{\"id\":\"CT_QUANTUM_MOON_LOCATOR_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_GRAVITY_CANNON_R1\":{\"id\":\"CT_GRAVITY_CANNON_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_GRAVITY_CANNON_X1\":{\"id\":\"CT_GRAVITY_CANNON_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_GRAVITY_CANNON_X2\":{\"id\":\"CT_GRAVITY_CANNON_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_ESCAPE_POD_R1\":{\"id\":\"CT_ESCAPE_POD_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_ESCAPE_POD_R2\":{\"id\":\"CT_ESCAPE_POD_R2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_ESCAPE_POD_X1\":{\"id\":\"CT_ESCAPE_POD_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_ESCAPE_POD_X2\":{\"id\":\"CT_ESCAPE_POD_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_HIGH_ENERGY_LAB_R1\":{\"id\":\"CT_HIGH_ENERGY_LAB_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_HIGH_ENERGY_LAB_R2\":{\"id\":\"CT_HIGH_ENERGY_LAB_R2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_HIGH_ENERGY_LAB_R3\":{\"id\":\"CT_HIGH_ENERGY_LAB_R3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_HIGH_ENERGY_LAB_X1\":{\"id\":\"CT_HIGH_ENERGY_LAB_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_HIGH_ENERGY_LAB_X2\":{\"id\":\"CT_HIGH_ENERGY_LAB_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_HIGH_ENERGY_LAB_X3\":{\"id\":\"CT_HIGH_ENERGY_LAB_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_WARP_TOWER_MAP_R1\":{\"id\":\"CT_WARP_TOWER_MAP_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_WARP_TOWER_MAP_X1\":{\"id\":\"CT_WARP_TOWER_MAP_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_WARP_TOWER_MAP_X4\":{\"id\":\"CT_WARP_TOWER_MAP_X4\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_WARP_TOWER_MAP_X3\":{\"id\":\"CT_WARP_TOWER_MAP_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_WARP_TOWER_MAP_X2\":{\"id\":\"CT_WARP_TOWER_MAP_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_SUNLESS_CITY_R1\":{\"id\":\"CT_SUNLESS_CITY_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_SUNLESS_CITY_R3\":{\"id\":\"CT_SUNLESS_CITY_R3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_SUNLESS_CITY_R4\":{\"id\":\"CT_SUNLESS_CITY_R4\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_SUNLESS_CITY_R5\":{\"id\":\"CT_SUNLESS_CITY_R5\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_SUNLESS_CITY_R2\":{\"id\":\"CT_SUNLESS_CITY_R2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_SUNLESS_CITY_X1\":{\"id\":\"CT_SUNLESS_CITY_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_SUNLESS_CITY_X2\":{\"id\":\"CT_SUNLESS_CITY_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_SUNLESS_CITY_X3\":{\"id\":\"CT_SUNLESS_CITY_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_ANGLERFISH_FOSSIL_R1\":{\"id\":\"CT_ANGLERFISH_FOSSIL_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_ANGLERFISH_FOSSIL_R2\":{\"id\":\"CT_ANGLERFISH_FOSSIL_R2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_ANGLERFISH_FOSSIL_R3\":{\"id\":\"CT_ANGLERFISH_FOSSIL_R3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_ANGLERFISH_FOSSIL_R4\":{\"id\":\"CT_ANGLERFISH_FOSSIL_R4\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_ANGLERFISH_FOSSIL_X1\":{\"id\":\"CT_ANGLERFISH_FOSSIL_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_ANGLERFISH_FOSSIL_X2\":{\"id\":\"CT_ANGLERFISH_FOSSIL_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_ANGLERFISH_FOSSIL_X3\":{\"id\":\"CT_ANGLERFISH_FOSSIL_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_QUANTUM_CAVES_R1\":{\"id\":\"CT_QUANTUM_CAVES_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_QUANTUM_CAVES_X1\":{\"id\":\"CT_QUANTUM_CAVES_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_QUANTUM_CAVES_X2\":{\"id\":\"CT_QUANTUM_CAVES_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_LAKEBED_CAVERN_R1\":{\"id\":\"CT_LAKEBED_CAVERN_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_LAKEBED_CAVERN_R2\":{\"id\":\"CT_LAKEBED_CAVERN_R2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_LAKEBED_CAVERN_X1\":{\"id\":\"CT_LAKEBED_CAVERN_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_LAKEBED_CAVERN_X2\":{\"id\":\"CT_LAKEBED_CAVERN_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"CT_LAKEBED_CAVERN_X3\":{\"id\":\"CT_LAKEBED_CAVERN_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"TT_WARP_TOWERS_X1\":{\"id\":\"TT_WARP_TOWERS_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"TT_WARP_TOWERS_X2\":{\"id\":\"TT_WARP_TOWERS_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"TT_TIME_LOOP_DEVICE_R1\":{\"id\":\"TT_TIME_LOOP_DEVICE_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"TT_TIME_LOOP_DEVICE_R2\":{\"id\":\"TT_TIME_LOOP_DEVICE_R2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"TT_TIME_LOOP_DEVICE_R3\":{\"id\":\"TT_TIME_LOOP_DEVICE_R3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"TT_TIME_LOOP_DEVICE_R4\":{\"id\":\"TT_TIME_LOOP_DEVICE_R4\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"TT_TIME_LOOP_DEVICE_X1\":{\"id\":\"TT_TIME_LOOP_DEVICE_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"TT_TIME_LOOP_DEVICE_X2\":{\"id\":\"TT_TIME_LOOP_DEVICE_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"TT_TIME_LOOP_DEVICE_X3\":{\"id\":\"TT_TIME_LOOP_DEVICE_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"TT_TIME_LOOP_DEVICE_X4\":{\"id\":\"TT_TIME_LOOP_DEVICE_X4\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"TT_TIME_LOOP_DEVICE_X5\":{\"id\":\"TT_TIME_LOOP_DEVICE_X5\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"TH_VILLAGE_X1\":{\"id\":\"TH_VILLAGE_X1\",\"revealOrder\":0,\"read\":false,\"newlyRevealed\":true},\"TH_VILLAGE_X2\":{\"id\":\"TH_VILLAGE_X2\",\"revealOrder\":0,\"read\":false,\"newlyRevealed\":true},\"TH_VILLAGE_X3\":{\"id\":\"TH_VILLAGE_X3\",\"revealOrder\":-1,\"read\":true,\"newlyRevealed\":false},\"TH_ZERO_G_CAVE_R1\":{\"id\":\"TH_ZERO_G_CAVE_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"TH_ZERO_G_CAVE_X1\":{\"id\":\"TH_ZERO_G_CAVE_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"TH_ZERO_G_CAVE_X2\":{\"id\":\"TH_ZERO_G_CAVE_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"TH_IMPACT_CRATER_R1\":{\"id\":\"TH_IMPACT_CRATER_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"TH_IMPACT_CRATER_X1\":{\"id\":\"TH_IMPACT_CRATER_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"TH_IMPACT_CRATER_X2\":{\"id\":\"TH_IMPACT_CRATER_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"TH_IMPACT_CRATER_X3\":{\"id\":\"TH_IMPACT_CRATER_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"TH_NOMAI_MINE_R1\":{\"id\":\"TH_NOMAI_MINE_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"TH_NOMAI_MINE_X1\":{\"id\":\"TH_NOMAI_MINE_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"TH_NOMAI_MINE_X2\":{\"id\":\"TH_NOMAI_MINE_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"TH_NOMAI_MINE_X3\":{\"id\":\"TH_NOMAI_MINE_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"TH_QUANTUM_SHARD_R1\":{\"id\":\"TH_QUANTUM_SHARD_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"TH_QUANTUM_SHARD_R2\":{\"id\":\"TH_QUANTUM_SHARD_R2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"TH_QUANTUM_SHARD_X1\":{\"id\":\"TH_QUANTUM_SHARD_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"TH_QUANTUM_SHARD_X2\":{\"id\":\"TH_QUANTUM_SHARD_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"TH_RADIO_TOWER_X1\":{\"id\":\"TH_RADIO_TOWER_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"TM_ESKER_R1\":{\"id\":\"TM_ESKER_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"TM_ESKER_X1\":{\"id\":\"TM_ESKER_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"TM_NORTH_POLE_R1\":{\"id\":\"TM_NORTH_POLE_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"TM_NORTH_POLE_X1\":{\"id\":\"TM_NORTH_POLE_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"TM_EYE_LOCATOR_R1\":{\"id\":\"TM_EYE_LOCATOR_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"TM_EYE_LOCATOR_R2\":{\"id\":\"TM_EYE_LOCATOR_R2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"TM_EYE_LOCATOR_X1\":{\"id\":\"TM_EYE_LOCATOR_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"TM_EYE_LOCATOR_X2\":{\"id\":\"TM_EYE_LOCATOR_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_RIEBECK_R1\":{\"id\":\"BH_RIEBECK_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_RIEBECK_R2\":{\"id\":\"BH_RIEBECK_R2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_RIEBECK_R3\":{\"id\":\"BH_RIEBECK_R3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_RIEBECK_R4\":{\"id\":\"BH_RIEBECK_R4\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_RIEBECK_X1\":{\"id\":\"BH_RIEBECK_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_RIEBECK_X2\":{\"id\":\"BH_RIEBECK_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_GRAVITY_CANNON_X1\":{\"id\":\"BH_GRAVITY_CANNON_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_GRAVITY_CANNON_X2\":{\"id\":\"BH_GRAVITY_CANNON_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_QUANTUM_RESEARCH_TOWER_R1\":{\"id\":\"BH_QUANTUM_RESEARCH_TOWER_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_QUANTUM_RESEARCH_TOWER_R2\":{\"id\":\"BH_QUANTUM_RESEARCH_TOWER_R2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_QUANTUM_RESEARCH_TOWER_X1\":{\"id\":\"BH_QUANTUM_RESEARCH_TOWER_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_QUANTUM_RESEARCH_TOWER_X2\":{\"id\":\"BH_QUANTUM_RESEARCH_TOWER_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_QUANTUM_RESEARCH_TOWER_X3\":{\"id\":\"BH_QUANTUM_RESEARCH_TOWER_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_QUANTUM_SHARD_R1\":{\"id\":\"BH_QUANTUM_SHARD_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_QUANTUM_SHARD_X1\":{\"id\":\"BH_QUANTUM_SHARD_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_QUANTUM_SHARD_X2\":{\"id\":\"BH_QUANTUM_SHARD_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_QUANTUM_SHARD_X3\":{\"id\":\"BH_QUANTUM_SHARD_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_WARP_RECEIVER_X1\":{\"id\":\"BH_WARP_RECEIVER_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_WARP_RECEIVER_X2\":{\"id\":\"BH_WARP_RECEIVER_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_ESCAPE_POD_R1\":{\"id\":\"BH_ESCAPE_POD_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_ESCAPE_POD_X1\":{\"id\":\"BH_ESCAPE_POD_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_ESCAPE_POD_X2\":{\"id\":\"BH_ESCAPE_POD_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_OLD_SETTLEMENT_R1\":{\"id\":\"BH_OLD_SETTLEMENT_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_OLD_SETTLEMENT_X1\":{\"id\":\"BH_OLD_SETTLEMENT_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_OLD_SETTLEMENT_X2\":{\"id\":\"BH_OLD_SETTLEMENT_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_OLD_SETTLEMENT_X3\":{\"id\":\"BH_OLD_SETTLEMENT_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_OLD_SETTLEMENT_X4\":{\"id\":\"BH_OLD_SETTLEMENT_X4\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_MURAL_1_X1\":{\"id\":\"BH_MURAL_1_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_MURAL_2_X1\":{\"id\":\"BH_MURAL_2_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_MURAL_3_X1\":{\"id\":\"BH_MURAL_3_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_HANGING_CITY_R1\":{\"id\":\"BH_HANGING_CITY_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_HANGING_CITY_R2\":{\"id\":\"BH_HANGING_CITY_R2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_HANGING_CITY_X1\":{\"id\":\"BH_HANGING_CITY_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_HANGING_CITY_X2\":{\"id\":\"BH_HANGING_CITY_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_HANGING_CITY_X3\":{\"id\":\"BH_HANGING_CITY_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_HANGING_CITY_X4\":{\"id\":\"BH_HANGING_CITY_X4\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_BLACK_HOLE_FORGE_R1\":{\"id\":\"BH_BLACK_HOLE_FORGE_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_BLACK_HOLE_FORGE_R2\":{\"id\":\"BH_BLACK_HOLE_FORGE_R2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_BLACK_HOLE_FORGE_R3\":{\"id\":\"BH_BLACK_HOLE_FORGE_R3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_BLACK_HOLE_FORGE_R4\":{\"id\":\"BH_BLACK_HOLE_FORGE_R4\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_BLACK_HOLE_FORGE_X4\":{\"id\":\"BH_BLACK_HOLE_FORGE_X4\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_BLACK_HOLE_FORGE_X5\":{\"id\":\"BH_BLACK_HOLE_FORGE_X5\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_BLACK_HOLE_FORGE_X6\":{\"id\":\"BH_BLACK_HOLE_FORGE_X6\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_BLACK_HOLE_FORGE_X1\":{\"id\":\"BH_BLACK_HOLE_FORGE_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_BLACK_HOLE_FORGE_X3\":{\"id\":\"BH_BLACK_HOLE_FORGE_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_WARP_ALIGNMENT_MAP_X1\":{\"id\":\"BH_WARP_ALIGNMENT_MAP_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_WARP_ALIGNMENT_MAP_X2\":{\"id\":\"BH_WARP_ALIGNMENT_MAP_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_WARP_ALIGNMENT_MAP_X3\":{\"id\":\"BH_WARP_ALIGNMENT_MAP_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_WARP_ALIGNMENT_MAP_X4\":{\"id\":\"BH_WARP_ALIGNMENT_MAP_X4\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_OBSERVATORY_R1\":{\"id\":\"BH_OBSERVATORY_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_OBSERVATORY_R2\":{\"id\":\"BH_OBSERVATORY_R2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_OBSERVATORY_R3\":{\"id\":\"BH_OBSERVATORY_R3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_OBSERVATORY_R4\":{\"id\":\"BH_OBSERVATORY_R4\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_OBSERVATORY_X1\":{\"id\":\"BH_OBSERVATORY_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_OBSERVATORY_X2\":{\"id\":\"BH_OBSERVATORY_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_OBSERVATORY_X3\":{\"id\":\"BH_OBSERVATORY_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_OBSERVATORY_X4\":{\"id\":\"BH_OBSERVATORY_X4\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_TORNADO_SIMULATION_R1\":{\"id\":\"BH_TORNADO_SIMULATION_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_TORNADO_SIMULATION_X1\":{\"id\":\"BH_TORNADO_SIMULATION_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"BH_TORNADO_SIMULATION_X2\":{\"id\":\"BH_TORNADO_SIMULATION_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"VM_VOLCANO_X1\":{\"id\":\"VM_VOLCANO_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"VM_VOLCANO_X2\":{\"id\":\"VM_VOLCANO_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"VM_VOLCANO_X3\":{\"id\":\"VM_VOLCANO_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"GD_OCEAN_R1\":{\"id\":\"GD_OCEAN_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"GD_OCEAN_R2\":{\"id\":\"GD_OCEAN_R2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"GD_OCEAN_R3\":{\"id\":\"GD_OCEAN_R3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"GD_OCEAN_X1\":{\"id\":\"GD_OCEAN_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"GD_OCEAN_X2\":{\"id\":\"GD_OCEAN_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"GD_GABBRO_ISLAND_R1\":{\"id\":\"GD_GABBRO_ISLAND_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"GD_GABBRO_ISLAND_X0\":{\"id\":\"GD_GABBRO_ISLAND_X0\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"GD_GABBRO_ISLAND_X1\":{\"id\":\"GD_GABBRO_ISLAND_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"GD_GABBRO_ISLAND_X2\":{\"id\":\"GD_GABBRO_ISLAND_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"GD_GABBRO_ISLAND_X3\":{\"id\":\"GD_GABBRO_ISLAND_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"GD_CONSTRUCTION_YARD_R1\":{\"id\":\"GD_CONSTRUCTION_YARD_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"GD_CONSTRUCTION_YARD_X1\":{\"id\":\"GD_CONSTRUCTION_YARD_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"GD_CONSTRUCTION_YARD_X2\":{\"id\":\"GD_CONSTRUCTION_YARD_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"GD_CONSTRUCTION_YARD_X3\":{\"id\":\"GD_CONSTRUCTION_YARD_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"GD_BRAMBLE_ISLAND_X1\":{\"id\":\"GD_BRAMBLE_ISLAND_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"GD_STATUE_ISLAND_R1\":{\"id\":\"GD_STATUE_ISLAND_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"GD_STATUE_ISLAND_R2\":{\"id\":\"GD_STATUE_ISLAND_R2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"GD_STATUE_ISLAND_X1\":{\"id\":\"GD_STATUE_ISLAND_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"GD_STATUE_ISLAND_X2\":{\"id\":\"GD_STATUE_ISLAND_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"GD_STATUE_WORKSHOP_R1\":{\"id\":\"GD_STATUE_WORKSHOP_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"GD_STATUE_WORKSHOP_R2\":{\"id\":\"GD_STATUE_WORKSHOP_R2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"GD_STATUE_WORKSHOP_R3\":{\"id\":\"GD_STATUE_WORKSHOP_R3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"GD_STATUE_WORKSHOP_X1\":{\"id\":\"GD_STATUE_WORKSHOP_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"GD_STATUE_WORKSHOP_X2\":{\"id\":\"GD_STATUE_WORKSHOP_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"GD_STATUE_WORKSHOP_X3\":{\"id\":\"GD_STATUE_WORKSHOP_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"GD_QUANTUM_TOWER_R1\":{\"id\":\"GD_QUANTUM_TOWER_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"GD_QUANTUM_TOWER_X1\":{\"id\":\"GD_QUANTUM_TOWER_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"GD_QUANTUM_TOWER_X2\":{\"id\":\"GD_QUANTUM_TOWER_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"GD_QUANTUM_TOWER_X3\":{\"id\":\"GD_QUANTUM_TOWER_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"GD_QUANTUM_TOWER_X4\":{\"id\":\"GD_QUANTUM_TOWER_X4\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"ORBITAL_PROBE_CANNON_R1\":{\"id\":\"ORBITAL_PROBE_CANNON_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"ORBITAL_PROBE_CANNON_R2\":{\"id\":\"ORBITAL_PROBE_CANNON_R2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"ORBITAL_PROBE_CANNON_R4\":{\"id\":\"ORBITAL_PROBE_CANNON_R4\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"ORBITAL_PROBE_CANNON_R3\":{\"id\":\"ORBITAL_PROBE_CANNON_R3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"ORBITAL_PROBE_CANNON_X1\":{\"id\":\"ORBITAL_PROBE_CANNON_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"ORBITAL_PROBE_CANNON_X2\":{\"id\":\"ORBITAL_PROBE_CANNON_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"ORBITAL_PROBE_CANNON_X3\":{\"id\":\"ORBITAL_PROBE_CANNON_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"OPC_INTACT_MODULE_R1\":{\"id\":\"OPC_INTACT_MODULE_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"OPC_INTACT_MODULE_X1\":{\"id\":\"OPC_INTACT_MODULE_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"OPC_INTACT_MODULE_X2\":{\"id\":\"OPC_INTACT_MODULE_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"OPC_BROKEN_MODULE_R1\":{\"id\":\"OPC_BROKEN_MODULE_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"OPC_BROKEN_MODULE_R2\":{\"id\":\"OPC_BROKEN_MODULE_R2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"OPC_BROKEN_MODULE_R3\":{\"id\":\"OPC_BROKEN_MODULE_R3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"OPC_BROKEN_MODULE_X1\":{\"id\":\"OPC_BROKEN_MODULE_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"OPC_BROKEN_MODULE_X2\":{\"id\":\"OPC_BROKEN_MODULE_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"OPC_BROKEN_MODULE_X3\":{\"id\":\"OPC_BROKEN_MODULE_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"OPC_SUNKEN_MODULE_R1\":{\"id\":\"OPC_SUNKEN_MODULE_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"OPC_SUNKEN_MODULE_R5\":{\"id\":\"OPC_SUNKEN_MODULE_R5\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"OPC_SUNKEN_MODULE_R4\":{\"id\":\"OPC_SUNKEN_MODULE_R4\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"OPC_SUNKEN_MODULE_R2\":{\"id\":\"OPC_SUNKEN_MODULE_R2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"OPC_SUNKEN_MODULE_R3\":{\"id\":\"OPC_SUNKEN_MODULE_R3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"OPC_SUNKEN_MODULE_X1\":{\"id\":\"OPC_SUNKEN_MODULE_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"OPC_SUNKEN_MODULE_X2\":{\"id\":\"OPC_SUNKEN_MODULE_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"OPC_SUNKEN_MODULE_X3\":{\"id\":\"OPC_SUNKEN_MODULE_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"OPC_EYE_COORDINATES_X1\":{\"id\":\"OPC_EYE_COORDINATES_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"DB_FELDSPAR_R1\":{\"id\":\"DB_FELDSPAR_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"DB_FELDSPAR_R2\":{\"id\":\"DB_FELDSPAR_R2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"DB_FELDSPAR_X1\":{\"id\":\"DB_FELDSPAR_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"DB_FELDSPAR_X2\":{\"id\":\"DB_FELDSPAR_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"DB_FELDSPAR_X3\":{\"id\":\"DB_FELDSPAR_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"DB_FROZEN_JELLYFISH_R1\":{\"id\":\"DB_FROZEN_JELLYFISH_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"DB_FROZEN_JELLYFISH_X1\":{\"id\":\"DB_FROZEN_JELLYFISH_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"DB_FROZEN_JELLYFISH_X2\":{\"id\":\"DB_FROZEN_JELLYFISH_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"DB_FROZEN_JELLYFISH_X3\":{\"id\":\"DB_FROZEN_JELLYFISH_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"DB_ESCAPE_POD_R1\":{\"id\":\"DB_ESCAPE_POD_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"DB_ESCAPE_POD_X1\":{\"id\":\"DB_ESCAPE_POD_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"DB_ESCAPE_POD_X2\":{\"id\":\"DB_ESCAPE_POD_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"DB_ESCAPE_POD_X3\":{\"id\":\"DB_ESCAPE_POD_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"DB_NOMAI_GRAVE_R1\":{\"id\":\"DB_NOMAI_GRAVE_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"DB_NOMAI_GRAVE_R2\":{\"id\":\"DB_NOMAI_GRAVE_R2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"DB_NOMAI_GRAVE_X1\":{\"id\":\"DB_NOMAI_GRAVE_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"DB_NOMAI_GRAVE_X2\":{\"id\":\"DB_NOMAI_GRAVE_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"DB_NOMAI_GRAVE_X3\":{\"id\":\"DB_NOMAI_GRAVE_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"DB_NOMAI_GRAVE_X4\":{\"id\":\"DB_NOMAI_GRAVE_X4\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"DB_VESSEL_R1\":{\"id\":\"DB_VESSEL_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"DB_VESSEL_R2\":{\"id\":\"DB_VESSEL_R2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"DB_VESSEL_R3\":{\"id\":\"DB_VESSEL_R3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"DB_VESSEL_R4\":{\"id\":\"DB_VESSEL_R4\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"DB_VESSEL_X1\":{\"id\":\"DB_VESSEL_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"DB_VESSEL_X2\":{\"id\":\"DB_VESSEL_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"DB_VESSEL_X3\":{\"id\":\"DB_VESSEL_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"DB_VESSEL_X4\":{\"id\":\"DB_VESSEL_X4\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"DB_VESSEL_X5\":{\"id\":\"DB_VESSEL_X5\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"DB_VESSEL_X6\":{\"id\":\"DB_VESSEL_X6\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"WHS_R1\":{\"id\":\"WHS_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"WHS_R2\":{\"id\":\"WHS_R2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"WHS_R3\":{\"id\":\"WHS_R3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"WHS_R4\":{\"id\":\"WHS_R4\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"WHS_X4\":{\"id\":\"WHS_X4\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"WHS_X1\":{\"id\":\"WHS_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"WHS_X2\":{\"id\":\"WHS_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"WHS_X3\":{\"id\":\"WHS_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"COMET_SHUTTLE_X1\":{\"id\":\"COMET_SHUTTLE_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"COMET_SHUTTLE_X2\":{\"id\":\"COMET_SHUTTLE_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"COMET_SHUTTLE_X3\":{\"id\":\"COMET_SHUTTLE_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"COMET_SHUTTLE_X4\":{\"id\":\"COMET_SHUTTLE_X4\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"COMET_INTERIOR_R1\":{\"id\":\"COMET_INTERIOR_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"COMET_INTERIOR_R2\":{\"id\":\"COMET_INTERIOR_R2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"COMET_INTERIOR_X1\":{\"id\":\"COMET_INTERIOR_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"COMET_INTERIOR_X2\":{\"id\":\"COMET_INTERIOR_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"COMET_INTERIOR_X3\":{\"id\":\"COMET_INTERIOR_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"COMET_INTERIOR_X4\":{\"id\":\"COMET_INTERIOR_X4\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"QUANTUM_MOON_R1\":{\"id\":\"QUANTUM_MOON_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"QUANTUM_MOON_R2\":{\"id\":\"QUANTUM_MOON_R2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"QUANTUM_MOON_R3\":{\"id\":\"QUANTUM_MOON_R3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"QUANTUM_MOON_R4\":{\"id\":\"QUANTUM_MOON_R4\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"QUANTUM_MOON_X1\":{\"id\":\"QUANTUM_MOON_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"QUANTUM_MOON_X2\":{\"id\":\"QUANTUM_MOON_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"QM_SHUTTLE_X1\":{\"id\":\"QM_SHUTTLE_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"QM_SHUTTLE_X2\":{\"id\":\"QM_SHUTTLE_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"QM_SHRINE_R1\":{\"id\":\"QM_SHRINE_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"QM_SHRINE_X1\":{\"id\":\"QM_SHRINE_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"QM_SHRINE_X2\":{\"id\":\"QM_SHRINE_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"QM_SHRINE_X3\":{\"id\":\"QM_SHRINE_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"QM_SHRINE_X4\":{\"id\":\"QM_SHRINE_X4\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"QM_SIXTH_LOCATION_R1\":{\"id\":\"QM_SIXTH_LOCATION_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"QM_SIXTH_LOCATION_R2\":{\"id\":\"QM_SIXTH_LOCATION_R2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"QM_SIXTH_LOCATION_R3\":{\"id\":\"QM_SIXTH_LOCATION_R3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"QM_SIXTH_LOCATION_X1\":{\"id\":\"QM_SIXTH_LOCATION_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"QM_SIXTH_LOCATION_X3\":{\"id\":\"QM_SIXTH_LOCATION_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"QM_SIXTH_LOCATION_X5\":{\"id\":\"QM_SIXTH_LOCATION_X5\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"QM_SIXTH_LOCATION_X4\":{\"id\":\"QM_SIXTH_LOCATION_X4\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"QM_SIXTH_LOCATION_X2\":{\"id\":\"QM_SIXTH_LOCATION_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"QM_SIXTH_LOCATION_X6\":{\"id\":\"QM_SIXTH_LOCATION_X6\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_RING_WORLD_X1\":{\"id\":\"IP_RING_WORLD_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_ZONE_1_X1\":{\"id\":\"IP_ZONE_1_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_ZONE_1_X2\":{\"id\":\"IP_ZONE_1_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_ZONE_1_STORY_X1\":{\"id\":\"IP_ZONE_1_STORY_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_ZONE_1_STORY_X2\":{\"id\":\"IP_ZONE_1_STORY_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_ZONE_1_SECRET_R1\":{\"id\":\"IP_ZONE_1_SECRET_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_ZONE_1_SECRET_X2\":{\"id\":\"IP_ZONE_1_SECRET_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_ZONE_1_SECRET_X1\":{\"id\":\"IP_ZONE_1_SECRET_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_ZONE_2_X1\":{\"id\":\"IP_ZONE_2_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_ZONE_2_X2\":{\"id\":\"IP_ZONE_2_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_ZONE_2_STORY_X1\":{\"id\":\"IP_ZONE_2_STORY_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_ZONE_2_STORY_X2\":{\"id\":\"IP_ZONE_2_STORY_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_ZONE_2_SECRET_R1\":{\"id\":\"IP_ZONE_2_SECRET_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_ZONE_2_SECRET_X2\":{\"id\":\"IP_ZONE_2_SECRET_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_ZONE_2_SECRET_X1\":{\"id\":\"IP_ZONE_2_SECRET_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_ZONE_2_LIGHTHOUSE_R1\":{\"id\":\"IP_ZONE_2_LIGHTHOUSE_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_ZONE_2_LIGHTHOUSE_X2\":{\"id\":\"IP_ZONE_2_LIGHTHOUSE_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_ZONE_2_LIGHTHOUSE_X1\":{\"id\":\"IP_ZONE_2_LIGHTHOUSE_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_ZONE_2_CODE_R1\":{\"id\":\"IP_ZONE_2_CODE_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_ZONE_2_CODE_X1\":{\"id\":\"IP_ZONE_2_CODE_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_ZONE_2_CODE_X2\":{\"id\":\"IP_ZONE_2_CODE_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_ZONE_2_CODE_X3\":{\"id\":\"IP_ZONE_2_CODE_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_ZONE_3_X1\":{\"id\":\"IP_ZONE_3_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_ZONE_3_STORY_X1\":{\"id\":\"IP_ZONE_3_STORY_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_ZONE_3_STORY_X2\":{\"id\":\"IP_ZONE_3_STORY_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_ZONE_3_SECRET_R1\":{\"id\":\"IP_ZONE_3_SECRET_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_ZONE_3_SECRET_X2\":{\"id\":\"IP_ZONE_3_SECRET_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_ZONE_3_SECRET_X1\":{\"id\":\"IP_ZONE_3_SECRET_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_ZONE_3_ENTRANCE_R1\":{\"id\":\"IP_ZONE_3_ENTRANCE_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_ZONE_3_ENTRANCE_X1\":{\"id\":\"IP_ZONE_3_ENTRANCE_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_ZONE_3_ENTRANCE_X2\":{\"id\":\"IP_ZONE_3_ENTRANCE_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_ZONE_3_ENTRANCE_X3\":{\"id\":\"IP_ZONE_3_ENTRANCE_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_ZONE_3_LAB_R1\":{\"id\":\"IP_ZONE_3_LAB_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_ZONE_3_LAB_X1\":{\"id\":\"IP_ZONE_3_LAB_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_ZONE_3_LAB_X3\":{\"id\":\"IP_ZONE_3_LAB_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_ZONE_3_LAB_X4\":{\"id\":\"IP_ZONE_3_LAB_X4\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_ZONE_3_LAB_X2\":{\"id\":\"IP_ZONE_3_LAB_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_MAP_PROJECTION_1_X1\":{\"id\":\"IP_MAP_PROJECTION_1_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_MAP_PROJECTION_2_X1\":{\"id\":\"IP_MAP_PROJECTION_2_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_MAP_PROJECTION_3_X1\":{\"id\":\"IP_MAP_PROJECTION_3_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_ZONE_4_X2\":{\"id\":\"IP_ZONE_4_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_ZONE_4_X3\":{\"id\":\"IP_ZONE_4_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_ZONE_4_X4\":{\"id\":\"IP_ZONE_4_X4\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_ZONE_4_STORY_X1\":{\"id\":\"IP_ZONE_4_STORY_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_ZONE_4_STORY_X2\":{\"id\":\"IP_ZONE_4_STORY_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_PRISON_R1\":{\"id\":\"IP_PRISON_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_PRISON_R2\":{\"id\":\"IP_PRISON_R2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_PRISON_X1\":{\"id\":\"IP_PRISON_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_PRISON_X2\":{\"id\":\"IP_PRISON_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_DREAM_LAKE_R1\":{\"id\":\"IP_DREAM_LAKE_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_DREAM_LAKE_R2\":{\"id\":\"IP_DREAM_LAKE_R2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_DREAM_LAKE_X1\":{\"id\":\"IP_DREAM_LAKE_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_DREAM_LAKE_X2\":{\"id\":\"IP_DREAM_LAKE_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_SARCOPHAGUS_R4\":{\"id\":\"IP_SARCOPHAGUS_R4\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_SARCOPHAGUS_R1\":{\"id\":\"IP_SARCOPHAGUS_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_SARCOPHAGUS_R2\":{\"id\":\"IP_SARCOPHAGUS_R2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_SARCOPHAGUS_R3\":{\"id\":\"IP_SARCOPHAGUS_R3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_SARCOPHAGUS_X2\":{\"id\":\"IP_SARCOPHAGUS_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_SARCOPHAGUS_X3\":{\"id\":\"IP_SARCOPHAGUS_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_SARCOPHAGUS_X4\":{\"id\":\"IP_SARCOPHAGUS_X4\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_DREAM_ZONE_1_R1\":{\"id\":\"IP_DREAM_ZONE_1_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_DREAM_ZONE_1_X1\":{\"id\":\"IP_DREAM_ZONE_1_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_DREAM_ZONE_1_X2\":{\"id\":\"IP_DREAM_ZONE_1_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_DREAM_ZONE_1_X3\":{\"id\":\"IP_DREAM_ZONE_1_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_DREAM_LIBRARY_1_R1\":{\"id\":\"IP_DREAM_LIBRARY_1_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_DREAM_LIBRARY_1_X1\":{\"id\":\"IP_DREAM_LIBRARY_1_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_DREAM_LIBRARY_1_X2\":{\"id\":\"IP_DREAM_LIBRARY_1_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_DREAM_1_STORY_X1\":{\"id\":\"IP_DREAM_1_STORY_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_DREAM_1_STORY_X2\":{\"id\":\"IP_DREAM_1_STORY_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_DREAM_1_RULE_X1\":{\"id\":\"IP_DREAM_1_RULE_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_DREAM_ZONE_2_R1\":{\"id\":\"IP_DREAM_ZONE_2_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_DREAM_ZONE_2_X1\":{\"id\":\"IP_DREAM_ZONE_2_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_DREAM_ZONE_2_X2\":{\"id\":\"IP_DREAM_ZONE_2_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_DREAM_ZONE_2_X3\":{\"id\":\"IP_DREAM_ZONE_2_X3\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_DREAM_LIBRARY_2_R1\":{\"id\":\"IP_DREAM_LIBRARY_2_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_DREAM_LIBRARY_2_X1\":{\"id\":\"IP_DREAM_LIBRARY_2_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_DREAM_LIBRARY_2_X2\":{\"id\":\"IP_DREAM_LIBRARY_2_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_DREAM_2_STORY_X1\":{\"id\":\"IP_DREAM_2_STORY_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_DREAM_2_STORY_X2\":{\"id\":\"IP_DREAM_2_STORY_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_DREAM_2_RULE_X1\":{\"id\":\"IP_DREAM_2_RULE_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_DREAM_2_RULE_X2\":{\"id\":\"IP_DREAM_2_RULE_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_DREAM_ZONE_3_R1\":{\"id\":\"IP_DREAM_ZONE_3_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_DREAM_ZONE_3_X1\":{\"id\":\"IP_DREAM_ZONE_3_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_DREAM_ZONE_3_X2\":{\"id\":\"IP_DREAM_ZONE_3_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_DREAM_LIBRARY_3_R1\":{\"id\":\"IP_DREAM_LIBRARY_3_R1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_DREAM_LIBRARY_3_X1\":{\"id\":\"IP_DREAM_LIBRARY_3_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_DREAM_LIBRARY_3_X2\":{\"id\":\"IP_DREAM_LIBRARY_3_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_DREAM_3_STORY_X1\":{\"id\":\"IP_DREAM_3_STORY_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_DREAM_3_STORY_X2\":{\"id\":\"IP_DREAM_3_STORY_X2\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_DREAM_3_RULE_X1\":{\"id\":\"IP_DREAM_3_RULE_X1\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false},\"IP_DREAM_ZONE_2_X4\":{\"id\":\"IP_DREAM_ZONE_2_X4\",\"revealOrder\":-1,\"read\":false,\"newlyRevealed\":false}},\"newlyRevealedFactIDs\":[\"TH_VILLAGE_X1\",\"TH_VILLAGE_X2\"],\"lastDeathType\":0,\"burnedMarshmallowEaten\":0,\"fullTimeloops\":0,\"perfectMarshmallowsEaten\":0,\"warpedToTheEye\":false,\"secondsRemainingOnWarp\":0.0,\"loopCountOnParadox\":0,\"shownPopups\":0,\"version\":\"1.1.12.125\"}";
 	vars.frame = (float)1/60;
-	vars.debugLoop = 0;
-	vars.currDlcSplit = 0;
-	vars.numDlcSplits = 0;
 	vars.Save = "";
 	vars.writeTime = "";
+	vars.scanningErrors = new List<string> {};
 
 	vars.splits = new Dictionary<string, bool>
     {
-        { "_deathImpact", false },
-		{ "_deathHP", false },
-		{ "_deathFish", false },
-        { "_sleep", false },
+		{ "_sleep", false },
 		{ "_wearSuit", false },
 		{ "_firstWarp", false },
 		{ "_warpCore", false },
@@ -460,7 +458,7 @@ print("__STARTUP START__");
 		{ 4428, new string[] { "IP_DREAM_3_STORY_X2", "Stranger", "Archive 3 - Reel Story 3 (Slide 53/84 Finish Building Simulation)" } },
 		{ 4440, new string[] { "IP_DREAM_3_RULE_X1", "Stranger", "Archive 3 - Reel Bug Matrix (Slide ?/? Elk Red Text)" } }
 	};
-
+	
 	//Look for a specific part of the game code, in this case a variable we want, since the game code doesn't change it works better than pointer paths for this game (likely because of Unity)
 	vars.signatureScan = (Func<Process, string, int, string, IntPtr>)((process, name, offset, target) => {
 		print("____________\n" + name + " attempt\n____________");
@@ -487,76 +485,83 @@ print("__STARTUP START__");
 		return(false);
 	});
 	
-	//
+	//2 functions to create a setting in one
 	vars.createSetting = (Func<string, string, string, bool, bool>)((name, description, tooltip, enabled) => {
 		settings.Add(name, enabled, description);
 		settings.SetToolTip(name, tooltip);
 		return true;
 	});
 
-	vars.createSetting("GeneralOptions", "Options", "", false);
-	vars.createSetting("GeneralSplits", "Splits", "Choose where you want the game to split, by default only works the first time an event happens", true);
-	vars.createSetting("DLCSplits", "DLC Splits", "Choose where you want the game to split, but only if you are on version 1.1.10 or later", false);
-
+	vars.createSetting("GeneralOptions", "Options", "", true);
+	vars.createSetting("GeneralSplits", "Splits", "Choose where you want the game to split", true);
+	vars.createSetting("DLCSplits", "100% Splits", "Choose where you want the game to split, but only if you are on version 1.1.10 or later", false);
+	
+	settings.CurrentDefaultParent = "GeneralOptions";
+		//vars.createSetting("_menuPauseOff", "Disable the time pause on the menu (Menu Storage)", "", false);
+		vars.createSetting("_menuSplit", "Split when quitting back to the menu", "", false);
+		vars.createSetting("_menuReset", "Reset the timer when quitting back to the menu", "", false);
+		vars.createSetting("_menuResetLite", "  ˪ Same but ONLY if you do before splitting", "", true);
+		vars.createSetting("_saveFile", "Auto delete progression while keeping Launch Codes /!\\ OVERWRITE SAVEFILE", "Automatically overwrite your savefile when the timer isn't running to erase everything except the launch codes.\nYOU NEED TO RESET THE TIMER BEFORE QUITTING OUT!\nUse it by clicking \"Resume expedition\"", false);
+		vars.createSetting("_forceVersion", "Force the autosplitter to run for a specific game version", "The game need to be restarted\nBe careful, if you select the wrong version it could break the autosplitter", false);
+			settings.CurrentDefaultParent = "_forceVersion";
+			foreach (string item in vars.ver) {
+				vars.createSetting("_v" + item, "" + item, "", false);
+			}
 	settings.CurrentDefaultParent = "GeneralSplits";
-		vars.createSetting("_deathImpact", "First death from Impact", "Like jumping off a cliff ;;)", false);
-		vars.createSetting("_deathHP", "First death from HP loss", "Like a campfire ;;)", false);
-		vars.createSetting("_deathFish", "First death from DaFishy", "chomp", false);
-		vars.createSetting("_sleep", "Sleep", "", false);
+		vars.createSetting("_sleep", "Sleep", "", true);
 		vars.createSetting("_wearSuit", "Wear spacesuit", "", false);
-		vars.createSetting("_firstWarp", "Use a warp pad", "Any warp pad in the Solar System", false);
+		vars.createSetting("_firstWarp", "Enter the ATP (Use a warp pad)", "Use any warp pad in the Solar System", false);
 		vars.createSetting("_warpCore", "Grab the warp core", "", false);
-		vars.createSetting("_exitWarp", "Use a warp pad while holding a warp core", "", false);
+		vars.createSetting("_exitWarp", "Exit the ATP", "Use any warp pad while holding the warp core", true);
 		vars.createSetting("_dBramble", "Enter Dark Bramble", "", false);
-		vars.createSetting("_dBrambleVessel", "Enter the vessel node in Dark Bramble", "", false);
+		vars.createSetting("_dBrambleVessel", "Enter the vessel node in Dark Bramble", "", true);
 		vars.createSetting("_qMoonIn", "Enter the Quantum Moon", "", false);
-		vars.createSetting("_vesselWarp", "Warp to the Eye of the Universe", "", false);
-			vars.createSetting("EyeSplits", "Eye Splits", "", false);
+		vars.createSetting("_vesselWarp", "Warp to the Eye", "", true);
+		vars.createSetting("EyeSplits", "Eye Splits", "", true);
+		vars.createSetting("_bigBang", "Big Bang", "Last split of most categories, can be kept on all the time", true);
+		vars.createSetting("_dst", "Destroy Spacetime", "Last split of the Destroy Spacetime category", true);
+		vars.createSetting("DeathSplits", "Death Splits", "", false);
+		vars.createSetting("FreeSplits", "General DLC Splits", "", false);
 			settings.CurrentDefaultParent = "EyeSplits";
-			vars.createSetting("_eyeSurface", "Warp to the Eye surface", "", false);
+			vars.createSetting("_eyeSurface", "Warp to the Eye's surface", "", false);
 			vars.createSetting("_eyeTunnel", "Enter the tunnel", "", false);
 			vars.createSetting("_eyeObservatory", "Reach the observatory", "", false);
-			vars.createSetting("_eyeMap", "Observe the map in the observatory", "", false);
-			vars.createSetting("_eyeInstruments", "Start the 'Instrument Hunt'", "", false);
-		settings.CurrentDefaultParent = "GeneralSplits";
-		vars.createSetting("_bigBang", "BigBang", "Last split of most categories, can be kept on all the time", true);
-		vars.createSetting("_dst", "Destroy Spacetime", "Last split of the Destroy Spacetime category", true);
-	settings.CurrentDefaultParent = "GeneralOptions";
-	vars.createSetting("_menuPauseOff", "Disable the time pause on the menu (Menu Storage)", "", false);
-	vars.createSetting("_menuSplit", "Split when quitting back to the menu", "", false);
-	vars.createSetting("_menuReset", "Reset the timer when quitting back to the menu", "", false);
-	vars.createSetting("_menuResetLite", "  ˪ Same but ONLY if you do before splitting", "", false);
-    vars.createSetting("_saveFile", "Auto delete progression while keeping Launch Codes /!\\ OVERWRITE SAVEFILE", "Automatically overwrite your savefile when the timer isn't running to erase everything except the launch codes.\nYOU NEED TO RESET THE TIMER BEFORE QUITTING OUT!\nUse it by clicking \"Resume expedition\"", false);
-		vars.createSetting("_forceVersion", "Force the autosplitter to run for a specific game version", "The game need to be restarted\nBe careful, if you select the wrong version it could break the autosplitter", false);
-		settings.CurrentDefaultParent = "_forceVersion";
-		foreach (string item in vars.ver) {
-			vars.createSetting("_v" + item, "" + item, "", false);
-		}
+			vars.createSetting("_eyeMap", "Observe the map in the observatory", "", true);
+			vars.createSetting("_eyeInstruments", "Start the 'Instrument Hunt' / Reach the campfire", "", true);
+			settings.CurrentDefaultParent = "DeathSplits";
+			vars.createSetting("_deathHP", "Death from HP loss (I.E campfire or ghost matter)", "", false);
+			vars.createSetting("_deathImpact", "Death from Impact", "", false);
+			vars.createSetting("_deathOxygen", "Death from Oxygen deprivation (air or water)", "", false);
+			vars.createSetting("_deathSun", "Death from the Sun", "", false);
+			vars.createSetting("_deathSupernova", "Death from the Supernova", "", false);
+			vars.createSetting("_deathFish", "Death from an Anglerfish", "", false);
+			vars.createSetting("_deathCrushed", "Death from being Crushed (rising sand)", "", false);
+			vars.createSetting("_deathElevator", "Death from a an elevator", "", false);
+			vars.createSetting("_deathLava", "Death from Lava (hollow's lantern)", "", false);
+			vars.createSetting("_deathDream", "Die in a Dream after dying in real life", "", false);
+			vars.createSetting("_deathDreamExplosion", "Die from the explosion caused by a faulty artifact", "", false);
+			vars.createSetting("_deathBlackHole", "Enter the Black Hole in the ATP", "", false);
+			vars.createSetting("_deathMeditation", "End a loop by meditating", "", false);
+			vars.createSetting("_deathTimeLoop", "Let a loop end by itself", "", false);
+			settings.CurrentDefaultParent = "FreeSplits";
+			vars.createSetting("_dlc0CloakEnter", "Enter the Stranger Cloak", "", false);
+			vars.createSetting("_dlc0CloakExit", "Exit the Stranger Cloak", "", false);
+			vars.createSetting("_dlc0RingEnter", "Enter the Ring World", "", false);
+			vars.createSetting("_dlc0RingExit", "Exit the Ring World", "", false);
+			vars.createSetting("_dlc0DreamEnter", "Enter the Dream World", "", false);
+			vars.createSetting("_dlc0DreamExit", "Exit the Dream World", "", false);
+			for (int i = 0; i < 2; i++) {
+				settings.CurrentDefaultParent = "_dlc0" + (i == 0 ? "DreamEnter" : "DreamExit");
+				vars.createSetting("_dlc0" + (i == 0 ? "DreamEnter" : "DreamExit") + "Any", "Any", "", false);
+				vars.createSetting("_dlc0" + (i == 0 ? "DreamEnter" : "DreamExit") + "Zone1", "Shrouded Woodlands | River Lowlands", "", false);
+				vars.createSetting("_dlc0" + (i == 0 ? "DreamEnter" : "DreamExit") + "Zone2", "Starlit Cove                 | Cinder Isles", "", false);
+				vars.createSetting("_dlc0" + (i == 0 ? "DreamEnter" : "DreamExit") + "Zone3", "Endless Canyon          | Hidden Gorge", "", false);
+				vars.createSetting("_dlc0" + (i == 0 ? "DreamEnter" : "DreamExit") + "Zone4", "Subterranean Lake     | Submerged Structure", "", false);
+			}
 
 	settings.CurrentDefaultParent = "DLCSplits";
 	vars.createSetting("Signals", "Signals", "", false);
 	vars.createSetting("Facts", "Facts & Rumors [WIP]", "", false);
-	vars.createSetting("FreeSplits", "General DLC Splits - hover to read instructions", "Choose what split you want in the Stranger\nRULES\n· Only one split at a time is considered\n· You can use both the free splits and the regular splits in the same run\n· You can select several sub-options, the first one to be validated will trigger the split\n", false);
-
-	for (int i = 0; i < 4; i++) {
-		settings.CurrentDefaultParent = "FreeSplits";
-    	vars.createSetting("_dlc" + i.ToString(), "Free Split " + (i + 1).ToString(), "", false);
-		settings.CurrentDefaultParent = "_dlc" + i.ToString();
-		vars.createSetting("_dlc" + i.ToString() + "CloakEnter", "Enter the Stranger Cloak", "", false);
-		vars.createSetting("_dlc" + i.ToString() + "CloakExit", "Exit the Stranger Cloak", "", false);
-		vars.createSetting("_dlc" + i.ToString() + "RingEnter", "Enter the Ring World", "", false);
-		vars.createSetting("_dlc" + i.ToString() + "RingExit", "Exit the Ring World", "", false);
-		vars.createSetting("_dlc" + i.ToString() + "DreamEnter", "Enter the Dream World", "", false);
-		vars.createSetting("_dlc" + i.ToString() + "DreamExit", "Exit the Dream World", "", false);
-		for (int j = 1; j < 3; j++) {
-			settings.CurrentDefaultParent = "_dlc" + i.ToString() + (j == 1 ? "DreamEnter" : "DreamExit");
-			vars.createSetting("_dlc" + i.ToString() + (j == 1 ? "DreamEnter" : "DreamExit") + "Any", "Any", "", false);
-			vars.createSetting("_dlc" + i.ToString() + (j == 1 ? "DreamEnter" : "DreamExit") + "Zone1", "Shrouded Woodlands | River Lowlands", "", false);
-			vars.createSetting("_dlc" + i.ToString() + (j == 1 ? "DreamEnter" : "DreamExit") + "Zone2", "Starlit Cove                 | Cinder Isles", "", false);
-			vars.createSetting("_dlc" + i.ToString() + (j == 1 ? "DreamEnter" : "DreamExit") + "Zone3", "Endless Canyon          | Hidden Gorge", "", false);
-			vars.createSetting("_dlc" + i.ToString() + (j == 1 ? "DreamEnter" : "DreamExit") + "Zone4", "Subterranean Lake     | Submerged Structure", "", false);
-		}
-	}
 
 	settings.CurrentDefaultParent = "Signals";
 	foreach (var item in vars.signals.Keys) {
@@ -571,7 +576,6 @@ print("__STARTUP START__");
   		vars.createSetting("_fact" + item.Value[0], String.IsNullOrEmpty(item.Value[2]) ? item.Value[0] : item.Value[2], item.Value[0], false);
 	}
 
-//
 	vars.read = (Func<string, string>)((path) => {
 		var str = "\n_______________\n\n";
 		try {
@@ -584,13 +588,12 @@ print("__STARTUP START__");
         	        str += temp.GetString(b);
 					Array.Clear(b, 0, b.Length);
         	    }
-        		fs.Close();//
+        		fs.Close();
 			}
 		}
 		catch (IOException e) {
 			print("PB in vars.read\n");
 			return vars.Save;
-			//throw;
 		}
 		return str;
 	});
@@ -608,7 +611,7 @@ print("__STARTUP START__");
             }
 		return true;
 	});
-//
+
 print("__STARTUP END__ ");
 }
 
@@ -636,6 +639,7 @@ init
 	//Epic	1.1.12 		B56866911AECACA1488891A8A32C9BEE
 	//Steam 1.1.13		7D64EC17914879EB2541002E4105C1F7
 	//Epic  1.1.13		24FEAE80D912656ACA721E7729D03554
+	//Steam 1.1.13alt	6F588ABC1E5E91668DE657CFB86FA169 
 
 	if (MD5Hash == "CFF646D642E49E06FBE02DACAA7747E0" || MD5Hash == "D2EBA93197CB5DBAAF23748E3657352F")
 		version = vars.ver[0];
@@ -643,9 +647,10 @@ init
 		version = vars.ver[1];
 	else if (MD5Hash == "75425F7225EC5C685EC183E9E2FEFC68" || MD5Hash == "B56866911AECACA1488891A8A32C9BEE" || MD5Hash == "8D09BEF112436A190C1464D82E35F119")
 		version = vars.ver[2];
-	else if (MD5Hash == "7D64EC17914879EB2541002E4105C1F7" || MD5Hash == "24FEAE80D912656ACA721E7729D03554")
+	else if (MD5Hash == "6F588ABC1E5E91668DE657CFB86FA169" || MD5Hash == "7D64EC17914879EB2541002E4105C1F7" || MD5Hash == "24FEAE80D912656ACA721E7729D03554")
 		version = vars.ver[3];
-	else version = "unknown";
+	else
+		version = "unknown";
 
     print("Game version = " + version);
 	if (settings["_forceVersion"]) {
@@ -657,61 +662,104 @@ init
 		}
 	}
 
+	//Here to access version
+	vars.scanAttempts = (Func<Process, string, int[], string[], string[], int, IntPtr>)((process, name, offset, target, ver, attempts) => {
+		IntPtr ptr = IntPtr.Zero;
+		int l = offset.Length;
+		if (l == target.Length && l == ver.Length) {
+			for (int i = 0; i < attempts; i++) {
+				for (int n = 0; n < l; n++) {
+					if (ver[n] == "default" || ver[n] == version || version == "unknown") {
+						ptr = vars.signatureScan(process, name + " (version : " + ver[n] + ")", offset[n], target[n]);
+						if (ptr != IntPtr.Zero) {
+							if (version == "unknown") {
+								version = (ver[n] == "default" ? vars.ver[vars.ver.Length - 1] : ver[n]);
+								print("Version changed to " + version);
+							}
+							return (ptr);
+						}
+					}
+				}
+				System.Threading.Thread.Sleep(2000);
+			}
+			vars.scanningErrors.Add(name);
+			print("Scanning failed: " + name);
+		}
+		return (ptr);
+	});
+
+
 	vars.splitSignals = new List<int[]> {};
-	vars.splitFacts = new List<int[]> {};
+	vars.splitFacts = new Dictionary<string, int[]> {};
 
-	IntPtr ptrLocator = IntPtr.Zero;
-	while(ptrLocator == IntPtr.Zero && !vars.debug) {
-		if(version != "1.0.7" || version == "unknown")
-			ptrLocator = vars.signatureScan(game, "LOCATOR v.1.1.10+", 43, "0F84 ???????? 41 83 3F 00 49 BA ???????????????? 49 8B CF 66 90 49 BB ???????????????? 41 FF D3 48 8B C8 48 B8");
-		if (ptrLocator != IntPtr.Zero) {
-			if (version == "unknown")
-				version = vars.ver[vars.ver.Length - 1];
-			break;
-		}
-		if(version == "1.0.7" || version == "unknown")
-			ptrLocator = vars.signatureScan(game, "LOCATOR v.1.0.7", 49, "0F84 ???????? 41 83 3F 00 49 BA ???????????????? 49 8B CF 48 83 EC 20 49 BB ???????????????? 41 FF D3 48 83 C4 20 48 8B C8 48 B8");
-		if (ptrLocator != IntPtr.Zero) {
-			version = "1.0.7";
-			break;
-		}
-		if (ptrLocator == IntPtr.Zero){
-			vars.debugLoop++;
-			System.Threading.Thread.Sleep(2000 * vars.debugLoop);
-		}
-		if(vars.debugLoop == 10)
-			vars.debug = true;
-	}
 	
+
+
+	if (vars.debug)
+		return;
+
+	int[] offsetArray = new int[] {43, 49};
+	string[] targetArray = new string[] {
+							"0F84 ???????? 41 83 3F 00 49 BA ???????????????? 49 8B CF 66 90 49 BB ???????????????? 41 FF D3 48 8B C8 48 B8",
+							"0F84 ???????? 41 83 3F 00 49 BA ???????????????? 49 8B CF 48 83 EC 20 49 BB ???????????????? 41 FF D3 48 83 C4 20 48 8B C8 48 B8"
+						};
+	string[] versionArray = new string[] {"default", "1.0.7"};
+
+	IntPtr ptrLocator = vars.scanAttempts(game, "LOCATOR", offsetArray, targetArray, versionArray, 5);
+	offsetArray = new int[] {14, 18};
+	targetArray = new string[] {
+					"F3 0F2A C8 F3 0F5A C9 F2 0F5E C1 48 B8",
+					"F3 0F5A C0 48 63 45 FC F2 0F2A C8 F2 0F5E C1 48 B8"
+				};
+
+	IntPtr ptrTime = vars.scanAttempts(game, "OW_TIME", offsetArray, targetArray, versionArray, 2);
+	offsetArray = new int[] {20, 14};
+	targetArray = new string[] {
+					"55 48 8B EC 48 81 EC ???????? 48 89 75 F8 48 8B F1 48 B8 ???????????????? 48 8B 00 48 85 C0 75 15 48 B8",
+					"55 48 8B EC 56 48 83 EC 78 48 8B F1 48 B8"
+				};
+
+	IntPtr ptrLoad = vars.scanAttempts(game, "LOAD_MANAGER", offsetArray, targetArray, versionArray, 2);
+	offsetArray = new int[] {10};
+	targetArray = new string[] {
+					"55 48 8b ec 48 83 ec 20 48 b8 ???????????????? 48 8b 00 48 85 c0 75 29"
+				};
+	versionArray = new string[] {"default"};
+	IntPtr ptrProfile = vars.scanAttempts(game, "PROFILE", offsetArray, targetArray, versionArray, 2);
+
+	if (vars.scanningErrors.Count > 0) {
+		string errorMessage = "The autosplitter searches for specific parts of the game memory, it cannot function if it doesn't find them, which is what just happened.\n" +
+		"\nHERE IS WHAT YOU CAN DO:\n" +
+		"\nCheck the 'Troubleshooting' part of this link to have all the details.\ngithub.com/sseneca42/Outer-Wilds-Autosplitter\n(you can access it by clicking on 'Website' next to 'Settings' in your splits)\n" +
+		"\n-The most common issue is that mods are installed or have been installed in the past.\nYou should verify the integrity of the game files through Steam or create another clean install of the game if you do not use Steam.\n(check the link if you need some help)\n" +
+		"-Try to launch Livesplit in Administrator mode or in Windows 8 compatibility mode.\n" +
+		"-Do not let the game running in the background right after launching it, you should be at least on the main menu before you tab out.\n";
+
+		errorMessage += "\n________________________\n\nLIST OF FAILED SCANS:\n\n";
+		if (vars.scanningErrors.Contains("LOCATOR"))
+			errorMessage += "-Locator\n";
+		if (vars.scanningErrors.Contains("OW_TIME"))
+			errorMessage += "-OW_time\n";
+		if (vars.scanningErrors.Contains("LOAD_MANAGER"))
+			errorMessage += "-Load_Manager\n";
+		if (vars.scanningErrors.Contains("PROFILE"))
+			errorMessage += "-Profile\n";
+		if (vars.scanningErrors.Count >= 4) {
+			errorMessage += "\nIn this case every scan failed, which could mean full incompatibility.\nNote that the autosplitter doesn't work on Windows 7 or below and on the Xbox Launcher version of the game for reasons beyond my control.\nSorry if this impacts you.\n" +
+			"If none of the fixes worked you can run without the autosplitter, just notify us of the issue you are having and your runs will be retimed\n\nYou can contact me (Nepo#2778) on the Outer Wilds Speedrunning Server discord.gg/Y8hBWPY\n";
+		} else {
+			errorMessage += "\nNot every scan failed, so it shouldn't be difficult to fix the error, try the suggestions above.\n" +
+			"\nIf nothing worked, the error could be due to a recent game update or an unknown bug, please contact me (Nepo#2778) on the Outer Wilds Speedrunning Server discord.gg/Y8hBWPY\n";
+		}
+		errorMessage += "\n________________________\n\nIf you find that the issue was caused by mods, sharing the list of mods you had installed on the Mod Launcher and the list of failed scans with me could help a lot, thank you!";
+		MessageBox.Show(
+			errorMessage,
+			"LiveSplit - " + vars.name + " - SCANNING ERROR",
+			MessageBoxButtons.OK, MessageBoxIcon.Error
+		);
+	}
+
 if (!vars.debug) {
-	IntPtr ptrTime = IntPtr.Zero;
-	while(ptrTime == IntPtr.Zero) {;
-		if (version != "1.0.7")
-			ptrTime = vars.signatureScan(game, "OW_TIME v.1.1.10+", 14, "F3 0F2A C8 F3 0F5A C9 F2 0F5E C1 48 B8");
-		else
-			ptrTime = vars.signatureScan(game, "OW_TIME v.1.0.7", 18, "F3 0F5A C0 48 63 45 FC F2 0F2A C8 F2 0F5E C1 48 B8");
-		if (ptrTime == IntPtr.Zero)
-			System.Threading.Thread.Sleep(1000);
-	}
-
-	IntPtr ptrLoad = IntPtr.Zero;
-	while (ptrLoad == IntPtr.Zero) {
-		if (version != "1.0.7")
-			ptrLoad = vars.signatureScan(game, "LOAD_MANAGER v.1.1.10+", 20, "55 48 8B EC 48 81 EC ???????? 48 89 75 F8 48 8B F1 48 B8 ???????????????? 48 8B 00 48 85 C0 75 15 48 B8");
-		else
-			ptrLoad = vars.signatureScan(game, "LOAD_MANAGER v.1.0.7", 14, "55 48 8B EC 56 48 83 EC 78 48 8B F1 48 B8");
-		if (ptrLoad == IntPtr.Zero)
-			System.Threading.Thread.Sleep(1000);
-	}
-
-	IntPtr ptrProfile = IntPtr.Zero;
-	while(ptrProfile == IntPtr.Zero && version != "1.0.7") {
-			//Profile manager getsharedinstance
-		ptrProfile = vars.signatureScan(game, "Profile v.1.1.10+", 10, "55 48 8b ec 48 83 ec 20 48 b8 ???????????????? 48 8b 00 48 85 c0 75 29");
-		if (ptrProfile == IntPtr.Zero)
-			System.Threading.Thread.Sleep(1000);
-	}
-
 	if (version != "1.0.7") {
 		vars.Profile = (IntPtr)(game.ReadValue<long>(ptrProfile));
 		print("|\nPOINTER Profile : 0x" + vars.Profile.ToString("X8") + "\n|");
@@ -891,8 +939,11 @@ if (!vars.debug) {
 		vars.nameLength, vars.pathLength
 	};
 	vars.watchers.UpdateAll(game);
-	if (vars.fixedTimestep.Current != vars.frame) {
-		var timingMessage = MessageBox.Show(
+	if (vars.fixedTimestep.Current != vars.frame)
+		print("TIMESTEP");
+	if (vars.fixedTimestep.Current != vars.frame && vars.fixedTimestep.Current != 0) {
+		print("Timestep is " + vars.fixedTimestep.Current + " o " + vars.fixedTimestep.Old);
+		MessageBox.Show(
 			"The physics rate of the game seems to have been modified, please use the default settings (60 fps) when running.\n\n"+
 			"See https://www.mobiusdigitalgames.com/supportforum.html or ask on Discord",
 			"LiveSplit | " + vars.name,
@@ -918,12 +969,6 @@ update {
 		return false;
 
 	vars.watchers.UpdateAll(game);
-
-/*
-	if (vars.sceneC.Current != vars.sceneC.Old || vars.scene.Current != vars.scene.Old || vars.fadeT.Current != vars.fadeT.Old || vars.allowAsync.Current != vars.allowAsync.Old) {
-		print("Current Scene = " + vars.sceneC.Current + "\nScene = " + vars.scene.Current + " old = " + vars.scene.Old + "\n fadeT = " + vars.fadeT.Current + "\n allowAsync = " + vars.allowAsync.Current);
-	}
-*/
 
 	if(version != "1.0.7" && (settings["Signals"] || settings["Facts"] || settings["_saveFile"])) {
 		if ((vars.nameLength.Current != vars.nameLength.Old || String.IsNullOrEmpty(vars.path)) && vars.pathLength.Current != 0) {
@@ -969,9 +1014,6 @@ start {
 		print("Cleaning 'Splits' Array\n");
 	   	vars.load = false;
     	vars.menu = false;
-        vars.splits["_deathImpact"] = false;
-		vars.splits["_deathHP"] = false;
-		vars.splits["_deathFish"] = false;
 		vars.splits["_sleep"] = false;
 		vars.splits["_wearSuit"] = false;
 		vars.splits["_firstWarp"] = false;
@@ -981,36 +1023,24 @@ start {
 		vars.splits["_dBrambleVessel"] = false;
 		vars.splits["_qMoonIn"] = false;
 		vars.splits["_vesselWarp"] = false;
-		vars.currDlcSplit = 0;
 		vars.loop = 0;
 		vars.warpCoreLoop = -1;
 		vars.splitSignals = new List<int[]> {};
 		foreach (var item in vars.signals) {
 			if(settings["_sig" + item.Key])
-			vars.splitSignals.Add(new int[] { item.Value, 1 });
+				vars.splitSignals.Add(new int[] { item.Value, 1 });
 		}
-		vars.splitFacts = new List<int[]> {};
+		vars.splitFacts = new Dictionary<string, int[]> {};
 		foreach (var item in vars.facts) {
 			if(settings["_fact" + item.Value[0]])
-			vars.splitFacts.Add(new int[] { item.Key, 1 });
+				vars.splitFacts.Add(item.Value[0], new int[] { 0, 0 });
 		}
-		vars.numDlcSplits = 0;
-		for (int i = 0; i < 4; i++) 
-		{
-			if (settings["_dlc" + i.ToString()])
-				vars.numDlcSplits++;
-			else
-				break;
+		foreach(var item in vars.splitSignals) {
+			print("sig nb = " + item[0] + " | bool = " + item[1]);
 		}
-	print("Number of free dlc splits = " + vars.numDlcSplits);
-	/*
-		foreach(var item in vars.splitSignals) {//
-			print("sig nb = " + item[0] + " | bool = " + item[1]);//
-		}//
-		foreach(var item in vars.splitFacts) {//
-			print("fact nb = " + item[0] + " | bool = " + item[1]);//
-		}//
-	*/
+		foreach ( KeyValuePair<string, int[]> split in vars.splitFacts) {
+			print("id = " + split.Key + "fact nb = " + split.Value[0] + " | bool = " + split.Value[1]);
+		}
 		vars.cleanValues = 0;
 	}
 	if (settings["_saveFile"] && !String.IsNullOrEmpty(vars.path) && !(vars.pauseSleeping.Current || vars.pauseInitializing.Current)) {
@@ -1022,7 +1052,6 @@ start {
 		}
 		catch (IOException e) {
 			print("Couldn't access the file 1");
-		//throw;
 		}
 	}
 	if ((vars.pauseSleeping.Old && !vars.pauseSleeping.Current) || vars.loadCompare(0, 3, 1, 1, true)) {
@@ -1039,7 +1068,6 @@ isLoading {
 //Reset the timer if it returns TRUE
 reset {
 	return (( (settings["_menuReset"] && !settings["_menuResetLite"]) || (settings["_menuResetLite"] && timer.CurrentSplitIndex == 0)) && vars.menu);
-	//should remove generaloptions
 }
 
 //Split if it returns TRUE
@@ -1047,22 +1075,41 @@ split {
 	if (settings["_menuSplit"] && vars.loadCompare(0, 1, -1, 1, true))
 		return true;
 	if(settings["GeneralSplits"]) {
+		if (vars.isDying.Current && !vars.isDying.Old) {
+			print("Death type = " + vars.deathType.Current);
+		}
 		if (settings["_bigBang"] && vars.deathType.Current == 6 && vars.deathType.Old != 6)
 			return true;
 		else if (settings["_dst"] && vars.isRealityShatterEffectComplete.Current && !vars.isRealityShatterEffectComplete.Old)
 			return true;
-		else if (settings["_deathImpact"] && !vars.splits["_deathImpact"] && vars.deathType.Old != 1 && vars.deathType.Current == 1) {
-			vars.splits["_deathImpact"] = true;
+		else if (settings["_deathHP"] && vars.isDying.Current && !vars.isDying.Old && vars.deathType.Current == 0)
 			return true;
-		}
-		else if (settings["_deathHP"] && !vars.splits["_deathHP"] && vars.isDying.Current && !vars.isDying.Old && vars.deathType.Current == 0) {
-			vars.splits["_deathHP"] = true;
+		else if (settings["_deathImpact"] && vars.deathType.Old != 1 && vars.deathType.Current == 1)
 			return true;
-		}
-		else if (settings["_deathFish"] && !vars.splits["_deathFish"] && vars.deathType.Old != 5 && vars.deathType.Current == 5) {
-			vars.splits["_deathFish"] = true;
+		else if (settings["_deathOxygen"] && vars.deathType.Old != 2 && vars.deathType.Current == 2)
 			return true;
-		}
+		else if (settings["_deathSun"] && vars.deathType.Old != 3 && vars.deathType.Current == 3)
+			return true;
+		else if (settings["_deathSupernova"] && vars.deathType.Old != 4 && vars.deathType.Current == 4)
+			return true;
+		else if (settings["_deathFish"] && vars.deathType.Old != 5 && vars.deathType.Current == 5)
+			return true;
+		else if (settings["_deathCrushed"] && vars.deathType.Old != 7 && vars.deathType.Current == 7)
+			return true;
+		else if (settings["_deathMeditation"] && vars.deathType.Old != 8 && vars.deathType.Current == 8)
+			return true;
+		else if (settings["_deathTimeLoop"] && vars.deathType.Old != 9 && vars.deathType.Current == 9)
+			return true;
+		else if (settings["_deathLava"] && vars.deathType.Old != 10 && vars.deathType.Current == 10)
+			return true;
+		else if (settings["_deathBlackHole"] && vars.deathType.Old != 11 && vars.deathType.Current == 11)
+			return true;
+		else if (settings["_deathDream"] && vars.deathType.Old != 12 && vars.deathType.Current == 12)
+			return true;
+		else if (settings["_deathDreamExplosion"] && vars.deathType.Old != 13 && vars.deathType.Current == 13)
+			return true;
+		else if (settings["_deathElevator"] && vars.deathType.Old != 14 && vars.deathType.Current == 14)
+			return true;
 		else if (settings["_sleep"] && !vars.splits["_sleep"] && vars.isSleepingAtCampfire.Current && !vars.isSleepingAtCampfire.Old) {
 			vars.splits["_sleep"] = true;
 			return true;
@@ -1115,30 +1162,26 @@ split {
 				return true;
 		}
 	}
-
 	if (version != "1.0.7") {
 		if (settings["FreeSplits"]) {
-			if (vars.currDlcSplit < vars.numDlcSplits) {
-				if((settings["_dlc" + vars.currDlcSplit.ToString() + "CloakEnter"] && vars.playerInsideCloak.Current && !vars.playerInsideCloak.Old)
-				|| (settings["_dlc" + vars.currDlcSplit.ToString() + "CloakExit"] && !vars.playerInsideCloak.Current && vars.playerInsideCloak.Old)
-				|| (settings["_dlc" + vars.currDlcSplit.ToString() + "RingEnter"] && vars.playerInsideRingWorld.Current && !vars.playerInsideRingWorld.Old)
-				|| (settings["_dlc" + vars.currDlcSplit.ToString() + "RingExit"] && !vars.playerInsideRingWorld.Current && vars.playerInsideRingWorld.Old)
-				|| (settings["_dlc" + vars.currDlcSplit.ToString() + "DreamEnter"] && vars.insideDream.Current && !vars.insideDream.Old &&
-					(settings["_dlc" + vars.currDlcSplit.ToString() + "DreamEnterAny"]
-				|| (vars.dreamLocation.Current == 100 && settings["_dlc" + vars.currDlcSplit.ToString() + "DreamEnterZone1"])
-				|| (vars.dreamLocation.Current == 200 && settings["_dlc" + vars.currDlcSplit.ToString() + "DreamEnterZone2"])
-				|| (vars.dreamLocation.Current == 300 && settings["_dlc" + vars.currDlcSplit.ToString() + "DreamEnterZone3"])
-				|| (vars.dreamLocation.Current == 400 && settings["_dlc" + vars.currDlcSplit.ToString() + "DreamEnterZone4"]) ))
-				|| (settings["_dlc" + vars.currDlcSplit.ToString() + "DreamExit"] && !vars.insideDream.Current && vars.insideDream.Old &&
-					(settings["_dlc" + vars.currDlcSplit.ToString() + "DreamExitAny"]
-				|| (vars.dreamLocation.Old == 100 && settings["_dlc" + vars.currDlcSplit.ToString() + "DreamExitZone1"])
-				|| (vars.dreamLocation.Old == 200 && settings["_dlc" + vars.currDlcSplit.ToString() + "DreamExitZone2"])
-				|| (vars.dreamLocation.Old == 300 && settings["_dlc" + vars.currDlcSplit.ToString() + "DreamExitZone3"])
-				|| (vars.dreamLocation.Old == 400 && settings["_dlc" + vars.currDlcSplit.ToString() + "DreamExitZone4"]) ))
-				) {
-					vars.currDlcSplit++;
-					return true;
-				}
+			if((settings["_dlc0CloakEnter"] && vars.playerInsideCloak.Current && !vars.playerInsideCloak.Old)
+			|| (settings["_dlc0CloakExit"] && !vars.playerInsideCloak.Current && vars.playerInsideCloak.Old && !vars.isDying.Current && !vars.menu)
+			|| (settings["_dlc0RingEnter"] && vars.playerInsideRingWorld.Current && !vars.playerInsideRingWorld.Old && !vars.isSleepingAtCampfire.Old)
+			|| (settings["_dlc0RingExit"] && !vars.playerInsideRingWorld.Current && vars.playerInsideRingWorld.Old && !vars.insideDream.Current && !vars.menu)
+			|| (settings["_dlc0DreamEnter"] && vars.insideDream.Current && !vars.insideDream.Old &&
+				(settings["_dlc0DreamEnterAny"]
+				|| (vars.dreamLocation.Current == 100 && settings["_dlc0DreamEnterZone1"])
+				|| (vars.dreamLocation.Current == 200 && settings["_dlc0DreamEnterZone2"])
+				|| (vars.dreamLocation.Current == 300 && settings["_dlc0DreamEnterZone3"])
+				|| (vars.dreamLocation.Current == 400 && settings["_dlc0DreamEnterZone4"]) ))
+			|| (settings["_dlc0DreamExit"] && !vars.insideDream.Current && vars.insideDream.Old && !vars.isDying.Current && !vars.menu &&
+				(settings["_dlc0DreamExitAny"]
+				|| (vars.dreamLocation.Old == 100 && settings["_dlc0DreamExitZone1"])
+				|| (vars.dreamLocation.Old == 200 && settings["_dlc0DreamExitZone2"])
+				|| (vars.dreamLocation.Old == 300 && settings["_dlc0DreamExitZone3"])
+				|| (vars.dreamLocation.Old == 400 && settings["_dlc0DreamExitZone4"]) ))
+			) {
+				return true;
 			}
 		}
 
@@ -1146,7 +1189,6 @@ split {
 			if (vars.writeTime != System.IO.File.GetLastWriteTime(vars.path) || vars.cleanValues == 1) {
 				print("NEW SAVE");
 				vars.writeTime = System.IO.File.GetLastWriteTime(vars.path);
-//				vars.write(vars.Save, @"C:\Users\xxx\Test.txt");
 				var arr = new string[1];
 				try {
 					arr = System.IO.File.ReadAllText(vars.path).Split('\"');
@@ -1154,12 +1196,10 @@ split {
 				catch (IOException e) {
 					print("Couldn't access the file 2");
 					return false;
-					//throw;
 				}
 				if (vars.splitSignals.Count > 0) {
 					foreach (var item in vars.splitSignals) {
 						if (item[1] == 1 && arr[item[0]] == ":true,") {
-							print("item = " + arr[item[0]]);
 							item[1] = 0;
 							if (vars.cleanValues != 1)
 								vars.timer.Split();
@@ -1173,16 +1213,25 @@ split {
 							break;
 						}
 					}
-					foreach (var item in vars.splitFacts) {
-						if ((vars.tmp + item[0] + 7 < arr.Length) && item[1] == 1 && arr[vars.tmp + item[0] + 7] != ":-1,") {
-							print("Unlocked = " + arr[vars.tmp + item[0]] + " | " + arr[vars.tmp + item[0] + 7]);
-							item[1] = 0;
-							if (vars.cleanValues != 1) {
-/*
-								timer.CurrentSplit.Name = ( String.IsNullOrEmpty(vars.facts[item[0]][2]) ? vars.facts[item[0]][0] : vars.facts[item[0]][2] );
-								print("item = " + ( String.IsNullOrEmpty(vars.facts[item[0]][2]) ? vars.facts[item[0]][0] : vars.facts[item[0]][2]) );
-*/
-								vars.timer.Split();
+					foreach ( KeyValuePair<string, int[]> split in vars.splitFacts) {
+						if (split.Value[1] == 0) {
+							if (arr[vars.tmp + split.Value[0]] != split.Key) {
+								int o = 12;
+								while (vars.tmp + (o) < arr.Length) {
+									if (arr[vars.tmp + o] == split.Key) {
+										split.Value[0] = o;
+										break;
+									}
+									o += 12;
+								}
+							}
+							if (arr[vars.tmp + split.Value[0]] == split.Key) {
+								if (arr[vars.tmp + split.Value[0] + 7] != ":-1,") {
+									split.Value[1] = 1;
+									if (vars.cleanValues != 1) {
+										vars.timer.Split();
+									}
+								}
 							}
 						}
 					}
