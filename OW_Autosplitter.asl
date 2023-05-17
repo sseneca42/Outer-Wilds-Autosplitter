@@ -31,7 +31,7 @@ print("__STARTUP START__");
 		print("Timing Method Changed!");
 	}
 
-	vars.name = "Outer Wilds Autosplitter 1.2.8";
+	vars.name = "Outer Wilds Autosplitter 1.2.8b";
 	vars.ver = new string[] {"1.0.7", "1.1.10", "1.1.12", "1.1.13"};
 	vars.debug = false;
 	vars.timer = new TimerModel { CurrentState = timer };
@@ -1062,7 +1062,7 @@ start {
 
 //'Pause' the timer if it returns TRUE
 isLoading {
-    return(vars.load || ( vars.menu && !settings["_menuPauseOff"] ) || (vars.isSleepingAtCampfire.Current && !vars.exitingDream.Current) || (settings["_menuPauseOff"] && vars.menu && vars.pauseLoading.Current) );
+    return(vars.load || vars.menu || (vars.isSleepingAtCampfire.Current && !vars.exitingDream.Current));
 }
 
 //Reset the timer if it returns TRUE
@@ -1125,7 +1125,7 @@ split {
 				return (settings["_firstWarp"]);
 			}
 		}
-		else if (!vars.splits["_warpCore"] && vars.heldItem.Current == 2 && vars.promptItem.Old == 3 && vars.promptItem.Current > 3 && vars.warpCoreLoop == vars.loop) {
+		else if (!vars.splits["_warpCore"] && ((vars.heldItem.Current == 2 && vars.promptItem.Old == 3 && vars.promptItem.Current > 3) || ((vars.heldItem.Current == 2 && vars.promptItem.Old < 4 && vars.promptItem.Current == 4))) && vars.warpCoreLoop == vars.loop) {
 			vars.splits["_warpCore"] = true;
 			return (settings["_warpCore"]);
 		}
