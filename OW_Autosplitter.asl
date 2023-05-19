@@ -31,7 +31,7 @@ print("__STARTUP START__");
 		print("Timing Method Changed!");
 	}
 
-	vars.name = "Outer Wilds Autosplitter 1.2.8b";
+	vars.name = "Outer Wilds Autosplitter 1.2.8c";
 	vars.ver = new string[] {"1.0.7", "1.1.10", "1.1.12", "1.1.13"};
 	vars.debug = false;
 	vars.timer = new TimerModel { CurrentState = timer };
@@ -619,7 +619,7 @@ print("__STARTUP END__ ");
 init
 {
 	print("__INIT START__");
-	
+	refreshRate = 60;
 	// MD5 code by CptBrian.
     string MD5Hash;
     using (var md5 = System.Security.Cryptography.MD5.Create())
@@ -688,12 +688,8 @@ init
 		return (ptr);
 	});
 
-
 	vars.splitSignals = new List<int[]> {};
 	vars.splitFacts = new Dictionary<string, int[]> {};
-
-	
-
 
 	if (vars.debug)
 		return;
@@ -1064,6 +1060,7 @@ start {
 isLoading {
     return(vars.load || vars.menu || (vars.isSleepingAtCampfire.Current && !vars.exitingDream.Current));
 }
+
 
 //Reset the timer if it returns TRUE
 reset {
