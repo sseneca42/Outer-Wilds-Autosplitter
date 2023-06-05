@@ -31,7 +31,7 @@ print("__STARTUP START__");
 		print("Timing Method Changed!");
 	}
 
-	vars.name = "Outer Wilds Autosplitter 1.2.8c";
+	vars.name = "Outer Wilds Autosplitter 1.2.8d";
 	vars.ver = new string[] {"1.0.7", "1.1.10", "1.1.12", "1.1.13"};
 	vars.debug = false;
 	vars.timer = new TimerModel { CurrentState = timer };
@@ -990,6 +990,8 @@ update {
 		}
 	}
 
+	if(vars.pauseInitializing.Old && !vars.pauseInitializing.Current)
+		vars.load = false;
 	if (!vars.menu && vars.loadCompare(0, 1, -1, 1, true))
 		vars.menu = true;
 	else if(vars.menu && ((vars.pauseSleeping.Old && !vars.pauseSleeping.Current) || (vars.loadCompare(3, 0, 3, 1, true)))) {
@@ -1000,8 +1002,6 @@ update {
 		vars.load = !vars.menu;
 	else if( vars.loadCompare(0, 2, 1, 1, false) ||  vars.loadCompare(0, 3, 1, 1, true ) )
 		vars.load = true;
-	else if(vars.pauseInitializing.Old && !vars.pauseInitializing.Current)
-		vars.load = false;
 }
 
 //Start the timer if it returns TRUE
@@ -1058,7 +1058,7 @@ start {
 
 //'Pause' the timer if it returns TRUE
 isLoading {
-    return(vars.load || vars.menu || (vars.isSleepingAtCampfire.Current && !vars.exitingDream.Current));
+	return(vars.load || vars.menu || (vars.isSleepingAtCampfire.Current && !vars.exitingDream.Current));
 }
 
 
