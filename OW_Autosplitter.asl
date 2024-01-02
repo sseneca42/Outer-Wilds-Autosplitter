@@ -32,7 +32,7 @@ print("__STARTUP START__");
 	}
 
 	vars.name = "Outer Wilds Autosplitter 1.2.8d";
-	vars.ver = new string[] {"1.0.7", "1.1.10", "1.1.12", "1.1.13"};
+	vars.ver = new string[] {"1.0.7", "1.1.10+", "1.1.12", "1.1.13+"};
 	vars.debug = false;
 	vars.timer = new TimerModel { CurrentState = timer };
 	vars.load = false;
@@ -745,7 +745,7 @@ init
 			"If none of the fixes worked you can run without the autosplitter, just notify us of the issue you are having and your runs will be retimed\n\nYou can contact me (Nepo#2778) on the Outer Wilds Speedrunning Server discord.gg/Y8hBWPY\n";
 		} else {
 			errorMessage += "\nNot every scan failed, so it shouldn't be difficult to fix the error, try the suggestions above.\n" +
-			"\nIf nothing worked, the error could be due to a recent game update or an unknown bug, please contact me (Nepo#2778) on the Outer Wilds Speedrunning Server discord.gg/Y8hBWPY\n";
+			"\nIf nothing worked, the error could be due to a recent game update or an unknown bug, please contact me (Nepo#2778) on the Outer Wilds Speedrunning Server discord.gg/pW4cqtEqUh\n";
 		}
 		errorMessage += "\n________________________\n\nIf you find that the issue was caused by mods, sharing the list of mods you had installed on the Mod Launcher and the list of failed scans with me could help a lot, thank you!";
 		MessageBox.Show(
@@ -795,7 +795,7 @@ if (!vars.debug) {
 		vars.inBrambleDimension = new MemoryWatcher<bool>(new DeepPointer(Locator + 0xB8, 0x54));
 		//Locator - 0xB8 _playerSectorDetector - 0x55 _inVesselDimension
 		vars.inVesselDimension = new MemoryWatcher<bool>(new DeepPointer(Locator + 0xB8, 0x55));
-		if (version == "1.1.13") {
+		if (version == "1.1.13+") {
 			//Locator - 0xD0 _audioMixer - 0xD2 _isSleepingAtCampfire
 			vars.isSleepingAtCampfire = new MemoryWatcher<bool>(new DeepPointer(Locator + 0xD0, 0xD2));
 			//---
@@ -836,7 +836,7 @@ if (!vars.debug) {
 		//---
 		//Locator - 0x198 _ringWorldController - 0x184 _playerInsideRingWorld
 		vars.playerInsideRingWorld = new MemoryWatcher<bool>(new DeepPointer(Locator + 0x198, 0x184));
-		if (version == "1.1.10") {
+		if (version == "1.1.10+") {
 		//DreamWorldController_1_1_10/1_1_11
 			//Locator - 0x1A0 _dreamWorldController - 0x131 _exitingDream
 			vars.exitingDream = new MemoryWatcher<bool>(new DeepPointer(Locator + 0x1A0, 0x131));
